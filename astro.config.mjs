@@ -1,7 +1,5 @@
 import { defineConfig } from 'astro/config';
 
-import cloudflare from "@astrojs/cloudflare";
-
 export default defineConfig({
   site: 'https://zawmbi.github.io',
   trailingSlash: 'ignore',
@@ -10,5 +8,5 @@ export default defineConfig({
     format: 'directory',
   },
 
-  adapter: cloudflare()
+
 });
