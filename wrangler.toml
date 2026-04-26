@@ -3,3 +3,11 @@ compatibility_date = "2025-04-01"
 
 [assets]
 directory = "./dist"
+
+[[routes]]
+pattern = "zawmbi.com"
+custom_domain = true
+
+[[routes]]
+pattern = "zawmbi.dev"
+custom_domain = true
