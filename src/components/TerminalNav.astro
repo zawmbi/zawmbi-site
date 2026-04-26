@@ -1,0 +1,145 @@
+---
+interface Props {
+  active?: 'Home' | 'Projects' | 'Research' | 'Rosalind' | 'About' | 'Contact';
+}
+
+const { active = 'Home' } = Astro.props;
+
+const items: { label: Props['active']; href: string }[] = [
+  { label: 'Home', href: '/' },
+  { label: 'Projects', href: '/projects/' },
+  { label: 'Research', href: '/research/' },
+  { label: 'Rosalind', href: '/rosalind/' },
+  { label: 'About', href: '/about/' },
+  { label: 'Contact', href: '/contact/' },
+];
+---
+
+<header class="nav">
+  <a class="nav__brand" href="/">
+    <span class="nav__mark" aria-hidden="true">※</span>
+    <span class="nav__name">
+      <span class="nav__path">~/</span>Linda.Mansour
+      <span class="nav__dot" aria-hidden="true">●</span>
+    </span>
+  </a>
+
+  <nav class="nav__items" aria-label="Primary">
+    {items.map((item) => {
+      const isActive = item.label === active;
+      return (
+        <a
+          href={item.href}
+          class:list={['nav__item', { 'nav__item--active': isActive }]}
+          aria-current={isActive ? 'page' : undefined}
+        >
+          {isActive ? `[${item.label}]` : item.label}
+        </a>
+      );
+    })}
+  </nav>
+
+  <div class="nav__loc">UIC · Chicago</div>
+</header>
+
+<style>
+  .nav {
+    border-bottom: 1px solid var(--rule);
+    padding: 14px var(--page-pad-x-sm);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    font-family: var(--font-mono);
+    background: var(--bg);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .nav__brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--cream);
+  }
+  .nav__brand:hover {
+    color: var(--cream);
+  }
+
+  .nav__mark {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--moss);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--moss);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .nav__name {
+    font-size: 13px;
+    letter-spacing: 0.04em;
+  }
+  .nav__path {
+    color: var(--faded);
+  }
+  .nav__dot {
+    color: var(--amber);
+    margin-left: 8px;
+  }
+
+  .nav__items {
+    display: flex;
+    gap: 4px;
+    font-size: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav__item {
+    padding: 6px 12px;
+    color: var(--cream-soft);
+    border: 1px solid transparent;
+    letter-spacing: 0.02em;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+  .nav__item:hover {
+    color: var(--cream);
+    border-color: var(--rule);
+  }
+  .nav__item--active {
+    color: var(--bg);
+    background: var(--moss);
+    border-color: var(--moss);
+  }
+  .nav__item--active:hover {
+    color: var(--bg);
+  }
+
+  .nav__loc {
+    font-size: 11px;
+    color: var(--faded);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 900px) {
+    .nav {
+      flex-wrap: wrap;
+    }
+    .nav__loc {
+      order: 2;
+      margin-left: auto;
+    }
+    .nav__items {
+      order: 3;
+      width: 100%;
+      justify-content: flex-start;
+      padding-top: 4px;
+      border-top: 1px dashed var(--rule);
+      margin-top: 4px;
+    }
+  }
+</style>

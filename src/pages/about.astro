@@ -1,0 +1,320 @@
+---
+import Base from '../layouts/Base.astro';
+import DNAColumn from '../components/DNAColumn.astro';
+---
+
+<Base active="About" title="About — Linda Mansour">
+  {/* HERO */}
+  <section class="about-hero rule-bottom">
+    <div class="about-hero__copy">
+      <div class="prompt">$ cat about.md</div>
+      <h1 class="about-hero__title">
+        Hi, I'm<br /><span class="italic moss-bright">Linda.</span>
+      </h1>
+      <p class="about-hero__lede">
+        Post-bacc & researcher at UIC working in
+        <span class="amber">bioinformatics</span> for plant transcriptomics and phylogenomics.
+        I write Python pipelines that ask which parts of the tree of life still need our attention.
+      </p>
+    </div>
+
+    <div class="collage">
+      <figure class="polaroid polaroid--portrait" style="--rot: -4deg; --top: 20px; --left: 40px; --w: 260px;">
+        <div class="polaroid__img polaroid__img--portrait" aria-hidden="true">[ Portrait — swap ]</div>
+        <figcaption>~ At the lab, '25</figcaption>
+      </figure>
+      <figure class="polaroid" style="--rot: 6deg; --top: 80px; --right: 30px; --w: 220px;">
+        <div class="polaroid__img polaroid__img--moss" aria-hidden="true">[ Palos Forest ]</div>
+      </figure>
+      <figure class="polaroid" style="--rot: 3deg; --bottom: 40px; --left: 80px; --w: 200px;">
+        <div class="polaroid__img polaroid__img--amber polaroid__img--32" aria-hidden="true">[ Cats! ]</div>
+      </figure>
+      <figure class="polaroid" style="--rot: -7deg; --bottom: 0; --right: 80px; --w: 180px;">
+        <div class="polaroid__img polaroid__img--moss-bright" aria-hidden="true">[ Garden ]</div>
+      </figure>
+      <div class="collage__dna" aria-hidden="true">
+        <DNAColumn height={200} width={50} opacity={0.4} />
+      </div>
+    </div>
+  </section>
+
+  {/* The Work */}
+  <section class="block">
+    <div class="block__copy">
+      <div class="prompt block__label">// The Work</div>
+      <p class="block__big">
+        I build Python pipelines —
+        <span class="moss-bright italic">MissMap</span> being the current —
+        that query NCBI metadata, resolve taxon synonyms, and map sequence type coverage across plant lineages.
+      </p>
+      <p class="block__small">
+        I also serve as a <span class="amber">Populations &amp; Communities Biology TA</span>.
+        Seeking bioinformatics roles and a lab in computational phylogeny, genetics, or evolution.
+      </p>
+    </div>
+    <div class="collage collage--small">
+      <figure class="polaroid" style="--rot: 2deg; --top: 0; --right: 0; --w: 320px;">
+        <div class="polaroid__img polaroid__img--soft polaroid__img--43" aria-hidden="true">[ Presenting at Botany 2025 ]</div>
+        <figcaption class="cap-amber">~ Palm Springs · July '25</figcaption>
+      </figure>
+      <figure class="polaroid" style="--rot: -3deg; --bottom: 0; --left: 0; --w: 200px;">
+        <div class="polaroid__img polaroid__img--moss" aria-hidden="true">[ TA — BIOS 120 ]</div>
+      </figure>
+    </div>
+  </section>
+
+  {/* Off the Screen */}
+  <section class="block block--alt rule-top rule-bottom">
+    <div class="collage collage--small block__visual-first">
+      <figure class="polaroid" style="--rot: -3deg; --top: 0; --left: 20px; --w: 240px;">
+        <div class="polaroid__img polaroid__img--stripes-amber polaroid__img--34" aria-hidden="true">[ Jump rope ]</div>
+        <figcaption class="cap-moss">~ Still landing doubles</figcaption>
+      </figure>
+      <figure class="polaroid" style="--rot: 5deg; --bottom: 0; --right: 20px; --w: 220px;">
+        <div class="polaroid__img polaroid__img--moss" aria-hidden="true">[ Figure skating ]</div>
+      </figure>
+    </div>
+    <div class="block__copy">
+      <div class="prompt block__label">// Off the Screen</div>
+      <p class="block__big">
+        For a few years now I've committed myself to
+        <span class="moss-bright italic">weightlifting</span>, calisthenics, and jump roping.
+        Outside the gym — the nature paths Illinois has to offer, especially the
+        <span class="amber">Palos Forest Preserves</span>, or the various parks in and around Chicago.
+      </p>
+      <p class="block__small">When the weather permits, I figure skate.</p>
+    </div>
+  </section>
+
+  {/* At Home */}
+  <section class="block block--last">
+    <div class="block__copy">
+      <div class="prompt block__label">// At Home</div>
+      <p class="block__big">
+        Three cats. A garden. I cook and bake
+        <span class="moss-bright italic">Middle Eastern</span> dishes and desserts with my mom — knafeh, baklava, ma'amoul.
+      </p>
+      <p class="block__small">
+        In idle hours: <span class="amber">sudoku</span>, the classics, Plague Inc., and browsing Fragrantica for fragrance notes I can't afford.
+      </p>
+      <div class="logout">
+        <span class="amber">↳</span> Thanks for reading. <span class="faded">$ logout</span>
+      </div>
+    </div>
+    <div class="collage collage--small">
+      <figure class="polaroid" style="--rot: 3deg; --top: 0; --right: 20px; --w: 240px;">
+        <div class="polaroid__img polaroid__img--amber polaroid__img--32" aria-hidden="true">[ Cats — the trio ]</div>
+      </figure>
+      <figure class="polaroid" style="--rot: -2deg; --top: 180px; --left: 0; --w: 280px;">
+        <div class="polaroid__img polaroid__img--stripes-moss polaroid__img--43" aria-hidden="true">[ Garden — tomatoes ]</div>
+      </figure>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .amber { color: var(--amber); }
+  .moss { color: var(--moss); }
+  .moss-bright { color: var(--moss-bright); }
+  .faded { color: var(--faded); }
+  .italic { font-style: italic; }
+
+  .about-hero {
+    padding: 60px var(--page-pad-x) 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .about-hero__copy {
+    padding-top: 40px;
+  }
+
+  .about-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(72px, 10vw, 132px);
+    margin: 8px 0 0;
+    font-weight: 300;
+    line-height: 0.9;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+  }
+
+  .about-hero__lede {
+    font-size: 16px;
+    color: var(--cream-soft);
+    line-height: 1.7;
+    margin-top: 30px;
+    max-width: 480px;
+  }
+
+  /* Collage */
+  .collage {
+    position: relative;
+    height: 600px;
+  }
+  .collage--small {
+    height: 420px;
+  }
+
+  .collage__dna {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .polaroid {
+    position: absolute;
+    margin: 0;
+    width: var(--w, 200px);
+    top: var(--top, auto);
+    left: var(--left, auto);
+    right: var(--right, auto);
+    bottom: var(--bottom, auto);
+    transform: rotate(var(--rot, 0deg));
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    padding: 12px;
+    transition: transform 0.25s ease;
+  }
+  .polaroid:hover {
+    transform: rotate(0deg);
+  }
+
+  .polaroid--portrait .polaroid__img {
+    aspect-ratio: 1/1;
+  }
+
+  .polaroid__img {
+    aspect-ratio: 4/5;
+    background: linear-gradient(135deg, var(--surface), var(--bg));
+    border: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--faded);
+    font-size: 11px;
+  }
+
+  .polaroid__img--portrait { aspect-ratio: 1/1; }
+  .polaroid__img--32 { aspect-ratio: 3/2; }
+  .polaroid__img--34 { aspect-ratio: 3/4; }
+  .polaroid__img--43 { aspect-ratio: 4/3; }
+
+  .polaroid__img--moss {
+    background: var(--moss);
+    opacity: 0.85;
+    color: var(--bg);
+  }
+  .polaroid__img--moss-bright {
+    background: var(--moss-bright);
+    opacity: 0.85;
+    color: var(--bg);
+  }
+  .polaroid__img--amber {
+    background: var(--amber);
+    opacity: 0.75;
+    color: var(--bg);
+  }
+  .polaroid__img--soft {
+    background: var(--surface);
+    color: var(--cream-soft);
+  }
+  .polaroid__img--stripes-amber {
+    background: repeating-linear-gradient(45deg, rgba(201, 152, 106, 0.4), rgba(201, 152, 106, 0.4) 8px, var(--surface) 8px, var(--surface) 16px);
+    color: var(--cream-soft);
+  }
+  .polaroid__img--stripes-moss {
+    background: repeating-linear-gradient(45deg, var(--moss), var(--moss) 4px, var(--moss-bright) 4px, var(--moss-bright) 12px);
+    opacity: 0.6;
+    color: var(--bg);
+  }
+
+  .polaroid figcaption {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--cream-soft);
+    text-align: center;
+    font-family: var(--font-mono);
+  }
+  .polaroid figcaption.cap-amber { color: var(--amber); text-align: left; margin-top: 8px; }
+  .polaroid figcaption.cap-moss { color: var(--moss); text-align: center; }
+
+  /* Blocks */
+  .block {
+    padding: 60px var(--page-pad-x) 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  .block--alt {
+    background: var(--bg-alt);
+  }
+  .block--last {
+    padding-bottom: 80px;
+  }
+
+  .block__visual-first {
+    order: 1;
+  }
+  .block--alt .block__copy {
+    padding-top: 30px;
+  }
+
+  .block__label {
+    margin-bottom: 16px;
+  }
+
+  .block__big {
+    font-size: clamp(18px, 2.2vw, 22px);
+    line-height: 1.55;
+    color: var(--cream);
+    font-family: var(--font-display);
+    font-weight: 300;
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+
+  .block__small {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--cream-soft);
+    margin-top: 22px;
+  }
+
+  .logout {
+    margin-top: 30px;
+    font-size: 13px;
+    color: var(--moss);
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .about-hero,
+    .block {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .about-hero__copy { padding-top: 0; }
+    .collage,
+    .collage--small {
+      height: 460px;
+    }
+    .block__visual-first {
+      order: unset;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .collage,
+    .collage--small {
+      height: 380px;
+    }
+    .polaroid {
+      transform: scale(0.85) rotate(var(--rot, 0deg));
+      transform-origin: top left;
+    }
+  }
+</style>

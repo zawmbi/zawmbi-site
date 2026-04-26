@@ -1,0 +1,259 @@
+---
+import Base from '../layouts/Base.astro';
+import PixelMatrix from '../components/PixelMatrix.astro';
+
+interface Entry {
+  num: 'I' | 'II' | 'III' | 'IV';
+  date: string;
+  title: string;
+  loc: string;
+  sup: string;
+  body: string;
+  side: 'left' | 'right';
+  accent: string;
+  plate: string;
+  link: string;
+  linkLabel: string;
+  id: string;
+}
+
+const entries: Entry[] = [
+  {
+    num: 'I',
+    date: '2025.07',
+    title: 'Botany 2025 — poster',
+    loc: 'Palm Springs, CA',
+    sup: 'Dr. Joseph Walker · UIC',
+    body: 'Presented the MissMap pipeline at the conference. The poster traces sequence-coverage gaps across plant lineages and proposes a sampling strategy for closing them.',
+    side: 'left',
+    accent: 'var(--amber)',
+    plate: '[ Poster · 2025 ]',
+    link: '#',
+    linkLabel: 'View full poster',
+    id: 'botany-2025',
+  },
+  {
+    num: 'II',
+    date: '2025.04—',
+    title: 'MissMap pipeline',
+    loc: 'github / zawmbi',
+    sup: 'Independent · in progress',
+    body: 'Computational pipeline mapping the availability of genetic sequence data across plant lineages. Leveraging NCBI GenBank, MissMap automates retrieval, classification, and visualization of sequencing completeness for target clades. Future work: data cleaning, ortholog detection, NCBI metadata filtering, clade-level summaries.',
+    side: 'right',
+    accent: 'var(--moss-bright)',
+    plate: '[ Coverage Matrix ]',
+    link: 'https://github.com/zawmbi',
+    linkLabel: 'Read paper',
+    id: 'missmap-pipeline',
+  },
+  {
+    num: 'III',
+    date: '2025.02',
+    title: 'RNA from herbaria',
+    loc: 'bioRxiv · 4th author',
+    sup: 'Walker Lab · UIC',
+    body: 'Study testing whether RNA suitable for transcriptomic analysis could be recovered from herbarium specimens. Demonstrated that mRNA remains biologically informative in many samples despite degradation, expanding the utility of historical plant collections for evolutionary and functional genomics. Featured on a podcast the day after publication.',
+    side: 'left',
+    accent: 'var(--cream)',
+    plate: '[ Manuscript ]',
+    link: '#',
+    linkLabel: 'View full poster',
+    id: 'rna-herbaria',
+  },
+  {
+    num: 'IV',
+    date: '2024.06',
+    title: 'Botany 2024 — first poster',
+    loc: 'Undergraduate',
+    sup: 'Dr. Joseph Walker · UIC',
+    body: 'First independent research, examining whether plant tissue gene expression clusters by species or tissue type — revisiting Yang & Wang (2013) using RNA-Seq. Inspired by Brawand et al. (2011) and Mármol-Sánchez et al. (2023), also investigated whether expression profiles remain intact in silica-dried tissue. Results: PCA + heatmaps confirmed species-level clustering and showed that tissue preserved for six months retains usable expression patterns.',
+    side: 'right',
+    accent: 'var(--amber)',
+    plate: '[ Poster · 2024 ]',
+    link: '#',
+    linkLabel: 'Read paper',
+    id: 'botany-2024',
+  },
+];
+---
+
+<Base active="Research" title="Research — Linda Mansour">
+  <section class="page-head rule-bottom">
+    <div class="prompt">$ cat ~/research/log.md</div>
+    <h1 class="page-head__title">
+      Research <span class="italic moss-bright">Notebook.</span>
+    </h1>
+  </section>
+
+  {entries.map((e, i) => {
+    const lastItem = i === entries.length - 1;
+    const rotateA = i % 2 === 0 ? '-1.5deg' : '2deg';
+    const rotateB = i % 2 === 0 ? '1.8deg' : '-2deg';
+    return (
+      <article
+        id={e.id}
+        class:list={['entry', `entry--${e.side}`, { 'entry--last': lastItem }]}
+      >
+        <aside class="entry__meta">
+          <div class="entry__num" style={`color:${e.accent}`}>{e.num}</div>
+          <div class="entry__date">{e.date}</div>
+          <div class="entry__loc">{e.loc}</div>
+          <div class="entry__sup-label">// Supervisor</div>
+          <div class="entry__sup">{e.sup}</div>
+        </aside>
+
+        <div class="entry__body">
+          <h2 class="entry__title">{e.title}</h2>
+          <p class="entry__text">{e.body}</p>
+          <a class="entry__link" style={`color:${e.accent}`} href={e.link} target={e.link.startsWith('http') ? '_blank' : undefined} rel={e.link.startsWith('http') ? 'noopener noreferrer' : undefined}>
+            → {e.linkLabel}
+          </a>
+        </div>
+
+        <div class="entry__plate" style={`--rot: ${e.side === 'left' ? rotateB : rotateA};`}>
+          <div class="entry__plate-frame">
+            <div class="entry__plate-img">
+              <PixelMatrix cols={10} rows={12} seed={i + (e.side === 'left' ? 1.7 : 0.4)} accent={e.accent} aspect="4/5" />
+            </div>
+            <div class="entry__plate-cap">Plate {e.num} · {e.plate}</div>
+          </div>
+        </div>
+      </article>
+    );
+  })}
+</Base>
+
+<style>
+  .moss-bright { color: var(--moss-bright); }
+  .italic { font-style: italic; }
+
+  .page-head {
+    padding: 60px var(--page-pad-x) 32px;
+  }
+
+  .page-head__title {
+    font-family: var(--font-display);
+    font-size: clamp(56px, 8vw, 96px);
+    margin: 8px 0 0;
+    font-weight: 300;
+    line-height: 0.95;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+  }
+
+  .entry {
+    padding: 50px var(--page-pad-x);
+    border-bottom: 1px dashed var(--rule);
+    display: grid;
+    gap: 36px;
+  }
+  .entry--last {
+    border-bottom: none;
+  }
+
+  .entry--left {
+    grid-template-columns: 120px 1.2fr 1fr;
+  }
+  .entry--right {
+    grid-template-columns: 1fr 1.2fr 120px;
+  }
+  .entry--right .entry__meta { order: 3; }
+  .entry--right .entry__plate { order: 1; }
+  .entry--right .entry__body { order: 2; }
+
+  .entry__meta {
+    font-size: 10px;
+    color: var(--moss);
+    line-height: 2;
+    letter-spacing: 0.04em;
+  }
+
+  .entry__num {
+    font-family: var(--font-display);
+    font-size: 64px;
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 14px;
+  }
+
+  .entry__loc {
+    color: var(--faded);
+  }
+
+  .entry__sup-label {
+    color: var(--faded);
+    margin-top: 10px;
+  }
+
+  .entry__sup {
+    color: var(--cream-soft);
+    font-size: 12px;
+  }
+
+  .entry__title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.5vw, 40px);
+    margin: 0;
+    font-weight: 300;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+    line-height: 1.05;
+  }
+
+  .entry__text {
+    font-size: 14px;
+    color: var(--cream-soft);
+    line-height: 1.75;
+    margin-top: 18px;
+  }
+
+  .entry__link {
+    margin-top: 18px;
+    display: inline-block;
+    font-size: 11px;
+  }
+
+  .entry__plate {
+    position: relative;
+  }
+
+  .entry__plate-frame {
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    padding: 14px;
+    transform: rotate(var(--rot, 0deg));
+    transition: transform 0.25s ease;
+  }
+  .entry__plate-frame:hover {
+    transform: rotate(0deg);
+  }
+
+  .entry__plate-img {
+    width: 100%;
+  }
+
+  .entry__plate-cap {
+    margin-top: 8px;
+    font-size: 9px;
+    color: var(--faded);
+    letter-spacing: 0.14em;
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .entry--left,
+    .entry--right {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .entry--right .entry__meta,
+    .entry--right .entry__plate,
+    .entry--right .entry__body { order: unset; }
+    .entry__plate {
+      max-width: 360px;
+    }
+    .entry__num {
+      font-size: 48px;
+    }
+  }
+</style>

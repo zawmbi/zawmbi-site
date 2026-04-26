@@ -1,0 +1,43 @@
+---
+const year = new Date().getFullYear();
+const month = String(new Date().getMonth() + 1).padStart(2, '0');
+---
+
+<footer class="footer">
+  <span class="footer__cmd">
+    $ linda --version {year}.{month} · all systems nominal
+  </span>
+  <span class="footer__links">
+    <a href="https://github.com/zawmbi" target="_blank" rel="noopener noreferrer">GitHub</a>
+    <span aria-hidden="true">·</span>
+    <a href="https://www.linkedin.com/in/linda-mansour/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <span aria-hidden="true">·</span>
+    <a href="mailto:linda@zawmbi.dev">Email</a>
+  </span>
+</footer>
+
+<style>
+  .footer {
+    border-top: 1px solid var(--rule);
+    padding: 14px var(--page-pad-x-sm);
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--faded);
+    margin-top: auto;
+  }
+  .footer__links {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .footer__links a {
+    color: var(--cream-soft);
+  }
+  .footer__links a:hover {
+    color: var(--amber);
+  }
+</style>

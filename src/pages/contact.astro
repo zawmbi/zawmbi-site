@@ -1,0 +1,143 @@
+---
+import Base from '../layouts/Base.astro';
+
+const channels = [
+  { label: 'Email', value: 'linda@zawmbi.dev', href: 'mailto:linda@zawmbi.dev', accent: 'var(--amber)' },
+  { label: 'GitHub', value: 'github.com/zawmbi', href: 'https://github.com/zawmbi', accent: 'var(--moss-bright)' },
+  { label: 'LinkedIn', value: 'linkedin.com/in/linda-mansour', href: 'https://www.linkedin.com/in/linda-mansour/', accent: 'var(--cream)' },
+  { label: 'Lab', value: 'Walker Lab · UIC', href: 'https://walker.bios.uic.edu/', accent: 'var(--cream-soft)' },
+];
+---
+
+<Base active="Contact" title="Contact — Linda Mansour">
+  <section class="page-head rule-bottom">
+    <div class="prompt">$ ssh linda@zawmbi.dev</div>
+    <h1 class="page-head__title">
+      Get in <span class="italic moss-bright">Touch.</span>
+    </h1>
+    <p class="page-head__lede">
+      Open to PhD program conversations, bioinformatics roles, and collaboration on plant phylogenomics or pipeline tooling. Best reached by email.
+    </p>
+  </section>
+
+  <section class="contact">
+    <div class="contact__grid">
+      {channels.map((c) => (
+        <a class="contact__card terminal-card" href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+          <div class="terminal-card__head">
+            <span>// {c.label.toLowerCase()}</span>
+            <span style={`color:${c.accent}`}>●</span>
+          </div>
+          <div class="contact__body">
+            <div class="contact__label">{c.label}</div>
+            <div class="contact__value" style={`color:${c.accent}`}>{c.value}</div>
+            <div class="contact__cta">→ Open</div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <aside class="contact__note">
+      <div class="prompt">// note</div>
+      <p>
+        Replies typically within 48 hours during the academic week. For collaborations, include a short blurb on the lineage or dataset and a link to anything public.
+      </p>
+    </aside>
+  </section>
+</Base>
+
+<style>
+  .moss-bright { color: var(--moss-bright); }
+  .italic { font-style: italic; }
+
+  .page-head {
+    padding: 60px var(--page-pad-x) 32px;
+  }
+
+  .page-head__title {
+    font-family: var(--font-display);
+    font-size: clamp(56px, 8vw, 96px);
+    margin: 8px 0 0;
+    font-weight: 300;
+    line-height: 0.95;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+  }
+
+  .page-head__lede {
+    font-size: 14px;
+    color: var(--cream-soft);
+    line-height: 1.7;
+    max-width: 560px;
+    margin-top: 22px;
+  }
+
+  .contact {
+    padding: 48px var(--page-pad-x) 100px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .contact__card {
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .contact__card:hover {
+    border-color: var(--moss);
+    transform: translateY(-2px);
+  }
+
+  .contact__body {
+    padding: 22px 18px;
+  }
+
+  .contact__label {
+    font-size: 11px;
+    color: var(--faded);
+    letter-spacing: 0.14em;
+  }
+
+  .contact__value {
+    font-family: var(--font-display);
+    font-size: 22px;
+    margin-top: 6px;
+    font-weight: 400;
+    word-break: break-word;
+  }
+
+  .contact__cta {
+    margin-top: 14px;
+    font-size: 11px;
+    color: var(--moss);
+  }
+
+  .contact__note {
+    padding: 22px;
+    border: 1px dashed var(--rule);
+    background: var(--bg-alt);
+  }
+
+  .contact__note p {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--cream-soft);
+  }
+
+  @media (max-width: 900px) {
+    .contact {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .contact__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

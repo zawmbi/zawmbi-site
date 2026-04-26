@@ -1,0 +1,205 @@
+---
+import Base from '../layouts/Base.astro';
+
+const problems = [
+  { id: 'DNA', name: 'Counting DNA Nucleotides', status: 'solved', date: '2024.02', tools: 'Python' },
+  { id: 'RNA', name: 'Transcribing DNA into RNA', status: 'solved', date: '2024.02', tools: 'Python' },
+  { id: 'REVC', name: 'Complementing a Strand of DNA', status: 'solved', date: '2024.02', tools: 'Python' },
+  { id: 'FIB', name: 'Rabbits and Recurrence Relations', status: 'solved', date: '2024.02', tools: 'Python' },
+  { id: 'GC', name: 'Computing GC Content', status: 'solved', date: '2024.03', tools: 'Python' },
+  { id: 'HAMM', name: 'Counting Point Mutations', status: 'solved', date: '2024.03', tools: 'Python' },
+  { id: 'IPRB', name: 'Mendel’s First Law', status: 'solved', date: '2024.03', tools: 'Python' },
+  { id: 'PROT', name: 'Translating RNA into Protein', status: 'solved', date: '2024.04', tools: 'Python' },
+  { id: 'SUBS', name: 'Finding a Motif in DNA', status: 'solved', date: '2024.04', tools: 'Python' },
+  { id: 'CONS', name: 'Consensus and Profile', status: 'in-progress', date: '—', tools: 'Python' },
+];
+
+const solved = problems.filter((p) => p.status === 'solved').length;
+---
+
+<Base active="Rosalind" title="Rosalind — Linda Mansour">
+  <section class="page-head rule-bottom">
+    <div class="page-head__top">
+      <div>
+        <div class="prompt">$ rosalind --status</div>
+        <h1 class="page-head__title">
+          <span class="italic moss-bright">Rosalind.</span>
+        </h1>
+      </div>
+      <div class="counter">
+        <div class="counter__num">{solved}<span class="counter__div">/</span><span class="counter__total">{problems.length}</span></div>
+        <div class="counter__label">problems · in flight</div>
+      </div>
+    </div>
+    <p class="page-head__lede">
+      Tracking my walk through <a href="https://rosalind.info" target="_blank" rel="noopener noreferrer" class="amber">rosalind.info</a> — bioinformatics problems in Python. Each entry links to the problem; solved entries to the snippet.
+    </p>
+  </section>
+
+  <section class="rosalind">
+    <div class="rosalind__table">
+      <div class="rosalind__row rosalind__row--head">
+        <span>id</span>
+        <span>problem</span>
+        <span>tools</span>
+        <span>solved</span>
+        <span>status</span>
+      </div>
+      {problems.map((p, i) => (
+        <a class:list={['rosalind__row', { 'rosalind__row--alt': i % 2 === 1 }]} href={`https://rosalind.info/problems/${p.id.toLowerCase()}/`} target="_blank" rel="noopener noreferrer">
+          <span class="rosalind__id">{p.id}</span>
+          <span class="rosalind__name">{p.name}</span>
+          <span class="rosalind__tools">{p.tools}</span>
+          <span class="rosalind__date">{p.date}</span>
+          <span class:list={['rosalind__status', `rosalind__status--${p.status}`]}>
+            {p.status === 'solved' ? '● solved' : '○ wip'}
+          </span>
+        </a>
+      ))}
+    </div>
+
+    <aside class="rosalind__note">
+      <div class="prompt">// notes</div>
+      <p>
+        Solutions live in a private repo for now. Once the Bioinformatics Stronghold track is complete I'll publish a tagged repo with each problem's input/output and approach.
+      </p>
+    </aside>
+  </section>
+</Base>
+
+<style>
+  .moss-bright { color: var(--moss-bright); }
+  .amber { color: var(--amber); }
+  .italic { font-style: italic; }
+
+  .page-head {
+    padding: 60px var(--page-pad-x) 32px;
+  }
+
+  .page-head__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .page-head__title {
+    font-family: var(--font-display);
+    font-size: clamp(64px, 9vw, 120px);
+    margin: 8px 0 0;
+    font-weight: 300;
+    line-height: 0.9;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+  }
+
+  .counter {
+    text-align: right;
+    border: 1px solid var(--rule);
+    background: var(--bg-alt);
+    padding: 16px 22px;
+  }
+
+  .counter__num {
+    font-family: var(--font-display);
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--moss-bright);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .counter__div { color: var(--rule); margin: 0 4px; }
+  .counter__total { color: var(--faded); font-size: 28px; }
+
+  .counter__label {
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--faded);
+    letter-spacing: 0.14em;
+  }
+
+  .page-head__lede {
+    font-size: 14px;
+    color: var(--cream-soft);
+    line-height: 1.7;
+    max-width: 600px;
+    margin-top: 22px;
+  }
+
+  .rosalind {
+    padding: 40px var(--page-pad-x) 100px;
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .rosalind__table {
+    border: 1px solid var(--rule);
+  }
+
+  .rosalind__row {
+    display: grid;
+    grid-template-columns: 80px 1fr 110px 100px 100px;
+    align-items: center;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 13px;
+    gap: 12px;
+    color: var(--cream);
+    transition: background 0.15s ease;
+  }
+  .rosalind__row:last-child { border-bottom: none; }
+  .rosalind__row--alt { background: var(--bg-alt); }
+  .rosalind__row:hover {
+    background: var(--surface);
+    color: var(--cream);
+  }
+
+  .rosalind__row--head {
+    font-size: 10px;
+    color: var(--faded);
+    letter-spacing: 0.14em;
+    background: var(--bg);
+    text-transform: lowercase;
+    pointer-events: none;
+  }
+
+  .rosalind__id {
+    color: var(--moss);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+  .rosalind__tools { color: var(--moss); font-size: 11px; }
+  .rosalind__date { color: var(--faded); font-size: 11px; }
+
+  .rosalind__status { font-size: 11px; }
+  .rosalind__status--solved { color: var(--moss-bright); }
+  .rosalind__status--in-progress { color: var(--amber); }
+
+  .rosalind__note {
+    padding: 22px;
+    border: 1px dashed var(--rule);
+    background: var(--bg-alt);
+  }
+  .rosalind__note p {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.7;
+    color: var(--cream-soft);
+  }
+
+  @media (max-width: 900px) {
+    .rosalind {
+      grid-template-columns: 1fr;
+    }
+    .rosalind__row {
+      grid-template-columns: 60px 1fr 80px 80px;
+      padding: 10px 12px;
+      font-size: 12px;
+    }
+    .rosalind__date { display: none; }
+    .rosalind__row--head { display: none; }
+  }
+</style>

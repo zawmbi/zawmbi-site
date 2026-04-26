@@ -1,0 +1,427 @@
+---
+import Base from '../layouts/Base.astro';
+
+const featuredTags = ['Python', 'NCBI', 'Bioinformatics', 'API'];
+
+const sideFeatured = [
+  {
+    n: '02',
+    date: 'Dec 2024',
+    title: 'Wildfire Analysis',
+    desc: 'ML + viz on national wildfire data · Python · R',
+    accent: 'var(--amber)',
+    id: 'wildfire',
+  },
+  {
+    n: '03',
+    date: 'Sept 2026',
+    title: 'PicToBeat',
+    desc: 'Image → playlist · Spotify API · ML',
+    accent: 'var(--moss-bright)',
+    id: 'pictobeat',
+  },
+];
+
+const apps = [
+  { id: 'ecg', plate: '[ ECG.png ]', title: 'ECG Classification', meta: 'MATLAB · GUI · 2024', size: 'sm' },
+  {
+    id: 'animal',
+    plate: '[ Animal Restaurant UI ]',
+    title: 'Animal Restaurant Tracker',
+    meta: '2026',
+    desc: 'Flutter / Dart progress tracker · iOS + Android · pending App Store review',
+    size: 'lg',
+    accent: 'var(--amber)',
+  },
+  { id: 'portfolio', plate: '[ Portfolio ]', title: 'Portfolio Site', meta: 'Astro · 2026', size: 'sm' },
+];
+
+const coursework: Array<[string, string, string, string]> = [
+  ['04', 'Elementary Cell Automation', 'C', '2024.09'],
+  ['05', 'Dynamic Memory Food Web', 'C', '2024.09'],
+  ['06', 'Evil Word Guessing Game', 'C', '2023.10'],
+  ['07', 'Popular Vote Minimizer', 'C', '2023.10'],
+  ['08', 'Shortest Word Ladder', 'C', '2023.11'],
+  ['09', 'Escape the Labyrinth', 'C', '2023.11'],
+  ['10', 'Outlast the Baddies', 'C', '2023.12'],
+  ['11', 'Library Management System', 'C++', '2023.09'],
+  ['12', 'Mini Search Engine', 'C++', '2023.09'],
+  ['13', 'Shape List Drawing Canvas', 'C++', '2023.10'],
+  ['14', 'Hospital Priority Queue', 'C++', '2023.11'],
+  ['15', 'Graphs', 'C++', '2023.11'],
+  ['16', 'Hospital Database', 'MySQL', '2024.07'],
+];
+---
+
+<Base active="Projects" title="Projects — Linda Mansour">
+  <section class="page-head rule-bottom">
+    <div>
+      <div class="prompt">$ cd ~/projects && ls</div>
+      <h1 class="page-head__title">
+        Programming<br /><span class="italic moss-bright">Projects.</span>
+      </h1>
+    </div>
+    <div class="page-head__intro">
+      <span class="faded">{'>'} </span>Always being updated. Most recent at
+      <a href="https://github.com/zawmbi" target="_blank" rel="noopener noreferrer" class="amber">github.com/zawmbi</a>.
+      Clicking a card opens its case study.
+    </div>
+  </section>
+
+  <section class="featured-row" id="missmap">
+    <div class="featured-row__grid">
+      <article class="missmap terminal-card" style="border-color: var(--moss);">
+        <div class="terminal-card__head">
+          <span>// Featured · 01</span>
+          <span class="moss">● Python</span>
+        </div>
+        <div class="missmap__body">
+          <h2 class="missmap__title">MissMap.py</h2>
+          <p class="missmap__desc">
+            Pipeline mapping the availability of genetic sequence data across plant lineages. Automates retrieval, classification, and visualization of sequencing completeness for target clades.
+          </p>
+          <div class="tag-row">
+            {featuredTags.map((t) => <span class="tag">{t}</span>)}
+          </div>
+          <div class="missmap__cta">
+            <a class="amber" href="/research/#missmap-pipeline">→ Case Study</a>
+            <a class="faded" href="https://github.com/zawmbi" target="_blank" rel="noopener noreferrer">→ GitHub</a>
+          </div>
+        </div>
+      </article>
+
+      <div class="side-feature">
+        {sideFeatured.map((p) => (
+          <a id={p.id} href={`#${p.id}`} class="side-feature__card">
+            <div class="side-feature__meta">// {p.n} · {p.date}</div>
+            <h3 class="side-feature__title" style={`color:${p.accent}`}>{p.title}</h3>
+            <div class="side-feature__desc">{p.desc}</div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="apps">
+    <div class="prompt apps__prompt">$ ls ./apps</div>
+    <div class="apps__grid">
+      {apps.map((a) => (
+        <a id={a.id} href={`#${a.id}`} class:list={['app-card', `app-card--${a.size}`]}>
+          <div class="app-card__plate" style={a.size === 'lg' ? 'aspect-ratio: 16/9;' : 'aspect-ratio: 1/1;'}>
+            {a.plate}
+          </div>
+          <div class="app-card__head">
+            <h4 class="app-card__title" style={a.accent ? `color:${a.accent}` : undefined}>{a.title}</h4>
+            {a.size === 'lg' && <span class="app-card__date">{a.meta}</span>}
+          </div>
+          {a.size === 'lg' ? (
+            <p class="app-card__desc">{a.desc}</p>
+          ) : (
+            <div class="app-card__meta">{a.meta}</div>
+          )}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="coursework rule-top">
+    <div class="coursework__grid">
+      <div class="coursework__head">
+        <div class="prompt">$ ls ./coursework</div>
+        <div class="coursework__title">Data Structures<br />& Algorithms</div>
+        <div class="coursework__sub">// C · C++ · {coursework.length} entries</div>
+      </div>
+      <div class="coursework__table">
+        {coursework.map(([n, t, l, d], i) => (
+          <div class:list={['coursework__row', { 'coursework__row--alt': i % 2 === 1 }]}>
+            <span class="coursework__n">{n}</span>
+            <span class="coursework__t">{t}</span>
+            <span class="coursework__l">{l}</span>
+            <span class="coursework__d">{d}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .amber { color: var(--amber); }
+  .moss { color: var(--moss); }
+  .moss-bright { color: var(--moss-bright); }
+  .faded { color: var(--faded); }
+  .italic { font-style: italic; }
+
+  .page-head {
+    padding: 60px var(--page-pad-x) 32px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 40px;
+    align-items: end;
+  }
+
+  .page-head__title {
+    font-family: var(--font-display);
+    font-size: clamp(56px, 8vw, 96px);
+    margin: 8px 0 0;
+    font-weight: 300;
+    line-height: 0.95;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+  }
+
+  .page-head__intro {
+    font-size: 12px;
+    color: var(--cream-soft);
+    line-height: 1.7;
+  }
+
+  /* MissMap featured row */
+  .featured-row {
+    padding: 40px var(--page-pad-x) 32px;
+  }
+
+  .featured-row__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 28px;
+  }
+
+  .missmap__body { padding: 32px; }
+
+  .missmap__title {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 6vw, 64px);
+    margin: 0;
+    font-weight: 300;
+    color: var(--moss-bright);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .missmap__desc {
+    font-size: 15px;
+    color: var(--cream-soft);
+    line-height: 1.7;
+    margin-top: 16px;
+    max-width: 620px;
+  }
+
+  .tag-row {
+    margin-top: 22px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  :global(.tag) {
+    padding: 4px 10px;
+  }
+
+  .missmap__cta {
+    margin-top: 28px;
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+  }
+
+  .side-feature {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .side-feature__card {
+    border: 1px solid var(--rule);
+    background: var(--bg-alt);
+    padding: 18px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .side-feature__card:hover {
+    border-color: var(--moss);
+    transform: translateY(-2px);
+  }
+
+  .side-feature__meta {
+    font-size: 10px;
+    color: var(--faded);
+  }
+
+  .side-feature__title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    margin: 6px 0 8px;
+    font-weight: 400;
+  }
+
+  .side-feature__desc {
+    font-size: 11px;
+    color: var(--cream-soft);
+    line-height: 1.6;
+  }
+
+  /* Apps */
+  .apps {
+    padding: 32px var(--page-pad-x);
+  }
+
+  .apps__prompt {
+    margin-bottom: 18px;
+  }
+
+  .apps__grid {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .app-card {
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    padding: 20px;
+    color: var(--cream);
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .app-card--lg {
+    background: var(--bg-alt);
+    padding: 24px;
+  }
+  .app-card:hover {
+    border-color: var(--moss);
+    transform: translateY(-2px);
+  }
+
+  .app-card__plate {
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--faded);
+    font-size: 11px;
+  }
+  .app-card--lg .app-card__plate {
+    background: linear-gradient(135deg, var(--surface), var(--bg));
+  }
+
+  .app-card__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 14px;
+    gap: 12px;
+  }
+  .app-card--lg .app-card__head { margin-top: 16px; }
+
+  .app-card__title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    margin: 0;
+    font-weight: 400;
+    color: var(--cream);
+  }
+  .app-card--lg .app-card__title {
+    font-size: 30px;
+  }
+
+  .app-card__date {
+    font-size: 10px;
+    color: var(--faded);
+  }
+
+  .app-card__meta {
+    font-size: 10px;
+    color: var(--faded);
+    margin-top: 4px;
+  }
+
+  .app-card__desc {
+    font-size: 12px;
+    color: var(--cream-soft);
+    line-height: 1.7;
+    margin: 8px 0 0;
+  }
+
+  /* Coursework */
+  .coursework {
+    padding: 48px var(--page-pad-x) 100px;
+    margin-top: 24px;
+  }
+
+  .coursework__grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 60px;
+  }
+
+  .coursework__title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 300;
+    margin-top: 8px;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+  }
+
+  .coursework__sub {
+    font-size: 11px;
+    color: var(--faded);
+    margin-top: 12px;
+  }
+
+  .coursework__table {
+    border: 1px solid var(--rule);
+  }
+
+  .coursework__row {
+    display: grid;
+    grid-template-columns: 60px 1fr 100px 100px;
+    align-items: center;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 13px;
+    gap: 12px;
+  }
+  .coursework__row:last-child { border-bottom: none; }
+  .coursework__row--alt { background: var(--bg-alt); }
+
+  .coursework__n { color: var(--faded); font-size: 11px; }
+  .coursework__t { color: var(--cream); }
+  .coursework__l { color: var(--moss); font-size: 11px; }
+  .coursework__d { color: var(--faded); font-size: 11px; text-align: right; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    .featured-row__grid {
+      grid-template-columns: 1fr;
+    }
+    .apps__grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .app-card--lg {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .page-head {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .apps__grid {
+      grid-template-columns: 1fr;
+    }
+    .app-card--lg {
+      grid-column: span 1;
+    }
+    .coursework__grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .coursework__row {
+      grid-template-columns: 40px 1fr 60px 70px;
+      padding: 10px 12px;
+      font-size: 12px;
+    }
+  }
+</style>

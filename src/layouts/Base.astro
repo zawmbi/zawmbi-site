@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+import TerminalNav from '../components/TerminalNav.astro';
+import TerminalFooter from '../components/TerminalFooter.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  active?: 'Home' | 'Projects' | 'Research' | 'Rosalind' | 'About' | 'Contact';
+}
+
+const {
+  title = 'Linda Mansour — Bioinformatics & Plant Phylogenomics',
+  description = 'Linda Mansour — post-bacc researcher at UIC building Python pipelines for plant phylogenomics. MissMap, PhyLabeler, and more.',
+  active = 'Home',
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://zawmbi.github.io').toString();
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1c1814" />
+    <link rel="canonical" href={canonical} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>{title}</title>
+  </head>
+  <body>
+    <TerminalNav active={active} />
+    <main>
+      <slot />
+    </main>
+    <TerminalFooter />
+  </body>
+</html>

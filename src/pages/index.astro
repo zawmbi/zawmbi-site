@@ -1,0 +1,400 @@
+---
+import Base from '../layouts/Base.astro';
+import DNAColumn from '../components/DNAColumn.astro';
+import PixelMatrix from '../components/PixelMatrix.astro';
+
+const sideProjects = [
+  { title: 'Wildfire Analysis', tags: 'Python · R · ML', date: 'Dec 2024', accent: 'var(--amber)', href: '/projects/#wildfire' },
+  { title: 'PicToBeat', tags: 'Python · Spotify API', date: 'Sept 2026', accent: 'var(--moss-bright)', href: '/projects/#pictobeat' },
+  { title: 'ECG Classification', tags: 'MATLAB · GUI', date: 'Nov 2024', accent: 'var(--cream-soft)', href: '/projects/#ecg' },
+];
+
+const featuredTags = ['Python', 'NCBI', 'Phylo', 'Data-Viz'];
+
+const news = [
+  {
+    date: '2025.04.25',
+    body: `Approaching the end of post-bacc at UIC. PhyLabeler is functional. Building monitr.xyz · pitching · two iOS apps under App Store review. Still TA-ing BIOS 120.`,
+    highlights: ['PhyLabeler', 'monitr.xyz'],
+  },
+  {
+    date: '2025.10.12',
+    body: `Started a Recent News log. Shipping PicToBeat + Animal Restaurant Tracker alongside MissMap. Applying to PhD programs · Fall 2026. Yay!`,
+    highlights: ['PicToBeat', 'Animal Restaurant Tracker'],
+  },
+];
+
+function highlight(body: string, terms: string[]) {
+  let out = body;
+  for (const t of terms) {
+    const re = new RegExp(`(${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g');
+    out = out.replace(re, '<span class="amber">$1</span>');
+  }
+  return out;
+}
+---
+
+<Base active="Home" title="Linda Mansour — Portfolio">
+  {/* HERO */}
+  <section class="hero rule-bottom">
+    <div class="hero__copy">
+      <div class="prompt">$ whoami</div>
+      <h1 class="hero__title">
+        Linda<br />
+        <span class="italic moss-bright">Mansour.</span>
+      </h1>
+      <div class="hero__bullets">
+        <p><span class="faded">// </span>Bioinformatics · plant transcriptomics</p>
+        <p><span class="faded">// </span>Building <span class="amber">MissMap</span> at UIC — mapping</p>
+        <p><span class="faded">// </span>sequence-coverage gaps across plant lineages</p>
+        <p><span class="faded">// </span>TA · BIOS 120 · seeking PhD · Fall 2026</p>
+      </div>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="/projects/">View Projects →</a>
+        <a class="btn" href="/research/">Read Research</a>
+        <a class="btn" href="/contact/">Contact</a>
+      </div>
+    </div>
+
+    <div class="hero__dna" aria-hidden="true">
+      <DNAColumn height={440} width={60} opacity={0.85} />
+    </div>
+
+    <div class="hero__card">
+      <div class="terminal-card">
+        <div class="terminal-card__head">
+          <span>~ specimen.json</span>
+          <span class="amber">● Live</span>
+        </div>
+        <div class="specimen">
+          <div><span class="faded">"role":</span> <span class="amber">"Post-bacc + Researcher"</span>,</div>
+          <div><span class="faded">"lab":</span> <span class="amber">"Walker · UIC"</span>,</div>
+          <div>
+            <span class="faded">"tools":</span>
+            [<span class="moss-bright">"Python","R","NCBI"</span>],
+          </div>
+          <div><span class="faded">"focus":</span> <span class="amber">"Phylogenomics"</span>,</div>
+          <div><span class="faded">"current":</span> <span class="amber">"MissMap.py"</span>,</div>
+          <div><span class="faded">"applying":</span> <span class="amber">"PhD 2026"</span></div>
+        </div>
+      </div>
+      <div class="hero__commit">
+        <span class="moss">›</span> Last commit · <span class="cream">2 days ago</span> · MissMap/synonyms.py
+      </div>
+    </div>
+  </section>
+
+  {/* FEATURED */}
+  <section class="featured">
+    <div class="featured__head">
+      <div>
+        <div class="prompt">$ ls -la ./featured</div>
+        <h2 class="section-title">Selected Work</h2>
+      </div>
+      <a class="featured__count" href="/projects/">[19 entries] →</a>
+    </div>
+
+    <div class="featured__grid">
+      <article class="featured__big terminal-card">
+        <div class="terminal-card__head">
+          <span>missmap.py · Python</span>
+          <span class="moss">● Ongoing</span>
+        </div>
+        <div class="featured__big-body">
+          <div>
+            <h3 class="featured__big-title">MissMap</h3>
+            <p class="featured__big-desc">
+              Python pipeline querying NCBI metadata, resolving taxon synonyms, and mapping sequence type coverage (rbcL, matK, ITS) across plant lineages.
+            </p>
+            <div class="tag-row">
+              {featuredTags.map((t) => <span class="tag">{t}</span>)}
+            </div>
+            <div class="featured__big-cta">
+              <a href="/projects/#missmap" class="amber">→ Case Study</a>
+              <a href="https://github.com/zawmbi" target="_blank" rel="noopener noreferrer" class="faded">→ GitHub</a>
+            </div>
+          </div>
+          <div class="featured__matrix">
+            <PixelMatrix cols={16} rows={16} seed={1} accent="var(--moss-bright)" />
+          </div>
+        </div>
+      </article>
+
+      <div class="featured__stack">
+        {sideProjects.map((p) => (
+          <a class="featured__small" href={p.href}>
+            <div class="featured__small-meta">
+              <span>{p.tags}</span>
+              <span>{p.date}</span>
+            </div>
+            <h4 class="featured__small-title" style={`color:${p.accent}`}>{p.title}</h4>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* NEWS */}
+  <section class="news rule-top">
+    <div class="news__head">
+      <div class="prompt">$ tail -f news.log</div>
+      <div class="news__title">Recent News</div>
+    </div>
+    <div class="news__list">
+      {news.map((n, i) => (
+        <div class:list={['news__item', { 'news__item--first': i === 0 }]}>
+          <div class="news__date">{n.date}</div>
+          <p class="news__body" set:html={highlight(n.body, n.highlights)}></p>
+        </div>
+      ))}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .amber { color: var(--amber); }
+  .moss { color: var(--moss); }
+  .moss-bright { color: var(--moss-bright); }
+  .faded { color: var(--faded); }
+  .cream { color: var(--cream); }
+  .italic { font-style: italic; }
+
+  /* HERO */
+  .hero {
+    padding: 80px var(--page-pad-x) 40px;
+    display: grid;
+    grid-template-columns: 1fr 100px 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(60px, 9vw, 120px);
+    margin: 8px 0 0;
+    font-weight: 300;
+    line-height: 0.95;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+  }
+
+  .hero__bullets {
+    font-size: 13px;
+    color: var(--cream-soft);
+    margin-top: 24px;
+    max-width: 480px;
+    line-height: 1.7;
+  }
+  .hero__bullets p { margin: 0; }
+
+  .hero__cta {
+    margin-top: 28px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .hero__dna {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero__card {
+    padding-top: 60px;
+  }
+
+  .specimen {
+    padding: 18px;
+    font-size: 12px;
+    line-height: 1.9;
+    font-family: var(--font-mono);
+  }
+
+  .hero__commit {
+    margin-top: 20px;
+    font-size: 11px;
+    color: var(--faded);
+  }
+
+  /* FEATURED */
+  .featured {
+    padding: 60px var(--page-pad-x) 40px;
+  }
+
+  .featured__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 36px;
+    flex-wrap: wrap;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 56px);
+    margin: 8px 0 0;
+    font-weight: 300;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+  }
+
+  .featured__count {
+    font-size: 11px;
+    color: var(--faded);
+  }
+
+  .featured__grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 24px;
+  }
+
+  .featured__big-body {
+    padding: 32px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .featured__big-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 44px);
+    margin: 0;
+    font-weight: 300;
+    color: var(--moss-bright);
+    letter-spacing: -0.01em;
+  }
+
+  .featured__big-desc {
+    font-size: 13px;
+    color: var(--cream-soft);
+    line-height: 1.6;
+    margin-top: 14px;
+  }
+
+  .tag-row {
+    margin-top: 18px;
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .featured__big-cta {
+    margin-top: 28px;
+    display: flex;
+    gap: 16px;
+    font-size: 12px;
+  }
+
+  .featured__matrix {
+    width: 100%;
+  }
+
+  .featured__stack {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .featured__small {
+    border: 1px solid var(--rule);
+    background: var(--bg-alt);
+    padding: 16px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+  }
+  .featured__small:hover {
+    border-color: var(--moss);
+    transform: translateY(-2px);
+  }
+
+  .featured__small-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--faded);
+  }
+
+  .featured__small-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    margin: 8px 0 0;
+    font-weight: 400;
+  }
+
+  /* NEWS */
+  .news {
+    padding: 60px var(--page-pad-x) 100px;
+    background: var(--bg-alt);
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 60px;
+  }
+
+  .news__title {
+    font-family: var(--font-display);
+    font-size: 36px;
+    font-weight: 300;
+    margin-top: 8px;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+  }
+
+  .news__item {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    padding: 20px 0;
+  }
+  .news__item--first {
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .news__date {
+    font-size: 11px;
+    color: var(--moss);
+  }
+
+  .news__body {
+    font-size: 14px;
+    line-height: 1.7;
+    margin: 0;
+    color: var(--cream-soft);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 1100px) {
+    .hero {
+      grid-template-columns: 1fr 60px 1fr;
+      gap: 24px;
+      padding: 60px var(--page-pad-x) 32px;
+    }
+    .featured__big-body {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .hero__dna { display: none; }
+    .hero__card { padding-top: 0; }
+
+    .featured__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .news {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 48px var(--page-pad-x) 64px;
+    }
+    .news__item {
+      grid-template-columns: 90px 1fr;
+      gap: 16px;
+    }
+  }
+</style>
