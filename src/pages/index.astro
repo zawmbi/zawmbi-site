@@ -2,6 +2,9 @@
 import Base from '../layouts/Base.astro';
 import DNAColumn from '../components/DNAColumn.astro';
 import PixelMatrix from '../components/PixelMatrix.astro';
+import { fetchLatestCommit, relativeTime } from '../lib/github';
+
+const latestCommit = await fetchLatestCommit();
 
 const sideProjects = [
   { title: 'Wildfire Analysis', tags: 'Python · R · ML', date: 'Dec 2024', accent: 'var(--amber)', href: '/projects/#wildfire' },
@@ -78,9 +81,15 @@ function highlight(body: string, terms: string[]) {
           <div><span class="faded">"applying":</span> <span class="amber">"PhD 2026"</span></div>
         </div>
       </div>
-      <div class="hero__commit">
-        <span class="moss">›</span> Last commit · <span class="cream">2 days ago</span> · MissMap/synonyms.py
-      </div>
+      {latestCommit ? (
+        <a class="hero__commit" href={latestCommit.url} target="_blank" rel="noopener noreferrer" title={latestCommit.message}>
+          <span class="moss">›</span> Last commit · <span class="cream">{relativeTime(latestCommit.date)}</span> · {latestCommit.repo} · <span class="faded">{latestCommit.short}</span>
+        </a>
+      ) : (
+        <div class="hero__commit">
+          <span class="moss">›</span> Last commit · <span class="faded">offline</span>
+        </div>
+      )}
     </div>
   </section>
 
@@ -214,6 +223,11 @@ function highlight(body: string, terms: string[]) {
     margin-top: 20px;
     font-size: 11px;
     color: var(--faded);
+    display: block;
+    text-decoration: none;
+  }
+  a.hero__commit:hover {
+    color: var(--cream-soft);
   }
 
   /* FEATURED */

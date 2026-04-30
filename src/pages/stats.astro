@@ -1,0 +1,594 @@
+---
+import Base from '../layouts/Base.astro';
+import {
+  fetchRepos,
+  fetchActivityHeatmap,
+  fetchLanguageStats,
+  fetchRecentActivity,
+  relativeTime,
+} from '../lib/github';
+
+const [repos, heatmap, languages, recent] = await Promise.all([
+  fetchRepos(),
+  fetchActivityHeatmap(84),
+  fetchLanguageStats(8),
+  fetchRecentActivity(8),
+]);
+
+const totalRepos = repos.length;
+const totalStars = repos.reduce((s, r) => s + r.stargazers_count, 0);
+const last30 = heatmap.slice(-30).reduce((s, d) => s + d.count, 0);
+const last90 = heatmap.reduce((s, d) => s + d.count, 0);
+const activeDays = heatmap.filter((d) => d.count > 0).length;
+const maxDay = heatmap.reduce((m, d) => Math.max(m, d.count), 0);
+
+// Build a 12-week × 7-day grid for the heatmap (oldest left, newest right).
+// `heatmap` is 84 contiguous days oldest → newest.
+// We want columns = weeks. Each column is 7 days starting Sunday.
+// Pad to align days-of-week.
+const firstDate = heatmap[0] ? new Date(heatmap[0].date) : new Date();
+const startWeekday = firstDate.getUTCDay(); // 0=Sun
+const padded: Array<{ date: string; count: number } | null> = [
+  ...Array.from({ length: startWeekday }).map(() => null),
+  ...heatmap,
+];
+const weekCount = Math.ceil(padded.length / 7);
+const grid: Array<Array<{ date: string; count: number } | null>> = Array.from({ length: weekCount }, (_, w) =>
+  Array.from({ length: 7 }, (_, d) => padded[w * 7 + d] ?? null),
+);
+
+// Top 5 most-recently-pushed repos for the table
+const recentRepos = repos.slice(0, 8);
+
+// Language palette (cycle through accents)
+const langColors = [
+  'var(--moss-bright)',
+  'var(--amber)',
+  'var(--moss)',
+  'var(--cream-soft)',
+  'var(--cream)',
+  '#9aa074',
+  '#d6b58a',
+  '#a89878',
+];
+
+const langs = languages.slice(0, 8);
+
+// Heatmap cell color based on intensity
+function cellColor(count: number): string {
+  if (count === 0) return 'var(--rule)';
+  const ratio = maxDay > 0 ? count / maxDay : 0;
+  if (ratio < 0.25) return 'var(--moss)';
+  if (ratio < 0.5) return '#a59868';
+  if (ratio < 0.75) return 'var(--moss-bright)';
+  return 'var(--amber)';
+}
+
+const dayLabels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+---
+
+<Base active="Stats" title="Stats — Linda Mansour">
+  <section class="page-head rule-bottom">
+    <div class="page-head__top">
+      <div>
+        <div class="prompt">$ stats --json | jq</div>
+        <h1 class="page-head__title">
+          <span class="italic moss-bright">Statistics.</span>
+        </h1>
+      </div>
+      <div class="generated">
+        <span class="faded">// generated at build</span>
+        <span class="amber">●</span>
+      </div>
+    </div>
+    <p class="page-head__lede">
+      Live signal from <a class="amber" href="https://github.com/zawmbi" target="_blank" rel="noopener noreferrer">github.com/zawmbi</a>. Refreshed each deploy. Public events only.
+    </p>
+  </section>
+
+  {/* Counters */}
+  <section class="counters">
+    <div class="counter terminal-card">
+      <div class="terminal-card__head"><span>// repos</span><span class="moss">●</span></div>
+      <div class="counter__body">
+        <div class="counter__num">{totalRepos}</div>
+        <div class="counter__label">public · non-fork</div>
+      </div>
+    </div>
+    <div class="counter terminal-card">
+      <div class="terminal-card__head"><span>// commits · 30d</span><span class="amber">●</span></div>
+      <div class="counter__body">
+        <div class="counter__num" style="color: var(--amber)">{last30}</div>
+        <div class="counter__label">push events</div>
+      </div>
+    </div>
+    <div class="counter terminal-card">
+      <div class="terminal-card__head"><span>// commits · 90d</span><span class="moss-bright">●</span></div>
+      <div class="counter__body">
+        <div class="counter__num" style="color: var(--moss-bright)">{last90}</div>
+        <div class="counter__label">push events</div>
+      </div>
+    </div>
+    <div class="counter terminal-card">
+      <div class="terminal-card__head"><span>// active</span><span class="cream">●</span></div>
+      <div class="counter__body">
+        <div class="counter__num">{activeDays}<span class="counter__div">/</span><span class="counter__total">84</span></div>
+        <div class="counter__label">days · last 12w</div>
+      </div>
+    </div>
+    <div class="counter terminal-card">
+      <div class="terminal-card__head"><span>// stars</span><span class="cream-soft">●</span></div>
+      <div class="counter__body">
+        <div class="counter__num">{totalStars}</div>
+        <div class="counter__label">across all repos</div>
+      </div>
+    </div>
+  </section>
+
+  {/* Heatmap */}
+  <section class="heatmap">
+    <div class="heatmap__head">
+      <div class="prompt">$ git log --since=12.weeks --pretty=format:%ad</div>
+      <h2 class="section-title">Commit Activity</h2>
+      <div class="heatmap__legend">
+        <span class="faded">less</span>
+        <span class="legend-cell" style="background: var(--rule)"></span>
+        <span class="legend-cell" style="background: var(--moss)"></span>
+        <span class="legend-cell" style="background: #a59868"></span>
+        <span class="legend-cell" style="background: var(--moss-bright)"></span>
+        <span class="legend-cell" style="background: var(--amber)"></span>
+        <span class="faded">more</span>
+      </div>
+    </div>
+
+    <div class="heatmap__grid">
+      <div class="heatmap__days">
+        {dayLabels.map((d, i) => (
+          <div class="heatmap__day-label" style={`grid-row: ${i + 1};`}>{i % 2 === 1 ? d : ''}</div>
+        ))}
+      </div>
+      <div class="heatmap__cells" style={`grid-template-columns: repeat(${weekCount}, 1fr);`}>
+        {grid.map((week) => (
+          <div class="heatmap__week">
+            {week.map((cell) => (
+              cell ? (
+                <div
+                  class="heatmap__cell"
+                  style={`background:${cellColor(cell.count)}`}
+                  title={`${cell.date} · ${cell.count} commit${cell.count === 1 ? '' : 's'}`}
+                ></div>
+              ) : (
+                <div class="heatmap__cell heatmap__cell--empty"></div>
+              )
+            ))}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* Languages */}
+  <section class="langs rule-top">
+    <div class="langs__head">
+      <div class="prompt">$ wc -l ./*/* | by-language</div>
+      <h2 class="section-title">Languages</h2>
+      <div class="faded langs__sub">// bytes across {Math.min(repos.length, 8)} most-recent repos</div>
+    </div>
+
+    {langs.length === 0 ? (
+      <div class="empty">// no language data available</div>
+    ) : (
+      <div class="langs__list">
+        {langs.map((l, i) => (
+          <div class="lang">
+            <div class="lang__row">
+              <span class="lang__name">{l.name}</span>
+              <span class="lang__pct">{l.pct.toFixed(1)}%</span>
+            </div>
+            <div class="lang__bar-track">
+              <div class="lang__bar" style={`width:${Math.max(0.5, l.pct)}%; background:${langColors[i % langColors.length]};`}></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </section>
+
+  {/* Recent repos table */}
+  <section class="repos rule-top">
+    <div class="repos__head">
+      <div class="prompt">$ ls -t ~/code | head -8</div>
+      <h2 class="section-title">Recently Pushed</h2>
+    </div>
+
+    {recentRepos.length === 0 ? (
+      <div class="empty">// no repo data available</div>
+    ) : (
+      <div class="repos__table">
+        <div class="repos__row repos__row--head">
+          <span>repo</span>
+          <span>language</span>
+          <span>★</span>
+          <span>pushed</span>
+        </div>
+        {recentRepos.map((r, i) => (
+          <a class:list={['repos__row', { 'repos__row--alt': i % 2 === 1 }]} href={r.html_url} target="_blank" rel="noopener noreferrer">
+            <span class="repos__name">
+              <span class="repos__repo">{r.name}</span>
+              {r.description && <span class="repos__desc">{r.description}</span>}
+            </span>
+            <span class="repos__lang">{r.language ?? '—'}</span>
+            <span class="repos__stars">{r.stargazers_count}</span>
+            <span class="repos__date">{relativeTime(r.pushed_at)}</span>
+          </a>
+        ))}
+      </div>
+    )}
+  </section>
+
+  {/* Recent activity log */}
+  <section class="activity rule-top">
+    <div class="activity__head">
+      <div class="prompt">$ tail -n 8 ~/.gh/activity.log</div>
+      <h2 class="section-title">Recent Activity</h2>
+    </div>
+
+    {recent.length === 0 ? (
+      <div class="empty">// no recent public events</div>
+    ) : (
+      <div class="activity__list">
+        {recent.map((ev) => (
+          <div class="activity__item">
+            <span class="activity__date">{relativeTime(ev.date)}</span>
+            <span class="activity__type">{ev.type.replace(/Event$/, '').toLowerCase()}</span>
+            <span class="activity__repo">{ev.repo}</span>
+            <span class="activity__detail">{ev.detail}</span>
+          </div>
+        ))}
+      </div>
+    )}
+  </section>
+</Base>
+
+<style>
+  .moss-bright { color: var(--moss-bright); }
+  .moss { color: var(--moss); }
+  .amber { color: var(--amber); }
+  .cream { color: var(--cream); }
+  .cream-soft { color: var(--cream-soft); }
+  .faded { color: var(--faded); }
+  .italic { font-style: italic; }
+
+  .page-head {
+    padding: 60px var(--page-pad-x) 32px;
+  }
+
+  .page-head__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .page-head__title {
+    font-family: var(--font-display);
+    font-size: clamp(64px, 9vw, 120px);
+    margin: 8px 0 0;
+    font-weight: 300;
+    line-height: 0.9;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+  }
+
+  .generated {
+    font-size: 11px;
+    color: var(--faded);
+    letter-spacing: 0.04em;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .page-head__lede {
+    font-size: 14px;
+    color: var(--cream-soft);
+    line-height: 1.7;
+    max-width: 600px;
+    margin-top: 22px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3.5vw, 40px);
+    margin: 8px 0 0;
+    font-weight: 300;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+  }
+
+  /* Counters */
+  .counters {
+    padding: 40px var(--page-pad-x) 24px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+
+  .counter__body {
+    padding: 18px 16px;
+  }
+
+  .counter__num {
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+  }
+
+  .counter__div { color: var(--rule); margin: 0 4px; font-size: 28px; }
+  .counter__total { color: var(--faded); font-size: 24px; }
+
+  .counter__label {
+    margin-top: 8px;
+    font-size: 10px;
+    color: var(--faded);
+    letter-spacing: 0.14em;
+  }
+
+  /* Heatmap */
+  .heatmap {
+    padding: 32px var(--page-pad-x);
+  }
+
+  .heatmap__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .heatmap__legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+  }
+
+  .legend-cell {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    border: 1px solid var(--bg);
+  }
+
+  .heatmap__grid {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 6px;
+    border: 1px solid var(--rule);
+    background: var(--bg-alt);
+    padding: 14px;
+    overflow-x: auto;
+  }
+
+  .heatmap__days {
+    display: grid;
+    grid-template-rows: repeat(7, 1fr);
+    gap: 3px;
+    font-size: 9px;
+    color: var(--faded);
+    align-items: center;
+  }
+
+  .heatmap__day-label {
+    height: 14px;
+    line-height: 14px;
+  }
+
+  .heatmap__cells {
+    display: grid;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .heatmap__week {
+    display: grid;
+    grid-template-rows: repeat(7, 14px);
+    gap: 3px;
+  }
+
+  .heatmap__cell {
+    width: 100%;
+    height: 14px;
+    border-radius: 1px;
+    transition: outline-color 0.15s ease;
+    outline: 1px solid transparent;
+  }
+  .heatmap__cell:hover {
+    outline-color: var(--cream);
+  }
+  .heatmap__cell--empty {
+    background: transparent !important;
+  }
+
+  /* Languages */
+  .langs {
+    padding: 48px var(--page-pad-x) 32px;
+  }
+
+  .langs__head {
+    margin-bottom: 24px;
+  }
+
+  .langs__sub {
+    font-size: 11px;
+    margin-top: 8px;
+  }
+
+  .langs__list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 32px;
+  }
+
+  .lang__row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 6px;
+  }
+  .lang__name { color: var(--cream); }
+  .lang__pct { color: var(--faded); font-size: 11px; }
+
+  .lang__bar-track {
+    height: 8px;
+    background: var(--bg-alt);
+    border: 1px solid var(--rule);
+    overflow: hidden;
+  }
+  .lang__bar {
+    height: 100%;
+    transition: width 0.5s ease;
+  }
+
+  /* Repos table */
+  .repos {
+    padding: 48px var(--page-pad-x) 32px;
+  }
+
+  .repos__head {
+    margin-bottom: 24px;
+  }
+
+  .repos__table {
+    border: 1px solid var(--rule);
+  }
+
+  .repos__row {
+    display: grid;
+    grid-template-columns: 1fr 120px 60px 120px;
+    align-items: center;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 13px;
+    gap: 12px;
+    color: var(--cream);
+    transition: background 0.15s ease;
+  }
+  .repos__row:last-child { border-bottom: none; }
+  .repos__row--alt { background: var(--bg-alt); }
+  .repos__row:hover {
+    background: var(--surface);
+  }
+
+  .repos__row--head {
+    font-size: 10px;
+    color: var(--faded);
+    letter-spacing: 0.14em;
+    background: var(--bg);
+    pointer-events: none;
+    text-transform: lowercase;
+  }
+
+  .repos__name {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+  .repos__repo {
+    color: var(--moss-bright);
+    font-size: 13px;
+  }
+  .repos__desc {
+    color: var(--faded);
+    font-size: 11px;
+    line-height: 1.5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .repos__lang { color: var(--moss); font-size: 11px; }
+  .repos__stars { color: var(--amber); font-size: 12px; }
+  .repos__date { color: var(--faded); font-size: 11px; text-align: right; }
+
+  /* Activity log */
+  .activity {
+    padding: 48px var(--page-pad-x) 100px;
+  }
+  .activity__head {
+    margin-bottom: 24px;
+  }
+  .activity__list {
+    border-left: 2px solid var(--rule);
+    padding-left: 16px;
+  }
+  .activity__item {
+    display: grid;
+    grid-template-columns: 100px 100px 140px 1fr;
+    gap: 14px;
+    padding: 8px 0;
+    font-size: 12px;
+    border-bottom: 1px dashed var(--rule);
+  }
+  .activity__item:last-child { border-bottom: none; }
+  .activity__date { color: var(--moss); }
+  .activity__type { color: var(--amber); }
+  .activity__repo { color: var(--cream); }
+  .activity__detail {
+    color: var(--cream-soft);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .empty {
+    border: 1px dashed var(--rule);
+    background: var(--bg-alt);
+    padding: 24px;
+    color: var(--faded);
+    font-size: 13px;
+    text-align: center;
+  }
+
+  /* Responsive */
+  @media (max-width: 1100px) {
+    .counters {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .repos__row {
+      grid-template-columns: 1fr 90px 50px 100px;
+    }
+  }
+
+  @media (max-width: 800px) {
+    .counters {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .langs__list {
+      grid-template-columns: 1fr;
+    }
+    .repos__row {
+      grid-template-columns: 1fr 70px 80px;
+    }
+    .repos__lang { display: none; }
+    .activity__item {
+      grid-template-columns: 90px 1fr;
+      gap: 8px;
+    }
+    .activity__type, .activity__repo { display: none; }
+  }
+
+  @media (max-width: 500px) {
+    .counters {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
