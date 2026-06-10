@@ -1,414 +1,364 @@
 ---
 import Base from '../layouts/Base.astro';
-import DNAColumn from '../components/DNAColumn.astro';
-import PixelMatrix from '../components/PixelMatrix.astro';
-import { fetchLatestCommit, relativeTime } from '../lib/github';
+import Mascot from '../components/Mascot.astro';
+import ImageSlot from '../components/ImageSlot.astro';
 
-const latestCommit = await fetchLatestCommit();
-
-const sideProjects = [
-  { title: 'Wildfire Analysis', tags: 'Python · R · ML', date: 'Dec 2024', accent: 'var(--amber)', href: '/projects/#wildfire' },
-  { title: 'PicToBeat', tags: 'Python · Spotify API', date: 'Sept 2026', accent: 'var(--moss-bright)', href: '/projects/#pictobeat' },
-  { title: 'ECG Classification', tags: 'MATLAB · GUI', date: 'Nov 2024', accent: 'var(--cream-soft)', href: '/projects/#ecg' },
+const navLinks = [
+  ['Apps', '#apps'],
+  ['Hire', '#hire'],
+  ['Studio', '#studio'],
 ];
 
-const featuredTags = ['Python', 'NCBI', 'Phylo', 'Data-Viz'];
-
-const news = [
+const apps = [
   {
-    date: '2025.04.25',
-    body: `Approaching the end of post-bacc at UIC. PhyLabeler is functional. Building monitr.xyz · pitching · two iOS apps under App Store review. Still TA-ing BIOS 120.`,
-    highlights: ['PhyLabeler', 'monitr.xyz', 'Syllabus to Calendar', 'Attendance Tracker'],
+    id: 'monitr',
+    name: 'monitr',
+    icon: 'mono',
+    tagline: 'Keep tabs on what matters.',
+    desc: 'A clean dashboard for watching your sites and services — uptime, status, and alerts that look the same on your laptop and your phone.',
+    platforms: ['Web', 'Desktop', 'Mobile'],
+    status: 'Live',
+    href: 'https://monitr.xyz',
+    cta: 'Open monitr',
+    shot: 'wide',
   },
   {
-    date: '2025.10.12',
-    body: `Started a Recent News log. Shipping PicToBeat webapp + building Animal Restaurant Tracker on iOS alongside MissMap.`,
-    highlights: ['PicToBeat', 'Animal Restaurant Tracker', 'MissMap'],
+    id: 'attendize',
+    name: 'Attendize',
+    icon: 'check',
+    tagline: 'Attendance, minus the spreadsheet.',
+    desc: 'Track your own attendance — classes, shifts, the gym, wherever you need to show up — in a couple of taps, and actually see how your streak is going.',
+    platforms: ['iOS'],
+    status: 'App Store',
+    href: '#',
+    cta: 'View on the App Store',
+    shot: 'phone',
+  },
+  {
+    id: 'syllabus',
+    name: 'Syllabus to Calendar',
+    icon: 'cal',
+    tagline: 'Your whole semester, in one scan.',
+    desc: 'Point it at a syllabus and it drops every due date, exam, and reading straight into your calendar. No more typing dates at midnight.',
+    platforms: ['iOS'],
+    status: 'App Store',
+    href: '#',
+    cta: 'View on the App Store',
+    shot: 'phone',
   },
 ];
 
-function highlight(body: string, terms: string[]) {
-  let out = body;
-  for (const t of terms) {
-    const re = new RegExp(`(${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g');
-    out = out.replace(re, '<span class="amber">$1</span>');
-  }
-  return out;
-}
+const services = [
+  ['Web apps, end to end', 'Design, build, deploy. Dashboards, internal tools, and products that need to work on day one — like monitr.'],
+  ['iOS apps', 'Native apps shipped all the way through App Store review. Two live so far; yours can be the third.'],
+  ['MVPs on a deadline', 'An idea turned into a real, testable product in weeks — scoped small on purpose so it actually ships.'],
+];
+
+const steps = [
+  ['Scope it small', 'We find the sharpest version of v1 — the thing worth building first.'],
+  ['Build in slices', 'Working software every week, not a big reveal at the end.'],
+  ['Ship, then sharpen', 'Launch early, watch real usage, fix what matters.'],
+];
+
+const tools = ['Swift & SwiftUI', 'React', 'TypeScript', 'Node.js', 'Design in Figma', 'App Store shipping'];
+
+const principles = [
+  ['Small on purpose', 'No bloat, no 40-tab settings screen. One job, done cleanly.'],
+  ['Ships, then sharpens', 'Real apps in real hands beats a perfect roadmap on a whiteboard.'],
+  ['Built for your actual life', 'Made for people who are busy and broke on time.'],
+];
+
+const marqueeItems = ['Indie software studio', 'Open for freelance', 'iOS + web', 'Three apps shipped', 'Built start to finish', 'Small apps, serious craft'];
+const marqueeRun = [...marqueeItems, ...marqueeItems];
 ---
 
-<Base active="Home" title="Linda Mansour — Portfolio">
-  {/* HERO */}
-  <section class="hero rule-bottom">
-    <div class="hero__copy">
-      <div class="prompt">$ whoami</div>
-      <h1 class="hero__title">
-        Linda<br />
-        <span class="italic moss-bright">Mansour.</span>
-      </h1>
-      <div class="hero__bullets">
-        <p><span class="faded">// </span>Bioinformatics · plant transcriptomics</p>
-        <p><span class="faded">// </span>Building <span class="amber">MissMap</span> at UIC — mapping</p>
-        <p><span class="faded">// </span>sequence-coverage gaps across plant lineages</p>
-        <p><span class="faded">// </span>TA · BIOS 120 · seeking PhD · Fall 2026</p>
-      </div>
-      <div class="hero__cta">
-        <a class="btn btn--primary" href="/projects/">View Projects →</a>
-        <a class="btn" href="/research/">Read Research</a>
-        <a class="btn" href="/contact/">Contact</a>
-      </div>
-    </div>
+<Base>
+  {/* ---------------- NAV ---------------- */}
+  <header class="nav">
+    <a class="brand" href="#top">
+      <span class="brand-mark"><Mascot kind="head" width={38} /></span>
+      <span class="wordmark">Zawmbi</span>
+      <span class="wordmark wordmark-sub2">Productions</span>
+    </a>
+    <nav class="nav-links">
+      {navLinks.map(([label, href]) => <a href={href}>{label}</a>)}
+    </nav>
+    <a class="btn btn-solid nav-cta" href="#hire">Start a project</a>
+  </header>
 
-    <div class="hero__dna" aria-hidden="true">
-      <DNAColumn height={440} width={60} opacity={0.85} />
-    </div>
-
-    <div class="hero__card">
-      <div class="terminal-card">
-        <div class="terminal-card__head">
-          <span>~ specimen.json</span>
-          <span class="amber">● Live</span>
+  {/* ---------------- HERO ---------------- */}
+  <section class="hero" id="top">
+    <div class="hero-grid wrap">
+      <div class="hero-copy">
+        <div class="eyebrow">Indie studio + freelance · est 2026</div>
+        <h1 class="hero-title" style="font-family: Inconsolata, ui-monospace, monospace;">Small apps.<br />Serious craft.</h1>
+        <p class="hero-sub">
+          Zawmbi Productions is my one-person studio: I design, build, and ship
+          software start to finish. Three apps live, more in the lab — and the
+          same care goes into client work.
+        </p>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="#hire">Work with me</a>
+          <a class="btn btn-ghost" href="#apps">See the apps →</a>
         </div>
-        <div class="specimen">
-          <div><span class="faded">"role":</span> <span class="amber">"Post-bacc + Researcher"</span>,</div>
-          <div><span class="faded">"lab":</span> <span class="amber">"Walker · UIC"</span>,</div>
-          <div>
-            <span class="faded">"tools":</span>
-            [<span class="moss-bright">"Python","R","NCBI"</span>],
-          </div>
-          <div><span class="faded">"focus":</span> <span class="amber">"Phylogenomics"</span>,</div>
-          <div><span class="faded">"current":</span> <span class="amber">"MissMap.py"</span>,</div>
-          <div><span class="faded">"applying":</span> <span class="amber">"PhD 2026"</span></div>
+        <div class="hero-ticker">
+          <span class="dot"></span> <span class="tick-label">Open for freelance</span>
+          <span class="tick-sep">·</span> shipping <strong>monitr</strong>, <strong>Attendize</strong> &amp; <strong>Syllabus&nbsp;to&nbsp;Calendar</strong>
         </div>
       </div>
-      {latestCommit ? (
-        <a class="hero__commit" href={latestCommit.url} target="_blank" rel="noopener noreferrer" title={latestCommit.message}>
-          <span class="moss">›</span> Last commit · <span class="cream">{relativeTime(latestCommit.date)}</span> · {latestCommit.repo} · <span class="faded">{latestCommit.short}</span>
-        </a>
-      ) : (
-        <div class="hero__commit">
-          <span class="moss">›</span> Last commit · <span class="faded">offline</span>
+      <aside class="hero-card pxc">
+        <ImageSlot
+          placeholder="Drop a photo of you"
+          style="width: 100%; aspect-ratio: 4 / 3;"
+        />
+        <div>
+          <div class="pc-name">Zawmbi</div>
+          <div class="pc-role">Developer · designer · founder, Zawmbi Productions</div>
         </div>
-      )}
+        <div class="pc-list">
+          <div class="pc-row"><span class="pc-k">Email</span><a class="pc-v" href="mailto:support@zawmbi.com">support@zawmbi.com</a></div>
+          <div class="pc-row"><span class="pc-k">GitHub</span><a class="pc-v" href="https://github.com/zawmbi" target="_blank" rel="noreferrer">github.com/zawmbi</a></div>
+          <div class="pc-row"><span class="pc-k">LinkedIn</span><a class="pc-v" href="https://linkedin.com/in/lindamansourr" target="_blank" rel="noreferrer">linkedin.com/in/lindamansourr</a></div>
+        </div>
+        <div class="pc-avail"><span class="dot"></span> Open for freelance &amp; full-time</div>
+      </aside>
     </div>
   </section>
 
-  {/* FEATURED */}
-  <section class="featured">
-    <div class="featured__head">
-      <div>
-        <div class="prompt">$ ls -la ./featured</div>
-        <h2 class="section-title">Selected Work</h2>
-      </div>
-      <a class="featured__count" href="/projects/">[19 entries] →</a>
+  {/* ---------------- MARQUEE ---------------- */}
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      {marqueeRun.map((s) => <span>{s}</span>)}
     </div>
+  </div>
 
-    <div class="featured__grid">
-      <article class="featured__big terminal-card">
-        <div class="terminal-card__head">
-          <span>missmap.py · Python</span>
-          <span class="moss">● Ongoing</span>
-        </div>
-        <div class="featured__big-body">
-          <div>
-            <h3 class="featured__big-title">MissMap</h3>
-            <p class="featured__big-desc">
-              Python pipeline querying NCBI metadata, resolving taxon synonyms, and mapping sequence type coverage (rbcL, matK, ITS) across plant lineages.
-            </p>
-            <div class="tag-row">
-              {featuredTags.map((t) => <span class="tag">{t}</span>)}
+  {/* ---------------- APPS ---------------- */}
+  <section class="section" id="apps">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">The apps</div>
+        <h2 class="sec-title" style="font-family: Onest, system-ui, sans-serif;">Shipped &amp; alive</h2>
+        <p class="sec-lead">Each one solves a single annoying thing, properly. Proof that things here get finished.</p>
+      </div>
+      <div class="approws">
+        {apps.map((app, i) => (
+          <article class:list={['approw', 'pxc', { 'approw-flip': i % 2 === 1 }]}>
+            <div class="approw-media">
+              <div class:list={['shot', `shot-${app.shot}`]}>
+                <ImageSlot
+                  placeholder={`Drop a ${app.name} screenshot`}
+                  style="width: 100%; height: 100%;"
+                />
+              </div>
             </div>
-            <div class="featured__big-cta">
-              <a href="/projects/#missmap" class="amber">→ Case Study</a>
-              <a href="https://github.com/zawmbi" target="_blank" rel="noopener noreferrer" class="faded">→ GitHub</a>
+            <div class="approw-body">
+              <div class="approw-head">
+                <div class="app-icon pxc-sm">
+                  {app.icon === 'check' && (
+                    <svg viewBox="0 0 40 40" class="ag"><path d="M11 21 l6 6 l12 -14" /></svg>
+                  )}
+                  {app.icon === 'cal' && (
+                    <svg viewBox="0 0 40 40" class="ag"><rect x="9" y="11" width="22" height="20" rx="3" /><path d="M9 17 H31 M15 8 V13 M25 8 V13" /></svg>
+                  )}
+                  {app.icon === 'mono' && (
+                    <svg viewBox="0 0 40 40" class="ag"><path d="M8 26 l7 -9 l6 5 l5 -10 l6 8" /></svg>
+                  )}
+                </div>
+                <div>
+                  <h3 class="app-name">{app.name}</h3>
+                  <div class="app-tag">{app.tagline}</div>
+                </div>
+              </div>
+              <p class="app-desc">{app.desc}</p>
+              <div class="app-meta">
+                {app.platforms.map((p) => <span class="badge badge-plat">{p}</span>)}
+                <span class="badge badge-status">{app.status}</span>
+              </div>
+              <a
+                class="btn btn-solid app-link"
+                href={app.href}
+                target={app.href.startsWith('http') ? '_blank' : undefined}
+                rel="noreferrer"
+              >{app.cta}</a>
             </div>
-          </div>
-          <div class="featured__matrix">
-            <PixelMatrix cols={16} rows={16} seed={1} accent="var(--moss-bright)" />
-          </div>
-        </div>
-      </article>
-
-      <div class="featured__stack">
-        {sideProjects.map((p) => (
-          <a class="featured__small" href={p.href}>
-            <div class="featured__small-meta">
-              <span>{p.tags}</span>
-              <span>{p.date}</span>
-            </div>
-            <h4 class="featured__small-title" style={`color:${p.accent}`}>{p.title}</h4>
-          </a>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
-  {/* NEWS */}
-  <section class="news rule-top">
-    <div class="news__head">
-      <div class="prompt">$ tail -f news.log</div>
-      <div class="news__title">Recent News</div>
-    </div>
-    <div class="news__list">
-      {news.map((n, i) => (
-        <div class:list={['news__item', { 'news__item--first': i === 0 }]}>
-          <div class="news__date">{n.date}</div>
-          <p class="news__body" set:html={highlight(n.body, n.highlights)}></p>
+  {/* ---------------- HIRE ---------------- */}
+  <section class="section section-alt" id="hire">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Work with me</div>
+        <h2 class="sec-title">Bring me your<br />annoying problem</h2>
+        <p class="sec-lead">I take on a small number of freelance and contract projects between releases — and I'm open to the right full-time role.</p>
+      </div>
+      <div class="serv-grid">
+        {services.map(([t, d], i) => (
+          <div class="serv-card pxc">
+            <span class="serv-no">{String(i + 1).padStart(2, '0')}</span>
+            <h4>{t}</h4>
+            <p>{d}</p>
+          </div>
+        ))}
+      </div>
+      <div class="toolbox pxc">
+        <span class="tb-label">The toolbox</span>
+        <div class="tb-chips">
+          {tools.map((s) => <span class="tb-chip">{s}</span>)}
         </div>
-      ))}
+      </div>
+      <div class="how-strip pxc">
+        {steps.map(([t, d], i) => (
+          <div class="how-step">
+            <span class="how-no">{i + 1}</span>
+            <div>
+              <div class="how-t">{t}</div>
+              <div class="how-d">{d}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="hire-cta pxc">
+        <div>
+          <h3 class="hire-cta-title">Have a project in mind?</h3>
+          <p class="hire-cta-sub">Tell me what you're building — you'll get an honest take, not a sales pitch.</p>
+        </div>
+        <a class="btn btn-solid btn-lg" href="mailto:support@zawmbi.com?subject=Project%20inquiry">Email the studio</a>
+      </div>
     </div>
   </section>
+
+  {/* ---------------- STUDIO ---------------- */}
+  <section class="section" id="studio">
+    <div class="wrap studio-grid">
+      <div class="studio-copy">
+        <div class="eyebrow">The studio</div>
+        <h2 class="sec-title">One human.<br />No filler.</h2>
+        <p class="studio-p">
+          Zawmbi Productions is what happens when one developer keeps running into
+          small, fixable annoyances and refuses to just live with them. So I build
+          the tool — and if it's good, it ships here.
+        </p>
+        <p class="studio-p">
+          Everything under the Zawmbi roof shares a spine: fast, honest, and a little
+          bit weird. Separate products, one stubborn point of view about how software
+          should treat your time.
+        </p>
+        <div class="maker">
+          <ImageSlot
+            placeholder="You"
+            style="width: 60px; height: 60px; flex: none; border-radius: 50%;"
+          />
+          <div>
+            <div class="maker-name">The human behind it</div>
+            <div class="maker-role">Founder · designer · the one fixing the bug at 2am</div>
+          </div>
+        </div>
+      </div>
+      <div class="principles">
+        {principles.map(([t, d], i) => (
+          <div class="principle pxc">
+            <span class="principle-no">{String(i + 1).padStart(2, '0')}</span>
+            <h4>{t}</h4>
+            <p>{d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- LAB ---------------- */}
+  <section class="section section-alt" id="lab">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">In the lab</div>
+        <h2 class="sec-title">More on the way</h2>
+        <p class="sec-lead">A couple of things are shambling toward the light. No promises on dates.</p>
+      </div>
+      <div class="lab-grid">
+        {[0, 1].map((i) => (
+          <div class="lab-card pxc">
+            <div class="lab-lock">◴</div>
+            <div class="lab-name">Untitled #{i + 1}</div>
+            <div class="lab-hint">Still cooking — name TBD</div>
+          </div>
+        ))}
+        <a class="lab-card lab-cta pxc" href="mailto:support@zawmbi.com?subject=App%20idea">
+          <div class="lab-plus">+</div>
+          <div class="lab-name">Got an idea?</div>
+          <div class="lab-hint">Tell me what you'd build →</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- NEWSLETTER ---------------- */}
+  <section class="section notify" id="notify">
+    <div class="wrap notify-inner">
+      <span class="notify-mark"><Mascot kind="head" width={58} /></span>
+      <h2 class="sec-title notify-title">Get the next one first</h2>
+      <p class="sec-lead">One short email when something new ships. No spam, no growth-hacking, no nonsense.</p>
+      <form class="notify-form" id="notify-form">
+        <input class="notify-input" type="email" name="email" placeholder="you@email.com" aria-label="Email" required />
+        <button class="btn btn-solid" type="submit">Notify me</button>
+      </form>
+      <div class="notify-done" id="notify-done" hidden>You're on the list. I'll be in touch. <span class="dot"></span></div>
+      <div class="notify-foot">Or just email <a href="mailto:support@zawmbi.com">support@zawmbi.com</a></div>
+    </div>
+  </section>
+
+  {/* ---------------- FOOTER ---------------- */}
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#top">
+          <span class="brand-mark"><Mascot kind="head" width={32} /></span>
+          <span class="wordmark">Zawmbi</span>
+        </a>
+        <p class="footer-tag">Small apps, zero busywork.</p>
+        <div class="footer-socials">
+          <a href="https://github.com/zawmbi" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://linkedin.com/in/lindamansourr" target="_blank" rel="noreferrer">LinkedIn</a>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Apps</h5>
+          <a href="#apps">monitr</a><a href="#apps">Attendize</a><a href="#apps">Syllabus to Calendar</a>
+        </div>
+        <div class="footer-col">
+          <h5>Work</h5>
+          <a href="#hire">Hire me</a><a href="#studio">About</a><a href="#lab">In the lab</a>
+        </div>
+        <div class="footer-col">
+          <h5>Say hi</h5>
+          <a href="mailto:support@zawmbi.com">support@zawmbi.com</a>
+          <a href="https://github.com/zawmbi" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://linkedin.com/in/lindamansourr" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href="#notify">Get notified</a>
+        </div>
+      </div>
+    </div>
+    <div class="wrap footer-base">
+      <span>© 2026 Zawmbi Productions</span>
+      <span>zawmbi.com</span>
+    </div>
+  </footer>
 </Base>
 
-<style>
-  .amber { color: var(--amber); }
-  .moss { color: var(--moss); }
-  .moss-bright { color: var(--moss-bright); }
-  .faded { color: var(--faded); }
-  .cream { color: var(--cream); }
-  .italic { font-style: italic; }
-
-  /* HERO */
-  .hero {
-    padding: 80px var(--page-pad-x) 40px;
-    display: grid;
-    grid-template-columns: 1fr 100px 1fr;
-    gap: 40px;
-    align-items: start;
+<script>
+  const form = document.getElementById('notify-form') as HTMLFormElement | null;
+  const done = document.getElementById('notify-done');
+  if (form && done) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = (form.elements.namedItem('email') as HTMLInputElement | null)?.value.trim();
+      if (!email) return;
+      form.hidden = true;
+      done.hidden = false;
+    });
   }
-
-  .hero__title {
-    font-family: var(--font-display);
-    font-size: clamp(60px, 9vw, 120px);
-    margin: 8px 0 0;
-    font-weight: 300;
-    line-height: 0.95;
-    color: var(--cream);
-    letter-spacing: -0.02em;
-  }
-
-  .hero__bullets {
-    font-size: 13px;
-    color: var(--cream-soft);
-    margin-top: 24px;
-    max-width: 480px;
-    line-height: 1.7;
-  }
-  .hero__bullets p { margin: 0; }
-
-  .hero__cta {
-    margin-top: 28px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .hero__dna {
-    display: flex;
-    justify-content: center;
-  }
-
-  .hero__card {
-    padding-top: 60px;
-  }
-
-  .specimen {
-    padding: 18px;
-    font-size: 12px;
-    line-height: 1.9;
-    font-family: var(--font-mono);
-  }
-
-  .hero__commit {
-    margin-top: 20px;
-    font-size: 11px;
-    color: var(--faded);
-    display: block;
-    text-decoration: none;
-  }
-  a.hero__commit:hover {
-    color: var(--cream-soft);
-  }
-
-  /* FEATURED */
-  .featured {
-    padding: 60px var(--page-pad-x) 40px;
-  }
-
-  .featured__head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 16px;
-    margin-bottom: 36px;
-    flex-wrap: wrap;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(36px, 5vw, 56px);
-    margin: 8px 0 0;
-    font-weight: 300;
-    color: var(--cream);
-    letter-spacing: -0.01em;
-  }
-
-  .featured__count {
-    font-size: 11px;
-    color: var(--faded);
-  }
-
-  .featured__grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 24px;
-  }
-
-  .featured__big-body {
-    padding: 32px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 28px;
-    align-items: center;
-  }
-
-  .featured__big-title {
-    font-family: var(--font-display);
-    font-size: clamp(32px, 4vw, 44px);
-    margin: 0;
-    font-weight: 300;
-    color: var(--moss-bright);
-    letter-spacing: -0.01em;
-  }
-
-  .featured__big-desc {
-    font-size: 13px;
-    color: var(--cream-soft);
-    line-height: 1.6;
-    margin-top: 14px;
-  }
-
-  .tag-row {
-    margin-top: 18px;
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-
-  .featured__big-cta {
-    margin-top: 28px;
-    display: flex;
-    gap: 16px;
-    font-size: 12px;
-  }
-
-  .featured__matrix {
-    width: 100%;
-  }
-
-  .featured__stack {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .featured__small {
-    border: 1px solid var(--rule);
-    background: var(--bg-alt);
-    padding: 16px;
-    transition: border-color 0.15s ease, transform 0.15s ease;
-  }
-  .featured__small:hover {
-    border-color: var(--moss);
-    transform: translateY(-2px);
-  }
-
-  .featured__small-meta {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    color: var(--faded);
-  }
-
-  .featured__small-title {
-    font-family: var(--font-display);
-    font-size: 22px;
-    margin: 8px 0 0;
-    font-weight: 400;
-  }
-
-  /* NEWS */
-  .news {
-    padding: 60px var(--page-pad-x) 100px;
-    background: var(--bg-alt);
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 60px;
-  }
-
-  .news__title {
-    font-family: var(--font-display);
-    font-size: 36px;
-    font-weight: 300;
-    margin-top: 8px;
-    color: var(--cream);
-    letter-spacing: -0.01em;
-  }
-
-  .news__item {
-    display: grid;
-    grid-template-columns: 120px 1fr;
-    gap: 24px;
-    padding: 20px 0;
-  }
-  .news__item--first {
-    border-bottom: 1px dashed var(--rule);
-  }
-
-  .news__date {
-    font-size: 11px;
-    color: var(--moss);
-  }
-
-  .news__body {
-    font-size: 14px;
-    line-height: 1.7;
-    margin: 0;
-    color: var(--cream-soft);
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 1100px) {
-    .hero {
-      grid-template-columns: 1fr 60px 1fr;
-      gap: 24px;
-      padding: 60px var(--page-pad-x) 32px;
-    }
-    .featured__big-body {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  @media (max-width: 800px) {
-    .hero {
-      grid-template-columns: 1fr;
-      gap: 32px;
-    }
-    .hero__dna { display: none; }
-    .hero__card { padding-top: 0; }
-
-    .featured__grid {
-      grid-template-columns: 1fr;
-    }
-
-    .news {
-      grid-template-columns: 1fr;
-      gap: 24px;
-      padding: 48px var(--page-pad-x) 64px;
-    }
-    .news__item {
-      grid-template-columns: 90px 1fr;
-      gap: 16px;
-    }
-  }
-</style>
+</script>

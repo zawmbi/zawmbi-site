@@ -1,21 +1,17 @@
 ---
 import '../styles/global.css';
-import TerminalNav from '../components/TerminalNav.astro';
-import TerminalFooter from '../components/TerminalFooter.astro';
 
 interface Props {
   title?: string;
   description?: string;
-  active?: 'Home' | 'Projects' | 'Research' | 'Rosalind' | 'Stats' | 'About' | 'Contact';
 }
 
 const {
-  title = 'Linda Mansour — Bioinformatics & Plant Phylogenomics',
-  description = 'Linda Mansour — post-bacc researcher at UIC building Python pipelines for plant phylogenomics. MissMap, PhyLabeler, and more.',
-  active = 'Home',
+  title = 'Zawmbi Productions — Cute mascot. Serious software.',
+  description = 'Zawmbi Productions is a one-person indie software studio. Three apps shipped — monitr, Attendize, and Syllabus to Calendar — plus freelance and contract work, built start to finish.',
 } = Astro.props;
 
-const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://zawmbi.github.io').toString();
+const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://zawmbi.com').toString();
 ---
 
 <!doctype html>
@@ -25,7 +21,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://zawmbi.gith
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#1c1814" />
+    <meta name="theme-color" content="#ece1cb" />
     <link rel="canonical" href={canonical} />
 
     <meta property="og:title" content={title} />
@@ -40,17 +36,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://zawmbi.gith
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400&family=JetBrains+Mono:wght@300;400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Gabarito:wght@500;600;700;800;900&family=Onest:wght@400;500;600;700&family=Doto:wght@500;600;700;800;900&family=Inconsolata:wght@400;600;800;900&family=Quantico:wght@400;700&family=Gamja+Flower&display=swap"
       rel="stylesheet"
     />
 
     <title>{title}</title>
   </head>
   <body>
-    <TerminalNav active={active} />
-    <main>
+    <div class="zawmbi">
       <slot />
-    </main>
-    <TerminalFooter />
+    </div>
   </body>
 </html>
