@@ -4,11 +4,12 @@ Drop the monitr theme screenshots in this folder. The gallery on the homepage
 (the monitr app row) and on the `/monitr` case-study page reads from
 `src/data/monitr.ts`.
 
-By default the code expects these filenames:
+The nine themes (in the app's theme-picker order) and the filenames the code
+expects:
 
 ```
-matrix.png  midnight.png  synthwave.png  mono.png  amber.png
-crimson.png  cyan.png  rose.png  gold.png
+ruby.png  dune.png  amber.png  terra.png  azure.png
+amethyst.png  fleur.png  yin.png  yang.png
 ```
 
 Each entry in `monitrThemes` (in `src/data/monitr.ts`) has a `name`, an

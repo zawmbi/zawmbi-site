@@ -24,15 +24,15 @@ export interface ThemeShot {
 }
 
 export const monitrThemes: ThemeShot[] = [
-  { name: 'Matrix', accent: '#46e08b', src: '/attachments/monitr/matrix.png' },
-  { name: 'Midnight', accent: '#3ea6ff', src: '/attachments/monitr/midnight.png' },
-  { name: 'Synthwave', accent: '#b06cf0', src: '/attachments/monitr/synthwave.png' },
-  { name: 'Mono', accent: '#e8e8e8', src: '/attachments/monitr/mono.png' },
-  { name: 'Amber', accent: '#f4a838', src: '/attachments/monitr/amber.png' },
-  { name: 'Crimson', accent: '#ef4444', src: '/attachments/monitr/crimson.png' },
-  { name: 'Cyan', accent: '#22d3d3', src: '/attachments/monitr/cyan.png' },
-  { name: 'Rose', accent: '#f4719b', src: '/attachments/monitr/rose.png' },
-  { name: 'Gold', accent: '#e8c349', src: '/attachments/monitr/gold.png' },
+  { name: 'Ruby', accent: '#e34155', src: '/attachments/monitr/ruby.png' },
+  { name: 'Dune', accent: '#df8f3d', src: '/attachments/monitr/dune.png' },
+  { name: 'Amber', accent: '#efa92f', src: '/attachments/monitr/amber.png' },
+  { name: 'Terra', accent: '#46d07e', src: '/attachments/monitr/terra.png' },
+  { name: 'Azure', accent: '#3ea6ff', src: '/attachments/monitr/azure.png' },
+  { name: 'Amethyst', accent: '#a06cf0', src: '/attachments/monitr/amethyst.png' },
+  { name: 'Fleur', accent: '#ef5fa0', src: '/attachments/monitr/fleur.png' },
+  { name: 'Yin', accent: '#f2f2f2', src: '/attachments/monitr/yin.png' },
+  { name: 'Yang', accent: '#1c1c1c', src: '/attachments/monitr/yang.png' },
 ];
 
 /* What it does — surfaced as a feature grid. */
