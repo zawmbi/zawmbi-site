@@ -9,7 +9,7 @@ import ImageSlot from '../components/ImageSlot.astro';
    Leave a value as '' to show the placeholder box instead.
    Example: const profilePhoto = '/attachments/me.jpg';
    ──────────────────────────────────────────────────────────────────── */
-const profilePhoto = '';   // hero trading-card photo (looks best ~4:3)
+const profilePhoto = '/attachments/lindapfp.jpg';   // hero trading-card photo (looks best ~4:3)
 const makerAvatar = '';    // small round avatar in the Studio section
 const appShots = {
   monitr: '',              // wide screenshot (~16:10)
@@ -74,17 +74,21 @@ const apps = [
     cta: 'View on the App Store',
     shot: 'phone',
   },
+];
+
+/* In the lab — named, not shipped yet. Rendered in the #lab section. */
+const labApps = [
   {
-    id: 'syllabus',
+    name: 'BayFinder',
+    hint: 'Exact coordinates and turn-by-turn directions to a hospital\'s emergency bay, built for EMTs who can\'t afford a wrong turn.',
+  },
+  {
+    name: 'Animal Restaurant Tracker',
+    hint: 'Keep tabs on your Animal Restaurant progress: dishes, staff, and payouts, without the spreadsheet.',
+  },
+  {
     name: 'Syllabus to Calendar',
-    icon: 'cal',
-    tagline: 'Your whole semester, in one scan.',
-    desc: 'Point it at a syllabus and it drops every due date, exam, and reading straight into your calendar. No more typing dates at midnight.',
-    platforms: ['iOS'],
-    status: 'App Store',
-    href: '#',
-    cta: 'View on the App Store',
-    shot: 'phone',
+    hint: 'Scan a syllabus, get every due date and exam dropped into your calendar. Still in the oven.',
   },
 ];
 
@@ -108,7 +112,7 @@ const principles = [
   ['Built for your actual life', 'Made for people who are busy and broke on time.'],
 ];
 
-const marqueeItems = ['Indie software studio', 'Open for freelance', 'iOS + web', 'Three apps shipped', 'Built start to finish', 'Small apps, serious craft'];
+const marqueeItems = ['Indie software studio', 'Open for freelance', 'iOS + web', 'Three apps shipped', 'Built start to finish', 'Hi, I\'m Linda!'];
 const marqueeRun = [...marqueeItems, ...marqueeItems];
 ---
 
@@ -134,7 +138,7 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
         <h1 class="hero-title" style="font-family: Inconsolata, ui-monospace, monospace;">Small apps.<br />Serious craft.</h1>
         <p class="hero-sub">
           Zawmbi Productions is my solo studio. I design, build, and ship
-          software start to finish. Three apps live, more in the lab, and the
+          software start to finish. Two apps live, more in the lab, and the
           same care goes into client work.
         </p>
         <div class="hero-cta">
@@ -326,11 +330,11 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
         <p class="sec-lead">A couple of things are shambling toward the light. No promises on dates.</p>
       </div>
       <div class="lab-grid">
-        {[0, 1].map((i) => (
+        {labApps.map((app) => (
           <div class="lab-card pxc">
             <div class="lab-lock">◴</div>
-            <div class="lab-name">Untitled #{i + 1}</div>
-            <div class="lab-hint">Still cooking, name TBD</div>
+            <div class="lab-name">{app.name}</div>
+            <div class="lab-hint">{app.hint}</div>
           </div>
         ))}
         <a class="lab-card lab-cta pxc" href="mailto:support@zawmbi.com?subject=App%20idea">
