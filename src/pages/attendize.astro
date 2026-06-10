@@ -1,0 +1,243 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Carousel from '../components/Carousel.astro';
+import ImageSlot from '../components/ImageSlot.astro';
+import {
+  attendize,
+  attendizeFacts,
+  attendizeTechTags,
+  attendizeSignature,
+  attendizeFeatures,
+  attendizeTokens,
+  attendizeDesign,
+  attendizeComponents,
+  attendizeTech,
+  attendizeArch,
+  attendizeGallery,
+} from '../data/attendize';
+---
+
+<Base
+  title="Attendize · a gamified attendance tracker for students · Zawmbi Productions"
+  description={attendize.blurb}
+>
+  <Nav />
+
+  {/* ---------------- HERO ---------------- */}
+  <section class="hero mon-hero atz-hero" id="top">
+    <div class="wrap">
+      <a class="mon-back" href="/#apps">← Back to all apps</a>
+      <div class="atz-hero-grid">
+        <div>
+          <div class="eyebrow" style="margin-top: 18px;">iPhone + iPad project</div>
+          <h1 class="mon-title">Attendize</h1>
+          <p class="mon-tag">{attendize.tagline}</p>
+          <p class="mon-blurb">{attendize.blurb}</p>
+          <div class="mon-cta">
+            <a class="btn btn-solid btn-lg" href="/#hire">Work with me</a>
+            <div class="mon-meta">
+              {attendize.platforms.map((p) => <span class="badge">{p}</span>)}
+              <span class="badge badge-status">{attendize.status}</span>
+            </div>
+          </div>
+          <div class="mon-tags">
+            {attendizeTechTags.map((t) => <span class="badge">{t}</span>)}
+          </div>
+        </div>
+        <div class="atz-hero-shot">
+          <div class="device-phone">
+            <ImageSlot
+              src={attendize.heroShot}
+              alt="Attendize — the Today screen"
+              placeholder="Today screen"
+              style="width: 100%; height: 100%;"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="atz-facts">
+        {attendizeFacts.map(([l, v]) => (
+          <div class="atz-fact">
+            <div class="atz-fact-l">{l}</div>
+            <div class="atz-fact-v">{v}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- THE IDEA ---------------- */}
+  <section class="section" id="idea">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">The idea</div>
+        <h2 class="sec-title">Attendance you<br />actually want to open</h2>
+        <p class="sec-lead">
+          Most students track attendance in their head or a half-kept spreadsheet,
+          usually until it is too late to fix. Attendize makes the daily check-in a
+          two-second habit, then turns that data into something motivating: a clear
+          read on how much room you have left, an honest forecast of where you will
+          land, and a game worth keeping a streak in.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- SIGNATURE FEATURES ---------------- */}
+  <section class="section section-alt" id="features">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Signature features</div>
+        <h2 class="sec-title">Glance, act,<br />understand</h2>
+        <p class="sec-lead">The whole app is organized around a student's loop. Four pieces carry it.</p>
+      </div>
+      <div class="atz-sig-list">
+        {attendizeSignature.map((f, i) => (
+          <article class:list={['atz-sig', { 'atz-sig-flip': i % 2 === 1 }]}>
+            <div class="atz-sig-shot">
+              <div class="device-phone">
+                <ImageSlot
+                  src={f.shot}
+                  alt={f.shotName}
+                  placeholder={f.shotName}
+                  style="width: 100%; height: 100%;"
+                />
+              </div>
+            </div>
+            <div class="atz-sig-body">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- THE REST OF THE KIT ---------------- */}
+  <section class="section" id="more">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Also in the app</div>
+        <h2 class="sec-title">The rest of the kit</h2>
+      </div>
+      <div class="feat-grid">
+        {attendizeFeatures.map(([t, d]) => (
+          <div class="feat-card">
+            <h4>{t}</h4>
+            <p>{d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- DESIGN SYSTEM ---------------- */}
+  <section class="section section-alt" id="design">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Design</div>
+        <h2 class="sec-title">A full design<br />system, from scratch</h2>
+        <p class="sec-lead">Light and dark, tokenized end to end, with two brand objects doing the heavy lifting.</p>
+      </div>
+
+      <div class="atz-swatches">
+        {attendizeTokens.map((t) => (
+          <div class="atz-swatch">
+            <span class="atz-chip" style={`background:${t.hex}`}></span>
+            <div class="atz-chip-n">{t.name}</div>
+            <div class="atz-chip-h">{t.hex}</div>
+          </div>
+        ))}
+      </div>
+
+      <div class="feat-grid" style="margin-top: 22px;">
+        {attendizeDesign.map(([t, d]) => (
+          <div class="feat-card">
+            <h4>{t}</h4>
+            <p>{d}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="sec-head" style="margin: 56px 0 22px; max-width: none;">
+        <h3 class="app-name" style="font-size: 24px;">Two signature components</h3>
+      </div>
+      <div class="atz-components">
+        {attendizeComponents.map((c) => (
+          <div class="atz-comp">
+            <div class="device-mini">
+              <ImageSlot src={c.shot} alt={c.title} placeholder={c.title} style="width: 100%; height: 100%;" />
+            </div>
+            <div>
+              <h4>{c.title}</h4>
+              <p>{c.detail}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- UNDER THE HOOD ---------------- */}
+  <section class="section" id="build">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Under the hood</div>
+        <h2 class="sec-title">The engineering</h2>
+        <p class="sec-lead">One typed codebase, two derived engines, and a responsive system that treats the iPad as a first-class layout.</p>
+      </div>
+      <div class="demo-list">
+        {attendizeTech.map(([t, d]) => (
+          <div class="demo-row">
+            <h4>{t}</h4>
+            <p>{d}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="sec-head" style="margin: 56px 0 22px; max-width: none;">
+        <h3 class="app-name" style="font-size: 24px;">Architecture at a glance</h3>
+      </div>
+      <div class="arch">
+        <div class="arch-node"><h5>{attendizeArch[0].title}</h5><p>{attendizeArch[0].detail}</p></div>
+        <span class="arch-arrow">→</span>
+        <div class="arch-col">
+          <div class="arch-node"><h5>{attendizeArch[1].title}</h5><p>{attendizeArch[1].detail}</p></div>
+          <div class="arch-node"><h5>{attendizeArch[2].title}</h5><p>{attendizeArch[2].detail}</p></div>
+        </div>
+        <span class="arch-arrow">→</span>
+        <div class="arch-node"><h5>{attendizeArch[3].title}</h5><p>{attendizeArch[3].detail}</p></div>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- GALLERY ---------------- */}
+  <section class="section section-alt" id="gallery">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">The gallery</div>
+        <h2 class="sec-title">Screens & states</h2>
+        <p class="sec-lead">iPhone and iPad, light and dark. Flip through.</p>
+      </div>
+      <Carousel items={attendizeGallery} aspect="4 / 3" interval={4600} />
+    </div>
+  </section>
+
+  {/* ---------------- CTA ---------------- */}
+  <section class="section" id="why">
+    <div class="wrap">
+      <div class="hire-cta pxc">
+        <div>
+          <h3 class="hire-cta-title">Want this kind of work?</h3>
+          <p class="hire-cta-sub">Attendize is a full product shipped solo: the idea, a complete design system, and a cross-platform app taken all the way to App Store review. Open to freelance, contract, and the right full-time role.</p>
+        </div>
+        <a class="btn btn-solid btn-lg" href="/#hire">Work with me</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>

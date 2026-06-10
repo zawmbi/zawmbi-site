@@ -17,7 +17,7 @@ import { monitrThemes } from '../data/monitr';
 const profilePhoto = '/attachments/lindapfp.jpg';   // hero trading-card photo (looks best ~4:3)
 const makerAvatar = '/attachments/humanbehindit.jpg';    // small round avatar in the Studio section
 const appShots = {
-  attendize: '',           // phone screenshot (tall)
+  attendize: '/attachments/attendize/dashboard-ring.png',   // phone screenshot (tall)
   syllabus: '',            // phone screenshot (tall)
 } as Record<string, string>;
 
@@ -38,12 +38,12 @@ const apps = [
     id: 'attendize',
     name: 'Attendize',
     icon: 'check',
-    tagline: 'Attendance, minus the spreadsheet.',
-    desc: 'Track your own attendance across classes, shifts, the gym, wherever you need to show up, in a couple of taps. See how your streak is really going.',
-    platforms: ['iOS'],
-    status: 'App Store',
-    href: '#',
-    cta: 'View on the App Store',
+    tagline: 'Attendance, with momentum.',
+    desc: 'A gamified attendance tracker for college and grad students. Log Present, Late, or Absent per class, see how many you can still safely miss, forecast your end-of-term percentage, and earn XP, ranks, streaks, and badges.',
+    platforms: ['iPhone', 'iPad'],
+    status: 'App Store soon',
+    href: '/attendize',
+    cta: 'See the case study →',
     shot: 'phone',
   },
 ];
@@ -79,7 +79,7 @@ const labApps = [
 ];
 
 const services = [
-  ['Web apps, end to end', 'I handle the full process, from design and build through to deployment, whether the result is a dashboard, an internal tool, or a product that needs to work reliably from day one, like monitr.'],
+  ['Web apps, end to end', 'I handle the full process, from design and build through to deployment, whether the result is a dashboard, an internal tool, or a product that needs to work reliably from day one.'],
   ['iOS apps', 'Native applications taken all the way through App Store review. Two are currently live, and there is room for yours.'],
   ['MVPs on a deadline', 'I turn an idea into a working, testable product within a few weeks, keeping the first version focused so that it reaches users quickly.'],
 ];
@@ -90,15 +90,15 @@ const steps = [
   ['Launch and refine', 'We release early, observe how the product is used, and improve the areas that matter most.'],
 ];
 
-const tools = ['Swift & SwiftUI', 'React', 'TypeScript', 'Node.js', 'Design in Figma', 'App Store shipping'];
+const tools = ['Swift & SwiftUI', 'React', 'TypeScript', 'Node.js', 'App Store shipping'];
 
 const principles = [
-  ['Focused', 'Each app is built to do one job well, without unnecessary features or clutter.'],
+  ['Focused', 'Each app is built to do one job well, without unnecessary features and minimizing clutter.'],
   ['Shipped, then improved', 'I prioritize getting a working product into use over perfecting a plan in advance.'],
   ['Built for real use', 'Designed for people who are busy and value their time.'],
 ];
 
-const marqueeItems = ['Indie software studio', 'Open for freelance', 'iOS + web', 'Three apps shipped', 'Built start to finish', 'Full-Stack'];
+const marqueeItems = ['Indie software studio', 'Open for freelance', 'iOS + web', 'Built start to finish', 'Full-Stack', 'AI Integrations'];
 const marqueeRun = [...marqueeItems, ...marqueeItems];
 ---
 
@@ -171,6 +171,15 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
               {app.id === 'monitr' ? (
                 <div style="width: 100%;">
                   <Carousel items={monitrThemes} aspect="16 / 10" interval={4200} />
+                </div>
+              ) : app.shot === 'phone' ? (
+                <div class="device-phone">
+                  <ImageSlot
+                    src={appShots[app.id] ?? ''}
+                    alt={`${app.name} screenshot`}
+                    placeholder={`Drop a ${app.name} screenshot`}
+                    style="width: 100%; height: 100%;"
+                  />
                 </div>
               ) : (
                 <div class:list={['shot', `shot-${app.shot}`]}>

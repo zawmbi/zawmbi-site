@@ -7,7 +7,6 @@ export const monitr = {
     'monitr aggregates 150+ news sources into an interactive dashboard — trending topics, a 3D world map, elections, conflicts, and markets — with a real-time social layer of chat, profiles, and presence layered on top.',
   status: 'Live · Alpha',
   href: 'https://monitr.xyz',
-  api: 'https://api.monitr.xyz',
   platforms: ['Web', 'Desktop', 'Mobile'],
 };
 

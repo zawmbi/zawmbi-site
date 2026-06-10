@@ -44,8 +44,50 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://zawmbi.com'
     <title>{title}</title>
   </head>
   <body>
+    <div id="preloader" class="preloader" role="status" aria-live="polite" aria-label="Loading">
+      <img class="preloader-ghoul" src="/attachments/zawmbi-walk-ghoul.gif" alt="" width="120" height="144" />
+      <div class="preloader-text">Loading<span class="preloader-dots"><i>.</i><i>.</i><i>.</i></span></div>
+    </div>
     <div class="zawmbi">
       <slot />
     </div>
+
+    <script is:inline>
+      /* Loading splash: keep it up until the page loads (min ~650ms so the
+         walk reads), fade it out, then smooth-scroll to any hash target. */
+      (function () {
+        var pre = document.getElementById('preloader');
+        if (!pre) return;
+        var start = Date.now();
+        function reveal() {
+          pre.classList.add('is-done');
+          if (pre.parentNode) pre.parentNode.removeChild(pre);
+          if (location.hash) {
+            var t = document.querySelector(location.hash);
+            if (t) window.setTimeout(function () { t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 90);
+          }
+        }
+        function done() { window.setTimeout(reveal, Math.max(0, 650 - (Date.now() - start))); }
+        if (document.readyState === 'complete') done();
+        else window.addEventListener('load', done);
+        window.setTimeout(reveal, 4000); /* safety: never trap the user */
+      })();
+    </script>
+
+    <script>
+      /* Smooth-scroll same-page anchor links (belt-and-suspenders over the CSS,
+         and it respects scroll-padding-top for the sticky nav). */
+      document.addEventListener('click', (e) => {
+        const a = (e.target as Element)?.closest?.('a[href*="#"]') as HTMLAnchorElement | null;
+        if (!a) return;
+        const url = new URL(a.href, location.href);
+        if (url.pathname !== location.pathname || !url.hash || url.hash === '#') return;
+        const target = document.querySelector(url.hash);
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.pushState(null, '', url.hash);
+      });
+    </script>
   </body>
 </html>

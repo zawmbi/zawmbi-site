@@ -33,7 +33,7 @@ const { items, interval = 4200, aspect = '16 / 9', class: cls = '' } = Astro.pro
             <span class="cz-ph-note">screenshot coming</span>
           </div>
           {it.src && (
-            <img class="cz-img" src={it.src} alt={`monitr — ${label} theme`} loading="lazy" onerror="this.remove()" />
+            <img class="cz-img" src={it.src} alt={label} loading="lazy" onerror="this.remove()" />
           )}
           <figcaption class="cz-cap">
             <span class="cz-swatch" style={`background:${accent}`}></span>{label}
