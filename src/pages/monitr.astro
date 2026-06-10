@@ -3,11 +3,20 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Carousel from '../components/Carousel.astro';
-import { monitr, monitrThemes, monitrFeatures, monitrDemonstrates } from '../data/monitr';
+import {
+  monitr,
+  monitrStats,
+  monitrTechTags,
+  monitrThemes,
+  monitrTour,
+  monitrFeatures,
+  monitrTech,
+  monitrArch,
+} from '../data/monitr';
 ---
 
 <Base
-  title="monitr · real-time world dashboard · Zawmbi Productions"
+  title="monitr · a live situation room for world events · Zawmbi Productions"
   description={monitr.blurb}
 >
   <Nav />
@@ -22,33 +31,57 @@ import { monitr, monitrThemes, monitrFeatures, monitrDemonstrates } from '../dat
       <p class="mon-blurb">{monitr.blurb}</p>
       <div class="mon-cta">
         <a class="btn btn-solid btn-lg" href={monitr.href} target="_blank" rel="noreferrer">Open monitr ↗</a>
+        <a class="btn btn-ghost" href={monitr.api} target="_blank" rel="noreferrer">API ↗</a>
         <div class="mon-meta">
           {monitr.platforms.map((p) => <span class="badge">{p}</span>)}
           <span class="badge badge-status">{monitr.status}</span>
         </div>
       </div>
+      <div class="mon-tags">
+        {monitrTechTags.map((t) => <span class="badge">{t}</span>)}
+      </div>
+      <div class="mon-stats">
+        {monitrStats.map(([n, l]) => (
+          <div class="mon-stat">
+            <div class="mon-stat-n">{n}</div>
+            <div class="mon-stat-l">{l}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- GUIDED TOUR ---------------- */}
+  <section class="section section-alt" id="tour">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">A guided tour</div>
+        <h2 class="sec-title">See it in action</h2>
+        <p class="sec-lead">From the live feed to the globe, the social layer, and the moderation back office. Flip through.</p>
+      </div>
+      <Carousel items={monitrTour} aspect="16 / 9" interval={4600} />
     </div>
   </section>
 
   {/* ---------------- THEME GALLERY ---------------- */}
-  <section class="section section-alt" id="themes">
+  <section class="section" id="themes">
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">Nine colorways</div>
         <h2 class="sec-title">One interface,<br />nine moods</h2>
-        <p class="sec-lead">Each theme re-tints the whole product: panels, markers, overlays, and the globe itself. Flip through them.</p>
+        <p class="sec-lead">Every theme re-tints the whole product from one token layer: panels, markers, overlays, and the globe itself.</p>
       </div>
       <Carousel items={monitrThemes} aspect="16 / 9" interval={4200} />
     </div>
   </section>
 
-  {/* ---------------- FEATURES ---------------- */}
-  <section class="section" id="features">
+  {/* ---------------- WHAT IT DOES ---------------- */}
+  <section class="section section-alt" id="features">
     <div class="wrap">
       <div class="sec-head">
-        <div class="eyebrow">Under the hood</div>
-        <h2 class="sec-title">What's inside</h2>
-        <p class="sec-lead">A lot, kept calm. Here is what monitr actually does.</p>
+        <div class="eyebrow">What it does</div>
+        <h2 class="sec-title">A whole situation<br />room, in a tab</h2>
+        <p class="sec-lead">Six systems that each could be their own product, working together.</p>
       </div>
       <div class="feat-grid">
         {monitrFeatures.map(([t, d]) => (
@@ -61,26 +94,46 @@ import { monitr, monitrThemes, monitrFeatures, monitrDemonstrates } from '../dat
     </div>
   </section>
 
-  {/* ---------------- WHAT IT DEMONSTRATES ---------------- */}
-  <section class="section section-alt" id="why">
+  {/* ---------------- HOW IT'S BUILT ---------------- */}
+  <section class="section" id="build">
     <div class="wrap">
       <div class="sec-head">
-        <div class="eyebrow">For employers &amp; clients</div>
-        <h2 class="sec-title">What it shows<br />I can do</h2>
-        <p class="sec-lead">monitr is the portfolio piece behind the studio: proof I can take something ambitious from idea to shipped.</p>
+        <div class="eyebrow">How it's built</div>
+        <h2 class="sec-title">The engineering</h2>
+        <p class="sec-lead">A hybrid of an always-on Dockerized backend and serverless, with security and cost treated as features.</p>
       </div>
       <div class="demo-list">
-        {monitrDemonstrates.map(([t, d]) => (
+        {monitrTech.map(([t, d]) => (
           <div class="demo-row">
             <h4>{t}</h4>
             <p>{d}</p>
           </div>
         ))}
       </div>
-      <div class="hire-cta pxc" style="margin-top: 34px;">
+
+      <div class="sec-head" style="margin: 56px 0 22px; max-width: none;">
+        <h3 class="app-name" style="font-size: 24px;">Architecture at a glance</h3>
+      </div>
+      <div class="arch">
+        <div class="arch-node"><h5>{monitrArch[0].title}</h5><p>{monitrArch[0].detail}</p></div>
+        <span class="arch-arrow">→</span>
+        <div class="arch-node"><h5>{monitrArch[1].title}</h5><p>{monitrArch[1].detail}</p></div>
+        <span class="arch-arrow">→</span>
+        <div class="arch-col">
+          <div class="arch-node"><h5>{monitrArch[2].title}</h5><p>{monitrArch[2].detail}</p></div>
+          <div class="arch-node"><h5>{monitrArch[3].title}</h5><p>{monitrArch[3].detail}</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- CTA ---------------- */}
+  <section class="section section-alt" id="why">
+    <div class="wrap">
+      <div class="hire-cta pxc">
         <div>
           <h3 class="hire-cta-title">Want this kind of work?</h3>
-          <p class="hire-cta-sub">I take on a few freelance and contract projects between releases, and I'm open to the right full-time role.</p>
+          <p class="hire-cta-sub">monitr is the proof: I take something ambitious from idea to shipped, security and infra included. Open to freelance, contract, and the right full-time role.</p>
         </div>
         <a class="btn btn-solid btn-lg" href="/#hire">Work with me</a>
       </div>

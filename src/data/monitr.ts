@@ -2,20 +2,35 @@
 
 export const monitr = {
   name: 'monitr',
-  tagline: 'A real-time window on the world.',
+  tagline: 'A live situation room for world events.',
   blurb:
-    'monitr pulls live news, conflict, markets, elections, and even satellites onto one interactive globe, then lets you arrange it all into the dashboard you actually want to watch.',
+    'monitr aggregates 150+ news sources into an interactive dashboard — trending topics, a 3D world map, elections, conflicts, and markets — with a real-time social layer of chat, profiles, and presence layered on top.',
   status: 'Live · Alpha',
   href: 'https://monitr.xyz',
+  api: 'https://api.monitr.xyz',
   platforms: ['Web', 'Desktop', 'Mobile'],
 };
+
+/* Headline numbers for the stats strip. */
+export const monitrStats: [string, string][] = [
+  ['150+', 'news sources'],
+  ['~57', 'cloud functions'],
+  ['9', 'colorway themes'],
+  ['Real-time', 'feed & presence'],
+];
+
+/* Stack tags. */
+export const monitrTechTags = [
+  'React', 'Vite', 'Three.js', 'Firebase', 'Node.js', 'PostgreSQL',
+  'WebSockets', 'Docker', 'nginx', 'Cloudflare', 'DigitalOcean', 'GDELT',
+];
 
 /* ───────────────────────────── THEME SCREENSHOTS ─────────────────────────────
    Drop your monitr theme PNGs into  public/attachments/monitr/  using the
    filenames below (or rename both the file and the `src` here to match).
    Until a file exists, its slide shows a tinted placeholder with the theme name,
    so the gallery looks intentional before the images land.
-   There are 9 colorway themes — adjust names / accents to match the real ones.
+   The nine colorways, in the app's theme-picker order.
    ──────────────────────────────────────────────────────────────────────────── */
 export interface ThemeShot {
   name: string;
@@ -35,23 +50,50 @@ export const monitrThemes: ThemeShot[] = [
   { name: 'Yang', accent: '#1c1c1c', src: '/attachments/monitr/yang.png' },
 ];
 
-/* What it does — surfaced as a feature grid. */
-export const monitrFeatures: [string, string][] = [
-  ['A living 3D globe', 'A WebGL globe that plots events where they happen, spins under a real day-night terminator, and zooms from the whole planet down to a single city.'],
-  ['28 intelligence panels', 'Conflict, military, politics, economics, science, climate, culture, elections, alliances and more. Pop any panel out and arrange your own dashboard.'],
-  ['156+ live sources', 'News streamed in real time with source and bias labels (leans left, center, leans right) so you can read a story across the spectrum, not just one side.'],
-  ['9 colorway themes', 'Re-skin the entire interface in a click. Every panel, marker, overlay, and globe re-tints from a single set of theme tokens.'],
-  ['Live presence', 'See who else is watching, share watchlists and history, and track a live user count, all updating in real time.'],
-  ['Space & satellites', 'Follow the ISS live (position, altitude, velocity, and crew) alongside other tracked objects in orbit.'],
-  ['Elections tracker', 'Upcoming and completed elections worldwide, with countdowns and outcomes, country by country.'],
-  ['Map overlays', 'Layer flights, maritime traffic, and more straight onto the globe to see the world move.'],
+/* ───────────────────────────── GUIDED-TOUR SHOTS ─────────────────────────────
+   The walkthrough carousel. Drop these into public/attachments/monitr/ too.
+   Each slide shows a captioned placeholder until the file lands.
+   ──────────────────────────────────────────────────────────────────────────── */
+export interface TourShot {
+  name: string;
+  src: string;
+}
+
+export const monitrTour: TourShot[] = [
+  { name: 'The dashboard', src: '/attachments/monitr/tour-dashboard.png' },
+  { name: 'The 3D globe', src: '/attachments/monitr/tour-globe.png' },
+  { name: 'Country deep-dive', src: '/attachments/monitr/tour-country.png' },
+  { name: 'Elections mode', src: '/attachments/monitr/tour-elections.png' },
+  { name: 'Geopolitics panels', src: '/attachments/monitr/tour-geopolitics.png' },
+  { name: 'Live chat & inbox', src: '/attachments/monitr/tour-chat.png' },
+  { name: 'Public profiles', src: '/attachments/monitr/tour-profile.png' },
+  { name: 'Admin & moderation', src: '/attachments/monitr/tour-admin.png' },
+  { name: 'Watchlist & alerts', src: '/attachments/monitr/tour-watchlist.png' },
 ];
 
-/* Why it matters — framed for employers / clients. */
-export const monitrDemonstrates: [string, string][] = [
-  ['Real-time data at scale', 'Many live streams — news, markets, satellites, presence — folded into one coherent UI that stays calm instead of chaotic.'],
-  ['A real design system', 'A fully themeable interface where nine complete colorways fall out of one token layer. Theming as architecture, not paint.'],
-  ['Serious data visualization', 'A performant 3D globe rendering thousands of geo-located markers without dropping frames.'],
-  ['Product thinking', 'Dense information made navigable: search, pop-out panels, watchlists, and bias labels that respect the reader.'],
-  ['Shipped, not slideware', 'Live at monitr.xyz across web, desktop, and mobile. Real users, real uptime, real edge cases handled.'],
+/* What it does — the feature surface. */
+export const monitrFeatures: [string, string][] = [
+  ['Live news aggregation', '150+ sources, including GDELT global event data, distilled into trending topics with credibility scoring and a websocket-backed live feed.'],
+  ['Interactive dashboards', 'A 3D globe and 2D maps, country deep-dives, an Elections mode, conflict and geopolitics panels (nuclear, tariffs, trade blocs), plus markets, weather, space, and live cams.'],
+  ['Watchlist & alerts', 'Track topics and countries with tiered alert sensitivity — off, important-only, or all — a daily AI-style digest, and browser notifications.'],
+  ['Real-time social layer', 'Global chat with @mentions, friends and requests, public profiles with badges, live presence, and opt-in "what are you viewing" activity.'],
+  ['Full moderation suite', 'An admin panel with user management, roles, a reports queue, word filters, a global chat kill-switch, badge granting, and an immutable audit log.'],
+  ['Accounts & billing', 'Google and X OAuth plus anonymous guest sessions, a username-onboarding gate, and Stripe-powered Pro subscriptions.'],
+];
+
+/* How it's built — the part recruiters care about. */
+export const monitrTech: [string, string][] = [
+  ['Frontend', 'React + Vite SPA, code-split by feature so the Three.js globe, maps, and charts load on demand. Hook-driven with real-time Firestore listeners, optimistic UI with debounced cloud saves, and error boundaries that degrade a failed call inline instead of crashing the app.'],
+  ['Backend', 'A Dockerized Node.js service on a DigitalOcean droplet (docker-compose + nginx reverse proxy) behind Cloudflare with origin TLS. PostgreSQL storage, a websocket server for live presence and feed, and scheduled news-ingestion and rundown jobs.'],
+  ['Serverless & data', 'Around 57 Firebase Cloud Functions (2nd-gen / Cloud Run), Firestore real-time DB, Cloud Storage, and Hosting — a deliberate hybrid of always-on droplet and serverless.'],
+  ['Security engineering', 'Default-deny Firestore and Storage rules, server-side validation and sanitization, Firestore-backed sliding-window rate limiting, signed upload URLs with size caps, ban and mute enforcement at the request gate, roles re-derived server-side, App Check (reCAPTCHA) attestation, and audit logging of every admin action.'],
+  ['Infra & cost engineering', 'Worked under a hard regional Cloud Run CPU quota: tuned per-function maxInstances and built a one-at-a-time deploy strategy to keep all ~57 functions shipping under the ceiling.'],
+];
+
+/* Simple architecture diagram, rendered on the page. */
+export const monitrArch = [
+  { title: 'React / Vite SPA', detail: 'Three.js · maps · charts' },
+  { title: 'Cloudflare', detail: 'origin TLS · CDN · WAF' },
+  { title: 'Firebase', detail: 'Auth · Firestore · ~57 Functions · Storage' },
+  { title: 'DigitalOcean droplet', detail: 'Docker · nginx · Postgres · WebSocket' },
 ];
