@@ -1,0 +1,16 @@
+---
+import Mascot from './Mascot.astro';
+import { navLinks } from '../data/site';
+---
+
+<header class="nav">
+  <a class="brand" href="/">
+    <span class="brand-mark"><Mascot kind="head" width={38} /></span>
+    <span class="wordmark">Zawmbi</span>
+    <span class="wordmark wordmark-sub2">Productions</span>
+  </a>
+  <nav class="nav-links">
+    {navLinks.map(([label, href]) => <a href={href}>{label}</a>)}
+  </nav>
+  <a class="btn btn-solid nav-cta" href="/#hire">Start a project</a>
+</header>

@@ -1,0 +1,45 @@
+---
+import Mascot from './Mascot.astro';
+import { socials, socialIcons } from '../data/site';
+---
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="/">
+        <span class="brand-mark"><Mascot kind="head" width={32} /></span>
+        <span class="wordmark">Zawmbi</span>
+      </a>
+      <p class="footer-tag">Small apps, zero busywork.</p>
+      <div class="footer-socials">
+        {socialIcons.map((s) => (
+          <a href={s.href} target="_blank" rel="noreferrer" aria-label={s.label}>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d={s.path} /></svg>
+          </a>
+        ))}
+      </div>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h5>Apps</h5>
+        <a href="/monitr">monitr</a><a href="/#apps">Attendize</a><a href="/#apps">Syllabus to Calendar</a>
+      </div>
+      <div class="footer-col">
+        <h5>Work</h5>
+        <a href="/#hire">Hire me</a><a href="/#studio">About</a><a href="/#lab">In the lab</a>
+      </div>
+      <div class="footer-col">
+        <h5>Say hi</h5>
+        <a href="mailto:support@zawmbi.com">support@zawmbi.com</a>
+        <a href={socials.github} target="_blank" rel="noreferrer">GitHub</a>
+        <a href={socials.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href={socials.twitter} target="_blank" rel="noreferrer">Twitter</a>
+        <a href="/#notify">Get notified</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap footer-base">
+    <span>© 2026 Zawmbi Productions</span>
+    <span>zawmbi.com</span>
+  </div>
+</footer>

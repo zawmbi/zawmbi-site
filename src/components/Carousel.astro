@@ -1,0 +1,96 @@
+---
+/* Image carousel that flips through slides. Each slide renders a tinted
+   placeholder (theme name + accent); if a real `src` loads it covers the
+   placeholder, and if the file is missing the broken <img> removes itself so
+   the placeholder shows through. Autoplay pauses on hover/focus and is disabled
+   under prefers-reduced-motion. */
+interface Item {
+  src?: string;
+  label?: string;
+  name?: string;
+  accent?: string;
+}
+
+interface Props {
+  items: Item[];
+  interval?: number;
+  aspect?: string;
+  class?: string;
+}
+
+const { items, interval = 4200, aspect = '16 / 9', class: cls = '' } = Astro.props;
+---
+
+<div class:list={['cz', cls]} data-carousel data-interval={interval} style={`--cz-aspect:${aspect}`}>
+  <div class="cz-viewport">
+    {items.map((it, i) => {
+      const label = it.label ?? it.name ?? '';
+      const accent = it.accent ?? 'var(--moss)';
+      return (
+        <figure class="cz-slide" data-active={i === 0 ? '' : undefined} aria-hidden={i === 0 ? 'false' : 'true'}>
+          <div class="cz-ph" style={`--cz-accent:${accent}`}>
+            <span class="cz-ph-name">{label}</span>
+            <span class="cz-ph-note">screenshot coming</span>
+          </div>
+          {it.src && (
+            <img class="cz-img" src={it.src} alt={`monitr — ${label} theme`} loading="lazy" onerror="this.remove()" />
+          )}
+          <figcaption class="cz-cap">
+            <span class="cz-swatch" style={`background:${accent}`}></span>{label}
+          </figcaption>
+        </figure>
+      );
+    })}
+    <button class="cz-btn cz-prev" type="button" data-cz-prev aria-label="Previous slide">‹</button>
+    <button class="cz-btn cz-next" type="button" data-cz-next aria-label="Next slide">›</button>
+  </div>
+  <div class="cz-dots">
+    {items.map((it, i) => (
+      <button class="cz-dot" type="button" data-cz-dot={i} aria-selected={i === 0 ? 'true' : 'false'} aria-label={`Show ${it.label ?? it.name ?? ''} theme`}></button>
+    ))}
+  </div>
+</div>
+
+<script>
+  function initCarousel(root) {
+    const slides = Array.prototype.slice.call(root.querySelectorAll('.cz-slide'));
+    const dots = Array.prototype.slice.call(root.querySelectorAll('.cz-dot'));
+    if (slides.length <= 1) return;
+    let idx = 0;
+    let timer = null;
+    const interval = Number(root.dataset.interval) || 4200;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function show(n) {
+      idx = (n + slides.length) % slides.length;
+      slides.forEach((s, i) => {
+        if (i === idx) s.setAttribute('data-active', '');
+        else s.removeAttribute('data-active');
+        s.setAttribute('aria-hidden', i === idx ? 'false' : 'true');
+      });
+      dots.forEach((d, i) => d.setAttribute('aria-selected', i === idx ? 'true' : 'false'));
+    }
+    function next() { show(idx + 1); }
+    function prev() { show(idx - 1); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function start() { if (reduce) return; stop(); timer = window.setInterval(next, interval); }
+
+    const nextBtn = root.querySelector('[data-cz-next]');
+    const prevBtn = root.querySelector('[data-cz-prev]');
+    if (nextBtn) nextBtn.addEventListener('click', () => { next(); start(); });
+    if (prevBtn) prevBtn.addEventListener('click', () => { prev(); start(); });
+    dots.forEach((d, i) => d.addEventListener('click', () => { show(i); start(); }));
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+    root.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { prev(); start(); }
+      else if (e.key === 'ArrowRight') { next(); start(); }
+    });
+
+    show(0);
+    start();
+  }
+  document.querySelectorAll('[data-carousel]').forEach(initCarousel);
+</script>

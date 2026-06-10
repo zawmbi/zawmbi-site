@@ -1,0 +1,91 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Carousel from '../components/Carousel.astro';
+import { monitr, monitrThemes, monitrFeatures, monitrDemonstrates } from '../data/monitr';
+---
+
+<Base
+  title="monitr · real-time world dashboard · Zawmbi Productions"
+  description={monitr.blurb}
+>
+  <Nav />
+
+  {/* ---------------- HERO ---------------- */}
+  <section class="hero mon-hero" id="top">
+    <div class="wrap">
+      <a class="mon-back" href="/#apps">← Back to all apps</a>
+      <div class="eyebrow" style="margin-top: 18px;">Flagship project</div>
+      <h1 class="mon-title">monitr</h1>
+      <p class="mon-tag">{monitr.tagline}</p>
+      <p class="mon-blurb">{monitr.blurb}</p>
+      <div class="mon-cta">
+        <a class="btn btn-solid btn-lg" href={monitr.href} target="_blank" rel="noreferrer">Open monitr ↗</a>
+        <div class="mon-meta">
+          {monitr.platforms.map((p) => <span class="badge">{p}</span>)}
+          <span class="badge badge-status">{monitr.status}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- THEME GALLERY ---------------- */}
+  <section class="section section-alt" id="themes">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Nine colorways</div>
+        <h2 class="sec-title">One interface,<br />nine moods</h2>
+        <p class="sec-lead">Each theme re-tints the whole product: panels, markers, overlays, and the globe itself. Flip through them.</p>
+      </div>
+      <Carousel items={monitrThemes} aspect="16 / 9" interval={4200} />
+    </div>
+  </section>
+
+  {/* ---------------- FEATURES ---------------- */}
+  <section class="section" id="features">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Under the hood</div>
+        <h2 class="sec-title">What's inside</h2>
+        <p class="sec-lead">A lot, kept calm. Here is what monitr actually does.</p>
+      </div>
+      <div class="feat-grid">
+        {monitrFeatures.map(([t, d]) => (
+          <div class="feat-card">
+            <h4>{t}</h4>
+            <p>{d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- WHAT IT DEMONSTRATES ---------------- */}
+  <section class="section section-alt" id="why">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">For employers &amp; clients</div>
+        <h2 class="sec-title">What it shows<br />I can do</h2>
+        <p class="sec-lead">monitr is the portfolio piece behind the studio: proof I can take something ambitious from idea to shipped.</p>
+      </div>
+      <div class="demo-list">
+        {monitrDemonstrates.map(([t, d]) => (
+          <div class="demo-row">
+            <h4>{t}</h4>
+            <p>{d}</p>
+          </div>
+        ))}
+      </div>
+      <div class="hire-cta pxc" style="margin-top: 34px;">
+        <div>
+          <h3 class="hire-cta-title">Want this kind of work?</h3>
+          <p class="hire-cta-sub">I take on a few freelance and contract projects between releases, and I'm open to the right full-time role.</p>
+        </div>
+        <a class="btn btn-solid btn-lg" href="/#hire">Work with me</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>
