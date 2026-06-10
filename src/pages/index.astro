@@ -1,53 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
 import Mascot from '../components/Mascot.astro';
 import ImageSlot from '../components/ImageSlot.astro';
+import Carousel from '../components/Carousel.astro';
+import { socials } from '../data/site';
+import { monitrThemes } from '../data/monitr';
 
 /* ─────────────────────────── YOUR IMAGES ───────────────────────────
    Drop image files into  public/attachments/  then point each path here.
    A file at public/attachments/me.jpg is reachable as '/attachments/me.jpg'.
    Leave a value as '' to show the placeholder box instead.
-   Example: const profilePhoto = '/attachments/me.jpg';
+   (monitr's screenshots live in src/data/monitr.ts → public/attachments/monitr/.)
    ──────────────────────────────────────────────────────────────────── */
 const profilePhoto = '/attachments/lindapfp.jpg';   // hero trading-card photo (looks best ~4:3)
 const makerAvatar = '';    // small round avatar in the Studio section
 const appShots = {
-  monitr: '',              // wide screenshot (~16:10)
   attendize: '',           // phone screenshot (tall)
   syllabus: '',            // phone screenshot (tall)
 } as Record<string, string>;
-
-/* Social links — handles live here. */
-const socials = {
-  github: 'https://github.com/zawmbi',
-  linkedin: 'https://linkedin.com/in/lindamansourr',
-  twitter: 'https://twitter.com/zawmbiawmbi',
-};
-
-/* Brand glyphs (paths from simple-icons, 24×24 viewBox) for the footer row. */
-const socialIcons = [
-  {
-    label: 'GitHub',
-    href: socials.github,
-    path: 'M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12',
-  },
-  {
-    label: 'LinkedIn',
-    href: socials.linkedin,
-    path: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z',
-  },
-  {
-    label: 'Twitter',
-    href: socials.twitter,
-    path: 'M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932L18.901 1.153Zm-1.291 19.49h2.039L6.486 3.24H4.298L17.61 20.643Z',
-  },
-];
-
-const navLinks = [
-  ['Apps', '#apps'],
-  ['Hire', '#hire'],
-  ['Studio', '#studio'],
-];
 
 const apps = [
   {
@@ -55,7 +27,7 @@ const apps = [
     name: 'monitr',
     icon: 'mono',
     tagline: 'Keep tabs on what matters.',
-    desc: 'A clean dashboard for watching your sites and services: uptime, status, and alerts that look the same on your laptop and your phone.',
+    desc: 'A real-time dashboard for watching the world: live news, conflict, markets, elections, even satellites, all on one interactive globe you arrange yourself.',
     platforms: ['Web', 'Desktop', 'Mobile'],
     status: 'Live',
     href: 'https://monitr.xyz',
@@ -117,18 +89,7 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
 ---
 
 <Base>
-  {/* ---------------- NAV ---------------- */}
-  <header class="nav">
-    <a class="brand" href="#top">
-      <span class="brand-mark"><Mascot kind="head" width={38} /></span>
-      <span class="wordmark">Zawmbi</span>
-      <span class="wordmark wordmark-sub2">Productions</span>
-    </a>
-    <nav class="nav-links">
-      {navLinks.map(([label, href]) => <a href={href}>{label}</a>)}
-    </nav>
-    <a class="btn btn-solid nav-cta" href="#hire">Start a project</a>
-  </header>
+  <Nav />
 
   {/* ---------------- HERO ---------------- */}
   <section class="hero" id="top">
@@ -191,14 +152,20 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
         {apps.map((app, i) => (
           <article class:list={['approw', 'pxc', { 'approw-flip': i % 2 === 1 }]}>
             <div class="approw-media">
-              <div class:list={['shot', `shot-${app.shot}`]}>
-                <ImageSlot
-                  src={appShots[app.id] ?? ''}
-                  alt={`${app.name} screenshot`}
-                  placeholder={`Drop a ${app.name} screenshot`}
-                  style="width: 100%; height: 100%;"
-                />
-              </div>
+              {app.id === 'monitr' ? (
+                <div style="width: 100%;">
+                  <Carousel items={monitrThemes} aspect="16 / 10" interval={4200} />
+                </div>
+              ) : (
+                <div class:list={['shot', `shot-${app.shot}`]}>
+                  <ImageSlot
+                    src={appShots[app.id] ?? ''}
+                    alt={`${app.name} screenshot`}
+                    placeholder={`Drop a ${app.name} screenshot`}
+                    style="width: 100%; height: 100%;"
+                  />
+                </div>
+              )}
             </div>
             <div class="approw-body">
               <div class="approw-head">
@@ -223,12 +190,15 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
                 {app.platforms.map((p) => <span class="badge badge-plat">{p}</span>)}
                 <span class="badge badge-status">{app.status}</span>
               </div>
-              <a
-                class="btn btn-solid app-link"
-                href={app.href}
-                target={app.href.startsWith('http') ? '_blank' : undefined}
-                rel="noreferrer"
-              >{app.cta}</a>
+              <div class="app-actions">
+                <a
+                  class="btn btn-solid app-link"
+                  href={app.href}
+                  target={app.href.startsWith('http') ? '_blank' : undefined}
+                  rel="noreferrer"
+                >{app.cta}</a>
+                {app.id === 'monitr' && <a class="btn btn-ghost" href="/monitr">See the case study →</a>}
+              </div>
             </div>
           </article>
         ))}
@@ -361,47 +331,7 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
     </div>
   </section>
 
-  {/* ---------------- FOOTER ---------------- */}
-  <footer class="footer">
-    <div class="wrap footer-grid">
-      <div class="footer-brand">
-        <a class="brand" href="#top">
-          <span class="brand-mark"><Mascot kind="head" width={32} /></span>
-          <span class="wordmark">Zawmbi</span>
-        </a>
-        <p class="footer-tag">Small apps, zero busywork.</p>
-        <div class="footer-socials">
-          {socialIcons.map((s) => (
-            <a href={s.href} target="_blank" rel="noreferrer" aria-label={s.label}>
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d={s.path} /></svg>
-            </a>
-          ))}
-        </div>
-      </div>
-      <div class="footer-cols">
-        <div class="footer-col">
-          <h5>Apps</h5>
-          <a href="#apps">monitr</a><a href="#apps">Attendize</a><a href="#apps">Syllabus to Calendar</a>
-        </div>
-        <div class="footer-col">
-          <h5>Work</h5>
-          <a href="#hire">Hire me</a><a href="#studio">About</a><a href="#lab">In the lab</a>
-        </div>
-        <div class="footer-col">
-          <h5>Say hi</h5>
-          <a href="mailto:support@zawmbi.com">support@zawmbi.com</a>
-          <a href={socials.github} target="_blank" rel="noreferrer">GitHub</a>
-          <a href={socials.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-          <a href={socials.twitter} target="_blank" rel="noreferrer">Twitter</a>
-          <a href="#notify">Get notified</a>
-        </div>
-      </div>
-    </div>
-    <div class="wrap footer-base">
-      <span>© 2026 Zawmbi Productions</span>
-      <span>zawmbi.com</span>
-    </div>
-  </footer>
+  <Footer />
 </Base>
 
 <script>
