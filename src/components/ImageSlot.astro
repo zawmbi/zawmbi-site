@@ -1,16 +1,23 @@
 ---
-/* Static stand-in for the prototype's drag-to-fill <image-slot> editor widget.
-   Renders the styled empty-state box so the riso layout reads correctly;
-   swap in a real <img> here once art is ready. */
+/* Image placeholder that becomes a real <img> as soon as you give it a `src`.
+   Drop your file in  public/attachments/  and set the src in index.astro
+   (see the "YOUR IMAGES" block at the top of that file). With no src it renders
+   the styled empty-state box so the layout still reads. */
 interface Props {
+  src?: string;
+  alt?: string;
   placeholder?: string;
   class?: string;
   style?: string;
 }
 
-const { placeholder = 'Drop an image', class: cls = '', style = '' } = Astro.props;
+const { src = '', alt = '', placeholder = 'Drop an image', class: cls = '', style = '' } = Astro.props;
 ---
 
-<div class:list={['image-slot', cls]} style={style}>
-  <span class="image-slot__cap">{placeholder}</span>
-</div>
+{src ? (
+  <img src={src} alt={alt} class:list={['image-slot', 'image-slot--filled', cls]} style={style} />
+) : (
+  <div class:list={['image-slot', cls]} style={style}>
+    <span class="image-slot__cap">{placeholder}</span>
+  </div>
+)}

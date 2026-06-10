@@ -3,6 +3,46 @@ import Base from '../layouts/Base.astro';
 import Mascot from '../components/Mascot.astro';
 import ImageSlot from '../components/ImageSlot.astro';
 
+/* ─────────────────────────── YOUR IMAGES ───────────────────────────
+   Drop image files into  public/attachments/  then point each path here.
+   A file at public/attachments/me.jpg is reachable as '/attachments/me.jpg'.
+   Leave a value as '' to show the placeholder box instead.
+   Example: const profilePhoto = '/attachments/me.jpg';
+   ──────────────────────────────────────────────────────────────────── */
+const profilePhoto = '';   // hero trading-card photo (looks best ~4:3)
+const makerAvatar = '';    // small round avatar in the Studio section
+const appShots = {
+  monitr: '',              // wide screenshot (~16:10)
+  attendize: '',           // phone screenshot (tall)
+  syllabus: '',            // phone screenshot (tall)
+} as Record<string, string>;
+
+/* Social links — handles live here. */
+const socials = {
+  github: 'https://github.com/zawmbi',
+  linkedin: 'https://linkedin.com/in/lindamansourr',
+  twitter: 'https://twitter.com/zawmbiawmbi',
+};
+
+/* Brand glyphs (paths from simple-icons, 24×24 viewBox) for the footer row. */
+const socialIcons = [
+  {
+    label: 'GitHub',
+    href: socials.github,
+    path: 'M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12',
+  },
+  {
+    label: 'LinkedIn',
+    href: socials.linkedin,
+    path: 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z',
+  },
+  {
+    label: 'Twitter',
+    href: socials.twitter,
+    path: 'M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932L18.901 1.153Zm-1.291 19.49h2.039L6.486 3.24H4.298L17.61 20.643Z',
+  },
+];
+
 const navLinks = [
   ['Apps', '#apps'],
   ['Hire', '#hire'],
@@ -15,7 +55,7 @@ const apps = [
     name: 'monitr',
     icon: 'mono',
     tagline: 'Keep tabs on what matters.',
-    desc: 'A clean dashboard for watching your sites and services — uptime, status, and alerts that look the same on your laptop and your phone.',
+    desc: 'A clean dashboard for watching your sites and services: uptime, status, and alerts that look the same on your laptop and your phone.',
     platforms: ['Web', 'Desktop', 'Mobile'],
     status: 'Live',
     href: 'https://monitr.xyz',
@@ -27,7 +67,7 @@ const apps = [
     name: 'Attendize',
     icon: 'check',
     tagline: 'Attendance, minus the spreadsheet.',
-    desc: 'Track your own attendance — classes, shifts, the gym, wherever you need to show up — in a couple of taps, and actually see how your streak is going.',
+    desc: 'Track your own attendance across classes, shifts, the gym, wherever you need to show up, in a couple of taps. See how your streak is really going.',
     platforms: ['iOS'],
     status: 'App Store',
     href: '#',
@@ -49,13 +89,13 @@ const apps = [
 ];
 
 const services = [
-  ['Web apps, end to end', 'Design, build, deploy. Dashboards, internal tools, and products that need to work on day one — like monitr.'],
+  ['Web apps, end to end', 'Design, build, deploy. Dashboards, internal tools, and products that need to work on day one, like monitr.'],
   ['iOS apps', 'Native apps shipped all the way through App Store review. Two live so far; yours can be the third.'],
-  ['MVPs on a deadline', 'An idea turned into a real, testable product in weeks — scoped small on purpose so it actually ships.'],
+  ['MVPs on a deadline', 'An idea turned into a real, testable product in weeks, scoped small on purpose so it actually ships.'],
 ];
 
 const steps = [
-  ['Scope it small', 'We find the sharpest version of v1 — the thing worth building first.'],
+  ['Scope it small', 'We find the sharpest version of v1, the thing worth building first.'],
   ['Build in slices', 'Working software every week, not a big reveal at the end.'],
   ['Ship, then sharpen', 'Launch early, watch real usage, fix what matters.'],
 ];
@@ -63,7 +103,7 @@ const steps = [
 const tools = ['Swift & SwiftUI', 'React', 'TypeScript', 'Node.js', 'Design in Figma', 'App Store shipping'];
 
 const principles = [
-  ['Small on purpose', 'No bloat, no 40-tab settings screen. One job, done cleanly.'],
+  ['Small on purpose', 'No bloat, no settings screen with 40 tabs. One job, done cleanly.'],
   ['Ships, then sharpens', 'Real apps in real hands beats a perfect roadmap on a whiteboard.'],
   ['Built for your actual life', 'Made for people who are busy and broke on time.'],
 ];
@@ -93,8 +133,8 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
         <div class="eyebrow">Indie studio + freelance · est 2026</div>
         <h1 class="hero-title" style="font-family: Inconsolata, ui-monospace, monospace;">Small apps.<br />Serious craft.</h1>
         <p class="hero-sub">
-          Zawmbi Productions is my one-person studio: I design, build, and ship
-          software start to finish. Three apps live, more in the lab — and the
+          Zawmbi Productions is my solo studio. I design, build, and ship
+          software start to finish. Three apps live, more in the lab, and the
           same care goes into client work.
         </p>
         <div class="hero-cta">
@@ -108,6 +148,8 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
       </div>
       <aside class="hero-card pxc">
         <ImageSlot
+          src={profilePhoto}
+          alt="Photo of the founder of Zawmbi Productions"
           placeholder="Drop a photo of you"
           style="width: 100%; aspect-ratio: 4 / 3;"
         />
@@ -117,8 +159,9 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
         </div>
         <div class="pc-list">
           <div class="pc-row"><span class="pc-k">Email</span><a class="pc-v" href="mailto:support@zawmbi.com">support@zawmbi.com</a></div>
-          <div class="pc-row"><span class="pc-k">GitHub</span><a class="pc-v" href="https://github.com/zawmbi" target="_blank" rel="noreferrer">github.com/zawmbi</a></div>
-          <div class="pc-row"><span class="pc-k">LinkedIn</span><a class="pc-v" href="https://linkedin.com/in/lindamansourr" target="_blank" rel="noreferrer">linkedin.com/in/lindamansourr</a></div>
+          <div class="pc-row"><span class="pc-k">GitHub</span><a class="pc-v" href={socials.github} target="_blank" rel="noreferrer">github.com/zawmbi</a></div>
+          <div class="pc-row"><span class="pc-k">LinkedIn</span><a class="pc-v" href={socials.linkedin} target="_blank" rel="noreferrer">linkedin.com/in/lindamansourr</a></div>
+          <div class="pc-row"><span class="pc-k">Twitter</span><a class="pc-v" href={socials.twitter} target="_blank" rel="noreferrer">@zawmbiawmbi</a></div>
         </div>
         <div class="pc-avail"><span class="dot"></span> Open for freelance &amp; full-time</div>
       </aside>
@@ -146,6 +189,8 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
             <div class="approw-media">
               <div class:list={['shot', `shot-${app.shot}`]}>
                 <ImageSlot
+                  src={appShots[app.id] ?? ''}
+                  alt={`${app.name} screenshot`}
                   placeholder={`Drop a ${app.name} screenshot`}
                   style="width: 100%; height: 100%;"
                 />
@@ -193,7 +238,7 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
       <div class="sec-head">
         <div class="eyebrow">Work with me</div>
         <h2 class="sec-title">Bring me your<br />annoying problem</h2>
-        <p class="sec-lead">I take on a small number of freelance and contract projects between releases — and I'm open to the right full-time role.</p>
+        <p class="sec-lead">I take on a small number of freelance and contract projects between releases, and I'm open to the right full-time role.</p>
       </div>
       <div class="serv-grid">
         {services.map(([t, d], i) => (
@@ -224,7 +269,7 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
       <div class="hire-cta pxc">
         <div>
           <h3 class="hire-cta-title">Have a project in mind?</h3>
-          <p class="hire-cta-sub">Tell me what you're building — you'll get an honest take, not a sales pitch.</p>
+          <p class="hire-cta-sub">Tell me what you're building. You'll get an honest take, not a sales pitch.</p>
         </div>
         <a class="btn btn-solid btn-lg" href="mailto:support@zawmbi.com?subject=Project%20inquiry">Email the studio</a>
       </div>
@@ -240,7 +285,7 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
         <p class="studio-p">
           Zawmbi Productions is what happens when one developer keeps running into
           small, fixable annoyances and refuses to just live with them. So I build
-          the tool — and if it's good, it ships here.
+          the tool, and if it's good, it ships here.
         </p>
         <p class="studio-p">
           Everything under the Zawmbi roof shares a spine: fast, honest, and a little
@@ -249,6 +294,8 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
         </p>
         <div class="maker">
           <ImageSlot
+            src={makerAvatar}
+            alt="The maker behind Zawmbi Productions"
             placeholder="You"
             style="width: 60px; height: 60px; flex: none; border-radius: 50%;"
           />
@@ -283,7 +330,7 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
           <div class="lab-card pxc">
             <div class="lab-lock">◴</div>
             <div class="lab-name">Untitled #{i + 1}</div>
-            <div class="lab-hint">Still cooking — name TBD</div>
+            <div class="lab-hint">Still cooking, name TBD</div>
           </div>
         ))}
         <a class="lab-card lab-cta pxc" href="mailto:support@zawmbi.com?subject=App%20idea">
@@ -300,7 +347,7 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
     <div class="wrap notify-inner">
       <span class="notify-mark"><Mascot kind="head" width={58} /></span>
       <h2 class="sec-title notify-title">Get the next one first</h2>
-      <p class="sec-lead">One short email when something new ships. No spam, no growth-hacking, no nonsense.</p>
+      <p class="sec-lead">One short email when something new ships. No spam, no growth hacking, no nonsense.</p>
       <form class="notify-form" id="notify-form">
         <input class="notify-input" type="email" name="email" placeholder="you@email.com" aria-label="Email" required />
         <button class="btn btn-solid" type="submit">Notify me</button>
@@ -320,8 +367,11 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
         </a>
         <p class="footer-tag">Small apps, zero busywork.</p>
         <div class="footer-socials">
-          <a href="https://github.com/zawmbi" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="https://linkedin.com/in/lindamansourr" target="_blank" rel="noreferrer">LinkedIn</a>
+          {socialIcons.map((s) => (
+            <a href={s.href} target="_blank" rel="noreferrer" aria-label={s.label}>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d={s.path} /></svg>
+            </a>
+          ))}
         </div>
       </div>
       <div class="footer-cols">
@@ -336,8 +386,9 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
         <div class="footer-col">
           <h5>Say hi</h5>
           <a href="mailto:support@zawmbi.com">support@zawmbi.com</a>
-          <a href="https://github.com/zawmbi" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="https://linkedin.com/in/lindamansourr" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href={socials.github} target="_blank" rel="noreferrer">GitHub</a>
+          <a href={socials.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+          <a href={socials.twitter} target="_blank" rel="noreferrer">Twitter</a>
           <a href="#notify">Get notified</a>
         </div>
       </div>
