@@ -60,14 +60,15 @@ export interface TourShot {
 }
 
 export const monitrTour: TourShot[] = [
-  { name: 'The dashboard', src: '/attachments/monitr/tour-dashboard.png' },
+  { name: 'The control panel', src: '/attachments/monitr/tour-control-panel.png' },
   { name: 'The 3D globe', src: '/attachments/monitr/tour-globe.png' },
   { name: 'Country deep-dive', src: '/attachments/monitr/tour-country.png' },
   { name: 'Elections mode', src: '/attachments/monitr/tour-elections.png' },
-  { name: 'Geopolitics panels', src: '/attachments/monitr/tour-geopolitics.png' },
   { name: 'Live chat & inbox', src: '/attachments/monitr/tour-chat.png' },
   { name: 'Public profiles', src: '/attachments/monitr/tour-profile.png' },
   { name: 'Admin & moderation', src: '/attachments/monitr/tour-admin.png' },
+  { name: 'The economic dashboard', src: '/attachments/monitr/tour-dashboard.png' },
+
   { name: 'Watchlist & alerts', src: '/attachments/monitr/tour-watchlist.png' },
 ];
 
@@ -78,7 +79,7 @@ export const monitrFeatures: [string, string][] = [
   ['Watchlist & alerts', 'Track topics and countries with tiered alert sensitivity — off, important-only, or all — a daily AI-style digest, and browser notifications.'],
   ['Real-time social layer', 'Global chat with @mentions, friends and requests, public profiles with badges, live presence, and opt-in "what are you viewing" activity.'],
   ['Full moderation suite', 'An admin panel with user management, roles, a reports queue, word filters, a global chat kill-switch, badge granting, and an immutable audit log.'],
-  ['Accounts & billing', 'Google and X OAuth plus anonymous guest sessions, a username-onboarding gate, and Stripe-powered Pro subscriptions.'],
+  ['Accounts', 'Google and X OAuth plus anonymous guest sessions and a username-onboarding gate.'],
 ];
 
 /* How it's built — the part recruiters care about. */

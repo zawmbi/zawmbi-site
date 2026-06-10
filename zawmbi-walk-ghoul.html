@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zawmbi — walking (Ghoul)</title>
+<style>
+  /* ===== Zawmbi walking sprite — self-contained, no dependencies =====
+     Drop this whole file into your app (open it, embed via <iframe>, or copy
+     the .zawmbi-walk block + <style> + <script> into your own page).
+     It walks automatically. Change size with --zw-size, speed with --zw-speed. */
+  :root{ --zw-size:240px; --zw-speed:.9s; }
+  html,body{margin:0;height:100%;background:transparent}
+  body{display:grid;place-items:center}
+
+  .zawmbi-walk{position:relative;display:inline-block;line-height:0;width:var(--zw-size)}
+  .zawmbi-walk svg{display:block;width:100%;height:auto;shape-rendering:crispEdges;image-rendering:pixelated}
+  .zawmbi-walk .zw-f1{display:block}
+  .zawmbi-walk .zw-f2{position:absolute;inset:0;opacity:0}
+  @media (prefers-reduced-motion: no-preference){
+    .zawmbi-walk{animation:zw-bob var(--zw-speed) steps(1) infinite}
+    .zawmbi-walk .zw-f1{animation:zw-a var(--zw-speed) steps(1) infinite}
+    .zawmbi-walk .zw-f2{animation:zw-b var(--zw-speed) steps(1) infinite}
+  }
+  @keyframes zw-a{0%,49.9%{opacity:1}50%,100%{opacity:0}}
+  @keyframes zw-b{0%,49.9%{opacity:0}50%,100%{opacity:1}}
+  @keyframes zw-bob{0%,49.9%{transform:translateY(0)}50%,100%{transform:translateY(-3.2%)}}
+</style>
+</head>
+<body>
+<div class="zawmbi-walk" id="zawmbi-walk" role="img" aria-label="Zawmbi zombie walking"></div>
+
+<script>
+(function(){
+  /* Ghoul palette */
+  var PAL = { o:'#222b29', g:'#7e9a90', s:'#62807a', h:'#9eb7ab', e:'#172019',
+              w:'#dce5de', k:'#a98a8a', t:'#4e6a5e', p:'#5d6377', q:'#494e61', d:'#3d524a' };
+
+  /* head — stitched-crown chibi, big 3x3 eyes, no mouth (18 wide) */
+  var HEAD = [
+    '.....oooooooo.....',
+    '...oohhththhhoo...',
+    '..ohggtttttgggho..',
+    '.ogggggtgtggggggo.',
+    '.oggggggggggggggo.',
+    '.oggggggggggggggo.',
+    '.ogweeggweegggggo.',
+    '.ogeeeggeeeggggggo',
+    '.ogeeeggeeeggggggo',
+    '.okkggggggkkggggo.',
+    '.okkggggggkkggggo.',
+    '.osggggggggggggso.',
+    '..osggggggggggso..',
+    '...oossssssssoo...',
+    '.....oooooooo.....'
+  ];
+
+  /* two body frames (20 wide) — feet alternate flat <-> lifted */
+  var BODY_A = [
+    '..oooooooooooo......',
+    '.oggggpppppppo......',
+    'oooooopppqpppo......',
+    'ogggggpppqpppo......',
+    '.ooooopqpppqpo......',
+    '......opoppopo......',
+    '......ogo.ogo.......',
+    '......ogo.ogo.......',
+    '.....oggo.ogo.......',
+    '.....oooo.ooo.......'
+  ];
+  var BODY_B = [
+    '..oooooooooooo......',
+    '.oggggpppppppo......',
+    'oooooopppqpppo......',
+    'ogggggpppqpppo......',
+    '.ooooopqpppqpo......',
+    '......opoppopo......',
+    '......ogo.ogo.......',
+    '......ogo.ogo.......',
+    '......ogo.oggo......',
+    '......ooo.oooo......'
+  ];
+
+  function mirror(g){ return g.map(function(r){ return r.split('').reverse().join(''); }); }
+  function build(head, body){ return head.slice(0,-1).map(function(r){ return '.'+r+'.'; }).concat(body); }
+  function svg(grid){
+    var h = grid.length, w = grid[0].length, rects = '';
+    for (var y=0; y<h; y++){
+      var row = grid[y];
+      for (var x=0; x<row.length; x++){
+        var c = row[x];
+        if (!c || c === '.') continue;
+        rects += '<rect x="'+x+'" y="'+y+'" width="1.04" height="1.04" fill="'+(PAL[c]||'#f0f')+'"/>';
+      }
+    }
+    return '<svg viewBox="0 0 '+w+' '+h+'" xmlns="http://www.w3.org/2000/svg">'+rects+'</svg>';
+  }
+
+  var a = mirror(build(HEAD, BODY_A));   /* faces right */
+  var b = mirror(build(HEAD, BODY_B));
+  document.getElementById('zawmbi-walk').innerHTML =
+    '<span class="zw-f1">'+svg(a)+'</span><span class="zw-f2">'+svg(b)+'</span>';
+})();
+</script>
+</body>
+</html>

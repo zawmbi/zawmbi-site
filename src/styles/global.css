@@ -24,7 +24,8 @@
   --maxw: 1180px;
 }
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }   /* offset so anchored sections clear the sticky nav */
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body {
   margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body);
   font-size: 17px; line-height: 1.6; -webkit-font-smoothing: antialiased;
@@ -163,6 +164,9 @@ a { color: inherit; text-decoration: none; }
   line-height: 1; letter-spacing: -.025em; margin: 14px 0 0; color: var(--ink); text-wrap: balance;
 }
 .sec-lead { font-size: 19px; color: var(--dim); margin: 18px 0 0; text-wrap: pretty; }
+.title-mascot { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.title-mascot .sec-title { margin: 14px 0 0; }
+.title-mascot > span { flex: none; }   /* the full-body zombie sits beside the words */
 
 /* ---------- app showcase ---------- */
 .approws { display: flex; flex-direction: column; gap: 34px; }
@@ -246,6 +250,16 @@ a { color: inherit; text-decoration: none; }
 .lab-cta .lab-hint { color: color-mix(in oklab, var(--cream), transparent 30%); }
 .lab-cta:hover { transform: translate(-3px, -3px); box-shadow: var(--sh-lg); }
 .lab-plus { font-family: var(--font-px); font-size: 34px; color: var(--moss); margin-bottom: auto; line-height: 1; }
+/* app cards: clickable, GitHub-linked, with a device-shaped screenshot on top */
+.lab-app { justify-content: flex-start; gap: 12px; text-decoration: none; cursor: pointer; }
+.lab-app:hover { transform: translate(-3px, -3px); box-shadow: var(--sh-lg); }
+.lab-shot { align-self: center; width: 100%; background: var(--paper); border: var(--bd); box-shadow: var(--sh-sm); margin-bottom: 4px; }
+.lab-shot-phone { max-width: 168px; aspect-ratio: 1320 / 2868; }   /* iPhone 6.9" */
+.lab-shot-ipad { max-width: 252px; aspect-ratio: 3 / 4; }          /* iPad 13" */
+.lab-shot .image-slot { width: 100%; height: 100%; border: 0 !important; }
+.lab-meta { display: flex; gap: 8px; flex-wrap: wrap; }
+.lab-follow { font-family: var(--font-px); font-weight: 700; font-size: 12.5px; letter-spacing: .04em; color: var(--moss-deep); margin-top: 2px; }
+.lab-app:hover .lab-follow { color: var(--clay); }
 
 /* ---------- newsletter (dark inverted focal band) ---------- */
 .notify { text-align: center; background: var(--ink); border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); position: relative; overflow: hidden; }

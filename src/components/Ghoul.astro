@@ -1,0 +1,92 @@
+---
+/* Zawmbi creature — "Ghoul" colorway.
+   kind="head" → the stitched-crown head, built to inline SVG at build time
+   (used for the nav / footer / newsletter marks + favicon colorway).
+   kind="walk" → the exported 4-frame walk cycle, played from the spritesheet
+   in zombie/export (copied to public/attachments/zawmbi-walk-spritesheet.png)
+   via a CSS filmstrip animation. No client JS. */
+interface Props {
+  kind?: 'head' | 'walk';
+  width?: number;
+  speed?: string;
+  label?: string;
+  class?: string;
+}
+const {
+  kind = 'head',
+  width = 144,
+  speed = '.8s',
+  label = 'Zawmbi zombie',
+  class: cls = '',
+} = Astro.props;
+
+const PAL: Record<string, string> = {
+  o: '#222b29', g: '#7e9a90', s: '#62807a', h: '#9eb7ab', e: '#172019',
+  w: '#dce5de', k: '#a98a8a', t: '#4e6a5e', p: '#5d6377', q: '#494e61', d: '#3d524a',
+};
+
+/* head — stitched-crown chibi, big 3x3 eyes, no mouth (18 wide) */
+const HEAD = [
+  '.....oooooooo.....',
+  '...oohhththhhoo...',
+  '..ohggtttttgggho..',
+  '.ogggggtgtggggggo.',
+  '.oggggggggggggggo.',
+  '.oggggggggggggggo.',
+  '.ogweeggweegggggo.',
+  '.ogeeeggeeeggggggo',
+  '.ogeeeggeeeggggggo',
+  '.okkggggggkkggggo.',
+  '.okkggggggkkggggo.',
+  '.osggggggggggggso.',
+  '..osggggggggggso..',
+  '...oossssssssoo...',
+  '.....oooooooo.....',
+];
+
+const mirror = (g: string[]) => g.map((r) => r.split('').reverse().join(''));
+function svg(grid: string[]) {
+  const h = grid.length, w = grid[0].length;
+  let rects = '';
+  for (let y = 0; y < h; y++) {
+    const row = grid[y];
+    for (let x = 0; x < row.length; x++) {
+      const c = row[x];
+      if (!c || c === '.') continue;
+      rects += `<rect x="${x}" y="${y}" width="1.04" height="1.04" fill="${PAL[c] || '#f0f'}"/>`;
+    }
+  }
+  return `<svg viewBox="0 0 ${w} ${h}" xmlns="http://www.w3.org/2000/svg">${rects}</svg>`;
+}
+
+const isWalk = kind === 'walk';
+const headSvg = isWalk ? null : svg(mirror(HEAD));
+/* exported looping walk cycle (240×288) — see zombie/export/ */
+const WALK_GIF = '/attachments/zawmbi-walk-ghoul.gif';
+---
+
+{isWalk ? (
+  <img
+    class:list={['zw-walk', cls]}
+    style={`width:${width}px;height:${Math.round(width * 288 / 240)}px;flex:0 0 auto`}
+    src={WALK_GIF}
+    alt={label}
+    width="240"
+    height="288"
+  />
+) : (
+  <span
+    class:list={['zw-head', cls]}
+    style={`width:${width}px`}
+    role="img"
+    aria-label={label}
+    set:html={headSvg}
+  ></span>
+)}
+
+<style>
+  .zw-head { display: inline-block; line-height: 0; }
+  .zw-head :global(svg) { display: block; width: 100%; height: auto; shape-rendering: crispEdges; image-rendering: pixelated; }
+  /* walk: the exported GIF animates itself; just size it and keep pixels crisp */
+  .zw-walk { display: block; height: auto; image-rendering: pixelated; }
+</style>

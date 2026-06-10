@@ -1,5 +1,5 @@
 ---
-import Mascot from './Mascot.astro';
+import Ghoul from './Ghoul.astro';
 import { socials, socialIcons } from '../data/site';
 ---
 
@@ -7,10 +7,10 @@ import { socials, socialIcons } from '../data/site';
   <div class="wrap footer-grid">
     <div class="footer-brand">
       <a class="brand" href="/">
-        <span class="brand-mark"><Mascot kind="head" width={32} /></span>
+        <span class="brand-mark"><Ghoul kind="head" width={32} label="Zawmbi" /></span>
         <span class="wordmark">Zawmbi</span>
       </a>
-      <p class="footer-tag">Small apps, zero busywork.</p>
+      <p class="footer-tag">An independent software studio.</p>
       <div class="footer-socials">
         {socialIcons.map((s) => (
           <a href={s.href} target="_blank" rel="noreferrer" aria-label={s.label}>

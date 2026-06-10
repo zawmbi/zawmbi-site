@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import Mascot from '../components/Mascot.astro';
+import Ghoul from '../components/Ghoul.astro';
 import ImageSlot from '../components/ImageSlot.astro';
 import Carousel from '../components/Carousel.astro';
 import { socials } from '../data/site';
@@ -15,7 +15,7 @@ import { monitrThemes } from '../data/monitr';
    (monitr's screenshots live in src/data/monitr.ts → public/attachments/monitr/.)
    ──────────────────────────────────────────────────────────────────── */
 const profilePhoto = '/attachments/lindapfp.jpg';   // hero trading-card photo (looks best ~4:3)
-const makerAvatar = '';    // small round avatar in the Studio section
+const makerAvatar = '/attachments/humanbehindit.jpg';    // small round avatar in the Studio section
 const appShots = {
   attendize: '',           // phone screenshot (tall)
   syllabus: '',            // phone screenshot (tall)
@@ -48,43 +48,57 @@ const apps = [
   },
 ];
 
-/* In the lab — named, not shipped yet. Rendered in the #lab section. */
+/* In the lab — named, not shipped yet. Rendered in the #lab section.
+   device: 'phone' = iPhone 6.9" shape, 'ipad' = iPad 13" shape.
+   Drop screenshots in public/attachments/lab/ and set `shot`. The card links to `repo`. */
 const labApps = [
   {
     name: 'BayFinder',
+    platform: 'iOS',
+    device: 'phone',
+    repo: 'https://github.com/zawmbi/emt-app',
+    shot: '',   // e.g. '/attachments/lab/bayfinder.png'
     hint: 'Exact coordinates and turn-by-turn directions to a hospital\'s emergency bay, built for EMTs who can\'t afford a wrong turn.',
   },
   {
     name: 'Animal Restaurant Tracker',
-    hint: 'Keep tabs on your Animal Restaurant progress: dishes, staff, and payouts, without the spreadsheet.',
+    platform: 'iOS',
+    device: 'phone',
+    repo: 'https://github.com/zawmbi/animal-restaurant-tracker-app',
+    shot: '',   // e.g. '/attachments/lab/animal-restaurant.png'
+    hint: 'A companion for the Animal Restaurant game that keeps track of your dishes, staff, and payouts in one place.',
   },
   {
     name: 'Syllabus to Calendar',
-    hint: 'Scan a syllabus, get every due date and exam dropped into your calendar. Still in the oven.',
+    platform: 'iOS',
+    device: 'phone',
+    repo: 'https://github.com/zawmbi/syllabus-to-calendar',
+    shot: '',   // e.g. '/attachments/lab/syllabus.png'
+    hint: 'Scan a syllabus and have every due date and exam added straight to your calendar.',
   },
 ];
 
 const services = [
-  ['Web apps, end to end', 'Design, build, deploy. Dashboards, internal tools, and products that need to work on day one, like monitr.'],
-  ['iOS apps', 'Native apps shipped all the way through App Store review. Two live so far; yours can be the third.'],
-  ['MVPs on a deadline', 'An idea turned into a real, testable product in weeks, scoped small on purpose so it actually ships.'],
+  ['Web apps, end to end', 'I handle the full process, from design and build through to deployment, whether the result is a dashboard, an internal tool, or a product that needs to work reliably from day one, like monitr.'],
+  ['iOS apps', 'Native applications taken all the way through App Store review. Two are currently live, and there is room for yours.'],
+  ['MVPs on a deadline', 'I turn an idea into a working, testable product within a few weeks, keeping the first version focused so that it reaches users quickly.'],
 ];
 
 const steps = [
-  ['Scope it small', 'We find the sharpest version of v1, the thing worth building first.'],
-  ['Build in slices', 'Working software every week, not a big reveal at the end.'],
-  ['Ship, then sharpen', 'Launch early, watch real usage, fix what matters.'],
+  ['Define the first version', 'We agree on what the first release genuinely needs to include, and what can wait until later.'],
+  ['Build in stages', 'You see working software each week, rather than waiting for a single reveal at the end.'],
+  ['Launch and refine', 'We release early, observe how the product is used, and improve the areas that matter most.'],
 ];
 
 const tools = ['Swift & SwiftUI', 'React', 'TypeScript', 'Node.js', 'Design in Figma', 'App Store shipping'];
 
 const principles = [
-  ['Small on purpose', 'No bloat, no settings screen with 40 tabs. One job, done cleanly.'],
-  ['Ships, then sharpens', 'Real apps in real hands beats a perfect roadmap on a whiteboard.'],
-  ['Built for your actual life', 'Made for people who are busy and broke on time.'],
+  ['Focused', 'Each app is built to do one job well, without unnecessary features or clutter.'],
+  ['Shipped, then improved', 'I prioritize getting a working product into use over perfecting a plan in advance.'],
+  ['Built for real use', 'Designed for people who are busy and value their time.'],
 ];
 
-const marqueeItems = ['Indie software studio', 'Open for freelance', 'iOS + web', 'Three apps shipped', 'Built start to finish', 'Hi, I\'m Linda!'];
+const marqueeItems = ['Indie software studio', 'Open for freelance', 'iOS + web', 'Three apps shipped', 'Built start to finish', 'Full-Stack'];
 const marqueeRun = [...marqueeItems, ...marqueeItems];
 ---
 
@@ -95,16 +109,15 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
   <section class="hero" id="top">
     <div class="hero-grid wrap">
       <div class="hero-copy">
-        <div class="eyebrow">Indie studio + freelance · est 2026</div>
-        <h1 class="hero-title" style="font-family: Inconsolata, ui-monospace, monospace;">Small apps.<br />Serious craft.</h1>
+        <div class="eyebrow">Indie studio + freelance · Chicago</div>
+        <h1 class="hero-title" style="font-family: Inconsolata, ui-monospace, monospace;">Hi, I'm Linda!</h1>
         <p class="hero-sub">
           Zawmbi Productions is my solo studio. I design, build, and ship
-          software start to finish. Two apps live, more in the lab, and the
-          same care goes into client work.
+          software start to finish. I develop iOS and webapps using a wide range of tools to best fit each client's personal needs.
         </p>
         <div class="hero-cta">
           <a class="btn btn-solid" href="#hire">Work with me</a>
-          <a class="btn btn-ghost" href="#apps">See the apps →</a>
+          <a class="btn btn-ghost" href="#apps">Check out the apps →</a>
         </div>
         <div class="hero-ticker">
           <span class="dot"></span> <span class="tick-label">Open for freelance</span>
@@ -120,7 +133,7 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
         />
         <div>
           <div class="pc-name">Zawmbi</div>
-          <div class="pc-role">Developer · designer · founder, Zawmbi Productions</div>
+          <div class="pc-role">Developer · Founder of Zawmbi Productions & monitr </div>
         </div>
         <div class="pc-list">
           <div class="pc-row"><span class="pc-k">Email</span><a class="pc-v" href="mailto:support@zawmbi.com">support@zawmbi.com</a></div>
@@ -145,8 +158,11 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">The apps</div>
-        <h2 class="sec-title" style="font-family: Onest, system-ui, sans-serif;">Shipped &amp; alive</h2>
-        <p class="sec-lead">Each one solves a single annoying thing, properly. Proof that things here get finished.</p>
+        <div class="title-mascot">
+          <h2 class="sec-title" style="font-family: Onest, system-ui, sans-serif;">What I've shipped</h2>
+          <Ghoul kind="walk" width={76} label="Zawmbi zombie walking" />
+        </div>
+        <p class="sec-lead">Each of these began as a problem I wanted solved, so I built the solution and released it. Together they show that work here gets finished.</p>
       </div>
       <div class="approws">
         {apps.map((app, i) => (
@@ -211,8 +227,8 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
     <div class="wrap">
       <div class="sec-head">
         <div class="eyebrow">Work with me</div>
-        <h2 class="sec-title">Bring me your<br />annoying problem</h2>
-        <p class="sec-lead">I take on a small number of freelance and contract projects between releases, and I'm open to the right full-time role.</p>
+        <h2 class="sec-title">Let's build<br />something together</h2>
+        <p class="sec-lead">I take on a limited number of freelance and contract projects between my own releases, and I'm open to the right full-time role.</p>
       </div>
       <div class="serv-grid">
         {services.map(([t, d], i) => (
@@ -243,7 +259,7 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
       <div class="hire-cta pxc">
         <div>
           <h3 class="hire-cta-title">Have a project in mind?</h3>
-          <p class="hire-cta-sub">Tell me what you're building. You'll get an honest take, not a sales pitch.</p>
+          <p class="hire-cta-sub">Tell me what you're building, and I'll give you a straightforward assessment of whether I'm the right fit for it.</p>
         </div>
         <a class="btn btn-solid btn-lg" href="mailto:support@zawmbi.com?subject=Project%20inquiry">Email the studio</a>
       </div>
@@ -255,16 +271,16 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
     <div class="wrap studio-grid">
       <div class="studio-copy">
         <div class="eyebrow">The studio</div>
-        <h2 class="sec-title">One human.<br />No filler.</h2>
+        <h2 class="sec-title">One person,<br />start to finish</h2>
         <p class="studio-p">
-          Zawmbi Productions is what happens when one developer keeps running into
-          small, fixable annoyances and refuses to just live with them. So I build
-          the tool, and if it's good, it ships here.
+          Zawmbi Productions began with a recurring pattern: I kept encountering the
+          same fixable problems and wanted better tools to deal with them. So I built
+          those tools myself, and the ones that worked well ended up here.
         </p>
         <p class="studio-p">
-          Everything under the Zawmbi roof shares a spine: fast, honest, and a little
-          bit weird. Separate products, one stubborn point of view about how software
-          should treat your time.
+          The apps differ on the surface, but they share a common principle. I believe
+          software should respect the time of the people using it, and I keep that in
+          mind across everything I build.
         </p>
         <div class="maker">
           <ImageSlot
@@ -274,8 +290,8 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
             style="width: 60px; height: 60px; flex: none; border-radius: 50%;"
           />
           <div>
-            <div class="maker-name">The human behind it</div>
-            <div class="maker-role">Founder · designer · the one fixing the bug at 2am</div>
+            <div class="maker-name">Linda Mansour</div>
+            <div class="maker-role">Founder and developer of Zawmbi Productions</div>
           </div>
         </div>
       </div>
@@ -297,15 +313,24 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
       <div class="sec-head">
         <div class="eyebrow">In the lab</div>
         <h2 class="sec-title">More on the way</h2>
-        <p class="sec-lead">A couple of things are shambling toward the light. No promises on dates.</p>
+        <p class="sec-lead">Several projects are currently in development. I'm not committing to release dates yet, but each one links to its GitHub repository, so you can follow the progress as it comes together.</p>
       </div>
       <div class="lab-grid">
         {labApps.map((app) => (
-          <div class="lab-card pxc">
-            <div class="lab-lock">◴</div>
+          <a class="lab-card lab-app pxc" href={app.repo} target="_blank" rel="noreferrer">
+            <div class:list={['lab-shot', `lab-shot-${app.device}`]}>
+              <ImageSlot
+                src={app.shot}
+                alt={`${app.name} screenshot`}
+                placeholder={`${app.name} screenshot coming soon`}
+                style="width: 100%; height: 100%;"
+              />
+            </div>
+            <div class="lab-meta"><span class="badge badge-plat">{app.platform}</span></div>
             <div class="lab-name">{app.name}</div>
             <div class="lab-hint">{app.hint}</div>
-          </div>
+            <span class="lab-follow">Follow progress on GitHub →</span>
+          </a>
         ))}
         <a class="lab-card lab-cta pxc" href="mailto:support@zawmbi.com?subject=App%20idea">
           <div class="lab-plus">+</div>
@@ -319,9 +344,9 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
   {/* ---------------- NEWSLETTER ---------------- */}
   <section class="section notify" id="notify">
     <div class="wrap notify-inner">
-      <span class="notify-mark"><Mascot kind="head" width={58} /></span>
+      <span class="notify-mark"><Ghoul kind="head" width={58} /></span>
       <h2 class="sec-title notify-title">Get the next one first</h2>
-      <p class="sec-lead">One short email when something new ships. No spam, no growth hacking, no nonsense.</p>
+      <p class="sec-lead">I send a brief email whenever I release something new, and I won't use your address for anything else.</p>
       <form class="notify-form" id="notify-form">
         <input class="notify-input" type="email" name="email" placeholder="you@email.com" aria-label="Email" required />
         <button class="btn btn-solid" type="submit">Notify me</button>
