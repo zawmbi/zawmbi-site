@@ -1,0 +1,31 @@
+---
+/* A single pixel-grid layer rendered as a crisp-edged SVG of <rect>s.
+   Mascot.astro stacks several of these (main / wobble frame / blink overlay). */
+import { gridToRects, type Palette } from '../lib/mascot';
+
+interface Props {
+  grid: string[];
+  width: number;
+  pal: Palette;
+  class?: string;
+  label?: string;
+}
+
+const { grid, width, pal, class: cls = '', label = '' } = Astro.props;
+const w = grid[0].length;
+const h = grid.length;
+const rects = gridToRects(grid, pal);
+---
+
+<span class:list={['z2', cls]}>
+  <svg
+    width={width}
+    height={(width * h) / w}
+    viewBox={`0 0 ${w} ${h}`}
+    role={label ? 'img' : 'presentation'}
+    aria-label={label || undefined}
+    aria-hidden={label ? undefined : 'true'}
+  >
+    {rects.map((r) => <rect x={r.x} y={r.y} width="1.04" height="1.04" fill={r.fill} />)}
+  </svg>
+</span>

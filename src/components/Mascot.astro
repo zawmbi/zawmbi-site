@@ -1,0 +1,76 @@
+---
+/* Zawmbi creature — composes pixel layers into the head or full body, with
+   CSS-driven idle motion (tick rotate / bob / 1px wobble) + blink overlay.
+   Ports Z2Head / Z2Full from the prototype. Motion classes are styled in
+   global.css (#z2-styles). */
+import MascotSprite from './MascotSprite.astro';
+import {
+  Z2_HEADS,
+  Z2_PALETTES,
+  buildFull,
+  mirror,
+  shiftTop,
+  blinkPatch,
+  type HeadVariant,
+} from '../lib/mascot';
+
+interface Props {
+  kind?: 'head' | 'full';
+  variant?: HeadVariant;
+  width?: number;
+  motion?: 'tick' | 'bob' | 'shimmy' | 'flip' | 'none';
+  blink?: boolean;
+  face?: 'left' | 'right';
+  label?: string;
+}
+
+const {
+  kind = 'head',
+  variant = 'stitch',
+  width = 144,
+  motion = kind === 'full' ? 'flip' : 'tick',
+  blink = true,
+  face = 'right',
+  label = 'Zawmbi mark',
+} = Astro.props;
+
+const pal = Z2_PALETTES.Sage;
+const head = Z2_HEADS[variant] ?? Z2_HEADS.stitch;
+
+let grid = kind === 'full' ? buildFull(head) : head;
+if (face !== 'left') grid = mirror(grid);
+
+const band = head.length - 9;
+
+// Wobble (1px frame flip) applies to the top rows only.
+const wobble = motion === 'shimmy' || motion === 'flip';
+const topRows = kind === 'full' ? head.length - 1 : grid.length;
+
+const frameA = wobble ? shiftTop(grid, -1, topRows) : grid;
+const frameB = wobble ? shiftTop(grid, 1, topRows) : null;
+
+// Whole-sprite transforms (rotate/translate) wrap the stack.
+const wrapClass = motion === 'tick' ? 'z2-tick' : motion === 'bob' ? 'z2-bob' : '';
+---
+
+{wrapClass ? <span class={wrapClass}>
+  <span class="z2-stack">
+    <MascotSprite grid={frameA} width={width} pal={pal} label={label} />
+    {blink && (
+      <span class="z2-abs z2-blinkp">
+        <MascotSprite grid={blinkPatch(frameA, band)} width={width} pal={pal} />
+      </span>
+    )}
+  </span>
+</span> : (
+  <span class="z2-stack">
+    <MascotSprite grid={frameA} width={width} pal={pal} label={label} />
+    {frameB && <MascotSprite grid={frameB} width={width} pal={pal} class="z2-abs z2-f2" />}
+    {blink && (
+      <span class="z2-abs z2-blinkp">
+        <MascotSprite grid={blinkPatch(frameA, band)} width={width} pal={pal} />
+        {frameB && <MascotSprite grid={blinkPatch(frameB, band)} width={width} pal={pal} class="z2-abs z2-f2" />}
+      </span>
+    )}
+  </span>
+)}
