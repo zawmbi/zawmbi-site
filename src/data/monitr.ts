@@ -11,6 +11,19 @@ export const monitr = {
   platforms: ['Web', 'Desktop', 'Mobile'],
 };
 
+/* ───────────────────────────── HERO DEMO REEL ───────────────────────────────
+   The strongest "real-time" sell: a muted, looping screen recording of the feed
+   updating and the globe turning. Drop a file in public/attachments/monitr/ and
+   point one of these at it. If `gif` is set it wins; otherwise `video` is used.
+   Until a file exists the frame shows a placeholder, and a missing file falls
+   back to it gracefully. Keep clips short (8–15s) and compressed.
+   ──────────────────────────────────────────────────────────────────────────── */
+export const monitrReel = {
+  video: '/attachments/monitr/monitr-demo.mp4', // muted autoplay loop (MP4/WebM)
+  gif: '',                                       // or a GIF (takes priority if set)
+  poster: '',                                    // optional still frame / fallback image
+};
+
 /* Headline numbers for the stats strip. */
 export const monitrStats: [string, string][] = [
   ['150+', 'news sources'],

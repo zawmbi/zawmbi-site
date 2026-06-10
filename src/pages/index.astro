@@ -6,7 +6,7 @@ import Mascot from '../components/Mascot.astro';
 import ImageSlot from '../components/ImageSlot.astro';
 import Carousel from '../components/Carousel.astro';
 import { socials } from '../data/site';
-import { monitrThemes } from '../data/monitr';
+import { monitrTour } from '../data/monitr';
 
 /* ─────────────────────────── YOUR IMAGES ───────────────────────────
    Drop image files into  public/attachments/  then point each path here.
@@ -150,7 +150,7 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
             <div class="approw-media">
               {app.id === 'monitr' ? (
                 <div style="width: 100%;">
-                  <Carousel items={monitrThemes} aspect="16 / 10" interval={4200} />
+                  <Carousel items={monitrTour} aspect="16 / 10" interval={4200} />
                 </div>
               ) : (
                 <div class:list={['shot', `shot-${app.shot}`]}>

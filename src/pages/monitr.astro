@@ -3,8 +3,10 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Carousel from '../components/Carousel.astro';
+import Gallery from '../components/Gallery.astro';
 import {
   monitr,
+  monitrReel,
   monitrStats,
   monitrTechTags,
   monitrThemes,
@@ -13,6 +15,9 @@ import {
   monitrTech,
   monitrArch,
 } from '../data/monitr';
+
+const reelSrc = monitrReel.gif || monitrReel.video;
+const reelIsGif = Boolean(monitrReel.gif);
 ---
 
 <Base
@@ -48,6 +53,28 @@ import {
           </div>
         ))}
       </div>
+
+      <div class="mon-reel">
+        <div class="mon-reel-label"><span class="dot"></span> Live demo · the feed updating and the globe turning</div>
+        <div class="image-slot mon-reel-frame">
+          <span class="image-slot__cap">Drop a screen recording here — a muted, looping MP4 or a GIF</span>
+          {reelSrc && (reelIsGif ? (
+            <img class="mon-reel-media" src={reelSrc} alt="monitr live demo" loading="lazy" onerror="this.remove()" />
+          ) : (
+            <video
+              class="mon-reel-media"
+              src={reelSrc}
+              poster={monitrReel.poster || undefined}
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              onerror="this.remove()"
+            ></video>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
 
@@ -69,9 +96,9 @@ import {
       <div class="sec-head">
         <div class="eyebrow">Nine colorways</div>
         <h2 class="sec-title">One interface,<br />nine moods</h2>
-        <p class="sec-lead">Every theme re-tints the whole product from one token layer: panels, markers, overlays, and the globe itself.</p>
+        <p class="sec-lead">Every theme re-tints the whole product from one token layer: panels, markers, overlays, and the globe itself. Click any tile to see it full frame.</p>
       </div>
-      <Carousel items={monitrThemes} aspect="16 / 9" interval={4200} />
+      <Gallery items={monitrThemes} />
     </div>
   </section>
 

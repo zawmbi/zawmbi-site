@@ -1,0 +1,139 @@
+---
+/* A grid of thumbnails that open a full-frame lightbox on click. Each tile
+   shows a tinted placeholder (name + accent) until its image loads, and a
+   missing image falls back to the placeholder. The lightbox supports prev/next,
+   Esc, and click-outside / close button to back out. */
+interface Item {
+  name?: string;
+  label?: string;
+  accent?: string;
+  src?: string;
+}
+
+interface Props {
+  items: Item[];
+  class?: string;
+}
+
+const { items, class: cls = '' } = Astro.props;
+const data = items.map((it) => ({
+  label: it.label ?? it.name ?? '',
+  accent: it.accent ?? '#8aa178',
+  src: it.src ?? '',
+}));
+---
+
+<div class:list={['gallery', cls]} data-gallery>
+  <div class="gal-grid">
+    {data.map((it, i) => (
+      <button
+        class="gal-tile"
+        type="button"
+        data-gal-item={i}
+        data-src={it.src}
+        data-name={it.label}
+        data-accent={it.accent}
+        aria-label={`View ${it.label} theme full frame`}
+      >
+        <div class="gal-ph" style={`--gal-accent:${it.accent}`}>
+          <span class="gal-ph-name">{it.label}</span>
+        </div>
+        {it.src && <img class="gal-img" src={it.src} alt={`monitr — ${it.label} theme`} loading="lazy" onerror="this.remove()" />}
+        <span class="gal-zoom" aria-hidden="true">⤢</span>
+        <span class="gal-cap"><span class="cz-swatch" style={`background:${it.accent}`}></span>{it.label}</span>
+      </button>
+    ))}
+  </div>
+
+  <div class="gal-lb" data-gal-lightbox hidden role="dialog" aria-modal="true" aria-label="Theme preview">
+    <button class="cz-btn gal-lb-close" type="button" data-gal-close aria-label="Close (Esc)">✕</button>
+    <button class="cz-btn gal-lb-prev" type="button" data-gal-prev aria-label="Previous theme">‹</button>
+    <figure class="gal-lb-frame">
+      <div class="gal-ph gal-lb-ph">
+        <span class="gal-ph-name" data-gal-lbname></span>
+        <span class="cz-ph-note">screenshot coming</span>
+      </div>
+      <img class="gal-lb-img" data-gal-lbimg alt="" hidden />
+      <figcaption class="cz-cap gal-lb-cap"><span class="cz-swatch" data-gal-lbsw></span><span data-gal-lbcap></span></figcaption>
+    </figure>
+    <button class="cz-btn gal-lb-next" type="button" data-gal-next aria-label="Next theme">›</button>
+  </div>
+</div>
+
+<style>
+  .gal-lb-ph { display: flex; flex-direction: column; gap: 10px; }
+  .gal-lb-ph .gal-ph-name { font-size: clamp(28px, 4.4vw, 46px); }
+</style>
+
+<script>
+  function initGallery(root) {
+    const tiles = Array.prototype.slice.call(root.querySelectorAll('.gal-tile'));
+    const lb = root.querySelector('[data-gal-lightbox]');
+    if (!tiles.length || !lb) return;
+    // Portal the overlay to <body> so it escapes the section's stacking context
+    // (.wrap has z-index, which would otherwise trap it beneath the sticky nav).
+    document.body.appendChild(lb);
+
+    const img = lb.querySelector('[data-gal-lbimg]');
+    const ph = lb.querySelector('.gal-lb-ph');
+    const phName = lb.querySelector('[data-gal-lbname]');
+    const capName = lb.querySelector('[data-gal-lbcap]');
+    const capSw = lb.querySelector('[data-gal-lbsw]');
+    const closeBtn = lb.querySelector('[data-gal-close]');
+
+    const items = tiles.map((t) => ({ src: t.dataset.src, name: t.dataset.name, accent: t.dataset.accent }));
+    let idx = 0;
+    let lastFocus = null;
+
+    function render() {
+      const it = items[idx];
+      ph.style.setProperty('--gal-accent', it.accent);
+      phName.textContent = it.name;
+      capSw.style.background = it.accent;
+      capName.textContent = it.name;
+      // Keep the placeholder until we know the real image exists; only then swap
+      // it in. Avoids a broken-image flash when a screenshot hasn't been added.
+      img.hidden = true;
+      img.removeAttribute('src');
+      if (it.src) {
+        const probe = new Image();
+        probe.onload = () => {
+          if (items[idx].src === it.src) {
+            img.src = it.src;
+            img.alt = 'monitr — ' + it.name + ' theme';
+            img.hidden = false;
+          }
+        };
+        probe.src = it.src;
+      }
+    }
+
+    function open(i) {
+      idx = (i + items.length) % items.length;
+      lastFocus = document.activeElement;
+      render();
+      lb.hidden = false;
+      document.documentElement.classList.add('gal-open');
+      closeBtn.focus();
+    }
+    function close() {
+      lb.hidden = true;
+      document.documentElement.classList.remove('gal-open');
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    function step(d) { idx = (idx + d + items.length) % items.length; render(); }
+
+    tiles.forEach((t, i) => t.addEventListener('click', () => open(i)));
+    closeBtn.addEventListener('click', close);
+    lb.querySelector('[data-gal-prev]').addEventListener('click', () => step(-1));
+    lb.querySelector('[data-gal-next]').addEventListener('click', () => step(1));
+    lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+    document.addEventListener('keydown', (e) => {
+      if (lb.hidden) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') step(-1);
+      else if (e.key === 'ArrowRight') step(1);
+    });
+  }
+  document.querySelectorAll('[data-gallery]').forEach(initGallery);
+</script>

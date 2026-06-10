@@ -373,6 +373,48 @@ a { color: inherit; text-decoration: none; }
   .arch-arrow { justify-content: center; transform: rotate(90deg); }
 }
 
+/* ---------- monitr hero demo reel ---------- */
+.mon-reel { margin-top: 40px; }
+.mon-reel-label { font-family: var(--font-px); font-weight: 700; font-size: 13px; letter-spacing: .04em; color: var(--dim); display: flex; align-items: center; gap: 9px; margin-bottom: 12px; }
+.mon-reel-frame { aspect-ratio: 16 / 9; width: 100%; border: var(--bd); box-shadow: var(--sh-lg); }
+.mon-reel-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; z-index: 1; background: var(--ink); }
+
+/* ---------- gallery (3×3 grid + click-to-zoom lightbox) ---------- */
+.gal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.gal-tile { position: relative; aspect-ratio: 16 / 10; border: var(--bd); box-shadow: var(--sh-sm); background: var(--well); overflow: hidden; cursor: pointer; padding: 0; display: block; transition: transform .12s, box-shadow .12s; }
+.gal-tile:hover { transform: translate(-3px, -3px); box-shadow: var(--sh); }
+.gal-tile:focus-visible { outline: 3px solid var(--moss); outline-offset: 3px; }
+.gal-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; z-index: 1; }
+.gal-ph { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; padding: 8px;
+  background: radial-gradient(120% 90% at 50% 115%, color-mix(in oklab, var(--gal-accent), transparent 70%), transparent 70%), var(--ink); }
+.gal-ph-name { font-family: var(--font-display); font-weight: 900; font-size: clamp(18px, 2.4vw, 28px); letter-spacing: -.02em;
+  color: color-mix(in oklab, var(--gal-accent), #fff 45%); text-shadow: 0 2px 12px rgba(0, 0, 0, .55); }
+.gal-zoom { position: absolute; top: 7px; right: 7px; z-index: 2; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-px); font-weight: 800; font-size: 13px; color: var(--ink); background: var(--cream); border: 2px solid var(--ink); opacity: 0; transition: opacity .12s; }
+.gal-tile:hover .gal-zoom, .gal-tile:focus-visible .gal-zoom { opacity: 1; }
+.gal-cap { position: absolute; left: 0; bottom: 0; z-index: 2; display: flex; align-items: center; gap: 7px;
+  font-family: var(--font-px); font-weight: 800; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--cream);
+  background: color-mix(in oklab, var(--ink), transparent 10%); padding: 6px 9px; border-top: 2px solid var(--ink); border-right: 2px solid var(--ink); }
+.gal-cap .cz-swatch { width: 11px; height: 11px; }
+
+.gal-lb { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 30px;
+  background: color-mix(in oklab, var(--ink), transparent 4%); }
+.gal-lb[hidden] { display: none; }
+.gal-lb-frame { position: relative; margin: 0; width: min(1120px, 94vw); aspect-ratio: 16 / 9; max-height: 84vh; border: var(--bd); box-shadow: var(--sh-lg); background: var(--ink); overflow: hidden; }
+.gal-lb-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; z-index: 1; background: var(--ink); }
+.gal-lb-img[hidden] { display: none; }
+.gal-lb-cap { z-index: 2; }
+.gal-lb-close { position: absolute; top: 22px; right: 24px; z-index: 2; }
+.gal-lb-prev { position: absolute; left: 24px; top: 50%; transform: translateY(-50%); z-index: 2; }
+.gal-lb-next { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); z-index: 2; }
+html.gal-open { overflow: hidden; }
+@media (max-width: 640px) {
+  .gal-grid { grid-template-columns: repeat(2, 1fr); }
+  .gal-lb { padding: 14px; }
+  .gal-lb-prev { left: 8px; }
+  .gal-lb-next { right: 8px; }
+}
+
 /* ---------- creature (pixel mark) animation ---------- */
 .z2 { display: inline-flex; line-height: 0; }
 .z2 svg { display: block; shape-rendering: crispEdges; }
