@@ -1,0 +1,135 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base
+  title="Contact · Zawmbi Productions"
+  description="Get in touch with Zawmbi Productions about freelance, contract, and full-time work."
+>
+  <Nav />
+
+  <section class="hero mon-hero" id="top">
+    <div class="wrap contact-wrap">
+      <a class="mon-back" href="/">← Back home</a>
+      <div class="eyebrow" style="margin-top: 18px;">Say hi</div>
+      <h1 class="mon-title">Let's talk</h1>
+      <p class="mon-blurb">
+        Tell me what you're building and I'll get back to you. Freelance, contract,
+        and the right full-time role are all on the table.
+      </p>
+
+      <form class="contact-form pxc" id="contact-form">
+        <div class="contact-row">
+          <label class="contact-field">
+            <span>Your name</span>
+            <input class="contact-input" type="text" name="name" autocomplete="name" placeholder="Jane Doe" />
+          </label>
+          <label class="contact-field">
+            <span>Your email</span>
+            <input class="contact-input" type="email" name="email" autocomplete="email" placeholder="you@email.com" />
+          </label>
+        </div>
+        <label class="contact-field">
+          <span>Message</span>
+          <textarea class="contact-input" name="message" rows="6" placeholder="A sentence or two about your project, timeline, and budget."></textarea>
+        </label>
+        <div class="contact-actions">
+          <button class="btn btn-solid btn-lg" type="submit" id="contact-send">Send message</button>
+          <button class="btn btn-ghost" type="button" id="contact-mailapp">Open default mail app</button>
+        </div>
+        <p class="contact-status" id="contact-status" role="status" aria-live="polite" hidden></p>
+        <p class="contact-foot">
+          Prefer to write it yourself? Email
+          <a href="mailto:support@zawmbi.com">support@zawmbi.com</a>
+          <button class="contact-copy" type="button" id="contact-copy">copy</button>
+          <span class="contact-copied" id="contact-copied" hidden>copied ✓</span>
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <Footer />
+</Base>
+
+<script>
+  /* The form really sends, via FormSubmit (no backend / no API key — it just
+     emails support@zawmbi.com). "Open default mail app" stays as a fallback. */
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const TO = 'support@zawmbi.com';
+  const ENDPOINT = 'https://formsubmit.co/ajax/' + TO;
+
+  const statusEl = document.getElementById('contact-status');
+  const sendBtn = document.getElementById('contact-send') as HTMLButtonElement | null;
+
+  function setStatus(text: string, kind: '' | 'ok' | 'err') {
+    if (!statusEl) return;
+    statusEl.textContent = text;
+    statusEl.className = 'contact-status' + (kind ? ' is-' + kind : '');
+    statusEl.hidden = !text;
+  }
+
+  function fields() {
+    const fd = new FormData(form!);
+    return {
+      name: String(fd.get('name') || '').trim(),
+      email: String(fd.get('email') || '').trim(),
+      message: String(fd.get('message') || '').trim(),
+    };
+  }
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const { name, email, message } = fields();
+      if (!name || !email || !message) {
+        setStatus('Please fill in your name, email, and a message.', 'err');
+        return;
+      }
+      if (sendBtn) { sendBtn.disabled = true; sendBtn.textContent = 'Sending…'; }
+      setStatus('Sending…', '');
+      try {
+        const res = await fetch(ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            name, email, message,
+            _subject: 'Project inquiry from ' + name,
+            _template: 'table',
+            _captcha: 'false',
+          }),
+        });
+        const data = await res.json().catch(() => ({} as any));
+        if (res.ok && (data.success === 'true' || data.success === true)) {
+          form.reset();
+          setStatus("Thanks — your message is on its way. I'll reply to your email soon.", 'ok');
+        } else {
+          setStatus(data.message || 'Something went wrong. Try “Open default mail app” instead.', 'err');
+        }
+      } catch {
+        setStatus('Couldn’t send right now. Use “Open default mail app” instead.', 'err');
+      } finally {
+        if (sendBtn) { sendBtn.disabled = false; sendBtn.textContent = 'Send message'; }
+      }
+    });
+
+    const mailBtn = document.getElementById('contact-mailapp');
+    mailBtn?.addEventListener('click', () => {
+      const { name, email, message } = fields();
+      const subject = name ? 'Project inquiry from ' + name : 'Project inquiry';
+      const body = message + '\n\n— ' + (name || 'Someone') + (email ? ' (' + email + ')' : '');
+      window.location.href =
+        'mailto:' + TO + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    });
+
+    const copyBtn = document.getElementById('contact-copy');
+    const copied = document.getElementById('contact-copied');
+    copyBtn?.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(TO);
+        if (copied) { copied.hidden = false; window.setTimeout(() => { copied.hidden = true; }, 1800); }
+      } catch {}
+    });
+  }
+</script>

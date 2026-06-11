@@ -97,3 +97,41 @@ export const monitrArch = [
   { title: 'Firebase', detail: 'Auth · Firestore · ~57 Functions · Storage' },
   { title: 'DigitalOcean droplet', detail: 'Docker · nginx · Postgres · WebSocket' },
 ];
+
+/* ───────────────────────── "THE PROBLEM" PLANNING TAB ─────────────────────────
+   The thinking behind monitr — written as a planning doc for the case study. */
+export const monitrProblem = {
+  lead: 'Staying genuinely informed about the world has never been harder. The raw information is out there, but it is scattered across hundreds of outlets, social feeds, market tickers, and maps — each with its own bias, refresh rate, and login. Holding a real-time picture in your head means juggling a dozen tabs and still missing how the pieces connect.',
+  bet: 'The bet: the real-time web, cheap global event data like GDELT, and serverless infrastructure have finally made a one-person “situation room” feasible — something that used to take a newsroom.',
+};
+
+export const monitrProblemPoints: [string, string][] = [
+  ['Everything lives somewhere else', 'News, markets, conflict, elections, weather, even satellites each sit in a separate tool with its own mental model.'],
+  ['The page is slower than the world', 'Most dashboards are static snapshots or refresh on a timer. Real events move faster than the screen in front of you.'],
+  ['Noise drowns the signal', 'With no credibility weighting or de-duplication, ten versions of one story crowd out the one that matters.'],
+  ['Watching alone', 'Following world events is oddly isolating — there is no shared space to react, discuss, or see what others track.'],
+  ['The context-switching tax', 'Every jump between apps drops the thread; the link between a market move and a headline gets lost in the gaps.'],
+  ['No room of your own', 'Off-the-shelf readers can’t be arranged, themed, or tuned to the handful of things any one person actually watches.'],
+];
+
+export const monitrAudience: [string, string][] = [
+  ['The informed generalist', 'Wants the whole world on one screen without ten subscriptions and twenty tabs.'],
+  ['Analysts & researchers', 'Geopolitics, markets, and OSINT work that needs breadth and the ability to drill into one country or event.'],
+  ['Finance & markets', 'People who trade or follow markets and want price action sitting next to the events driving it.'],
+  ['Students & educators', 'A live teaching surface for current events, elections, and global affairs.'],
+  ['Watch-together communities', 'Groups who want to follow a developing situation and talk about it in the same place.'],
+];
+
+export const monitrGoals: [string, string][] = [
+  ['One screen, the whole world', 'Aggregate the major event surfaces into a single, arrangeable situation room.'],
+  ['Real-time by default', 'A live feed, live presence, and websocket updates so the page keeps pace with events.'],
+  ['Signal over noise', 'Trending topics distilled from 150+ sources, with credibility scoring and de-duplication.'],
+  ['Make it social', 'Chat, profiles, presence, and shared watching, so following the world is not a solo act.'],
+  ['Make it yours', 'Themes, layout, watchlists, and tiered alerts so each person tunes their own room.'],
+];
+
+export const monitrPrinciples: [string, string][] = [
+  ['Aggregate, don’t replace', 'Surface and connect primary sources, and always link back out — never pretend to be the origin.'],
+  ['Security & cost are features', 'Default-deny rules, rate limiting, and quota-aware deploys are part of the product, not an afterthought.'],
+  ['Runnable by one person', 'Cheap data feeds, serverless, and a hybrid backend keep a one-operator situation room sustainable.'],
+];

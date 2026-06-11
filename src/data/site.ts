@@ -5,6 +5,7 @@ export const navLinks: [string, string][] = [
   ['monitr', '/monitr'],
   ['Hire', '/#hire'],
   ['Studio', '/#studio'],
+  ['Contact', '/contact'],
 ];
 
 export const socials = {

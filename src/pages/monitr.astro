@@ -12,6 +12,11 @@ import {
   monitrFeatures,
   monitrTech,
   monitrArch,
+  monitrProblem,
+  monitrProblemPoints,
+  monitrAudience,
+  monitrGoals,
+  monitrPrinciples,
 } from '../data/monitr';
 ---
 
@@ -50,77 +55,119 @@ import {
     </div>
   </section>
 
-  {/* ---------------- GUIDED TOUR ---------------- */}
-  <section class="section section-alt" id="tour">
+  {/* ---------------- TABBED CASE STUDY ---------------- */}
+  <section class="section mon-tabs-section" id="case">
     <div class="wrap">
-      <div class="sec-head">
-        <div class="eyebrow">A guided tour</div>
-        <h2 class="sec-title">See it in action</h2>
-        <p class="sec-lead">From the live feed to the globe, the social layer, and the moderation back office. Flip through.</p>
-      </div>
-      <Carousel items={monitrTour} aspect="16 / 9" interval={4600} />
-    </div>
-  </section>
+      <div class="mon-tabs" data-tabs>
+        <div class="mon-tablist" role="tablist" aria-label="monitr case study">
+          <button class="mon-tab" role="tab" id="tab-problem" aria-controls="panel-problem" aria-selected="true">The problem</button>
+          <button class="mon-tab" role="tab" id="tab-product" aria-controls="panel-product" aria-selected="false">The product</button>
+          <button class="mon-tab" role="tab" id="tab-tour" aria-controls="panel-tour" aria-selected="false">The tour</button>
+          <button class="mon-tab" role="tab" id="tab-build" aria-controls="panel-build" aria-selected="false">Under the hood</button>
+        </div>
 
-  {/* ---------------- THEME GALLERY ---------------- */}
-  <section class="section" id="themes">
-    <div class="wrap">
-      <div class="sec-head">
-        <div class="eyebrow">Nine colorways</div>
-        <h2 class="sec-title">One interface,<br />nine moods</h2>
-        <p class="sec-lead">Every theme re-tints the whole product from one token layer: panels, markers, overlays, and the globe itself.</p>
-      </div>
-      <Carousel items={monitrThemes} aspect="16 / 9" interval={4200} />
-    </div>
-  </section>
+        <div class="mon-panels">
+          {/* ---- THE PROBLEM (planning) ---- */}
+          <section class="mon-panel" role="tabpanel" id="panel-problem" aria-labelledby="tab-problem">
+            <div class="plan-top">
+              <div>
+                <h2 class="plan-title">A situation room<br />for one person</h2>
+                <p class="plan-lead">{monitrProblem.lead}</p>
+              </div>
+              <div class="plan-bet" set:html={monitrProblem.bet.replace('The bet:', '<strong>The bet:</strong>')}></div>
+            </div>
 
-  {/* ---------------- WHAT IT DOES ---------------- */}
-  <section class="section section-alt" id="features">
-    <div class="wrap">
-      <div class="sec-head">
-        <div class="eyebrow">What it does</div>
-        <h2 class="sec-title">A whole situation<br />room, in a tab</h2>
-        <p class="sec-lead">Six systems that each could be their own product, working together.</p>
-      </div>
-      <div class="feat-grid">
-        {monitrFeatures.map(([t, d]) => (
-          <div class="feat-card">
-            <h4>{t}</h4>
-            <p>{d}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+            <div class="plan-block">
+              <h3 class="plan-h">Why it's hard</h3>
+              <div class="plan-grid">
+                {monitrProblemPoints.map(([t, d], i) => (
+                  <div class="plan-card">
+                    <span class="num">{String(i + 1).padStart(2, '0')}</span>
+                    <h4>{t}</h4>
+                    <p>{d}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-  {/* ---------------- HOW IT'S BUILT ---------------- */}
-  <section class="section" id="build">
-    <div class="wrap">
-      <div class="sec-head">
-        <div class="eyebrow">How it's built</div>
-        <h2 class="sec-title">The engineering</h2>
-        <p class="sec-lead">A hybrid of an always-on Dockerized backend and serverless, with security and cost treated as features.</p>
-      </div>
-      <div class="demo-list">
-        {monitrTech.map(([t, d]) => (
-          <div class="demo-row">
-            <h4>{t}</h4>
-            <p>{d}</p>
-          </div>
-        ))}
-      </div>
+            <div class="plan-cols">
+              <div class="plan-block">
+                <h3 class="plan-h">Who it's for</h3>
+                <div class="plan-list">
+                  {monitrAudience.map(([t, d]) => (
+                    <div class="plan-row"><b>{t}</b><span>{d}</span></div>
+                  ))}
+                </div>
+              </div>
+              <div class="plan-block">
+                <h3 class="plan-h">What good looks like</h3>
+                <div class="plan-list">
+                  {monitrGoals.map(([t, d]) => (
+                    <div class="plan-row"><b>{t}</b><span>{d}</span></div>
+                  ))}
+                </div>
+              </div>
+            </div>
 
-      <div class="sec-head" style="margin: 56px 0 22px; max-width: none;">
-        <h3 class="app-name" style="font-size: 24px;">Architecture at a glance</h3>
-      </div>
-      <div class="arch">
-        <div class="arch-node"><h5>{monitrArch[0].title}</h5><p>{monitrArch[0].detail}</p></div>
-        <span class="arch-arrow">→</span>
-        <div class="arch-node"><h5>{monitrArch[1].title}</h5><p>{monitrArch[1].detail}</p></div>
-        <span class="arch-arrow">→</span>
-        <div class="arch-col">
-          <div class="arch-node"><h5>{monitrArch[2].title}</h5><p>{monitrArch[2].detail}</p></div>
-          <div class="arch-node"><h5>{monitrArch[3].title}</h5><p>{monitrArch[3].detail}</p></div>
+            <div class="plan-block">
+              <h3 class="plan-h">Operating principles</h3>
+              <div class="plan-grid plan-grid-3">
+                {monitrPrinciples.map(([t, d]) => (
+                  <div class="plan-card plan-card-moss">
+                    <h4>{t}</h4>
+                    <p>{d}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ---- THE PRODUCT ---- */}
+          <section class="mon-panel" role="tabpanel" id="panel-product" aria-labelledby="tab-product" hidden>
+            <h2 class="plan-title">A whole situation room, in a tab</h2>
+            <p class="plan-lead">Six systems that could each be their own product, working together.</p>
+            <div class="feat-grid plan-block">
+              {monitrFeatures.map(([t, d]) => (
+                <div class="feat-card">
+                  <h4>{t}</h4>
+                  <p>{d}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* ---- THE TOUR ---- */}
+          <section class="mon-panel" role="tabpanel" id="panel-tour" aria-labelledby="tab-tour" hidden>
+            <h3 class="plan-h">A guided tour</h3>
+            <Carousel items={monitrTour} aspect="16 / 9" interval={4600} />
+            <h3 class="plan-h" style="margin-top: 34px;">Nine colorways, one token layer</h3>
+            <Carousel items={monitrThemes} aspect="16 / 9" interval={4200} />
+          </section>
+
+          {/* ---- UNDER THE HOOD ---- */}
+          <section class="mon-panel" role="tabpanel" id="panel-build" aria-labelledby="tab-build" hidden>
+            <h2 class="plan-title">The engineering</h2>
+            <p class="plan-lead">A hybrid of an always-on Dockerized backend and serverless, with security and cost treated as features.</p>
+            <div class="demo-list plan-block">
+              {monitrTech.map(([t, d]) => (
+                <div class="demo-row">
+                  <h4>{t}</h4>
+                  <p>{d}</p>
+                </div>
+              ))}
+            </div>
+            <h3 class="plan-h" style="margin-top: 34px;">Architecture at a glance</h3>
+            <div class="arch">
+              <div class="arch-node"><h5>{monitrArch[0].title}</h5><p>{monitrArch[0].detail}</p></div>
+              <span class="arch-arrow">→</span>
+              <div class="arch-node"><h5>{monitrArch[1].title}</h5><p>{monitrArch[1].detail}</p></div>
+              <span class="arch-arrow">→</span>
+              <div class="arch-col">
+                <div class="arch-node"><h5>{monitrArch[2].title}</h5><p>{monitrArch[2].detail}</p></div>
+                <div class="arch-node"><h5>{monitrArch[3].title}</h5><p>{monitrArch[3].detail}</p></div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -141,3 +188,37 @@ import {
 
   <Footer />
 </Base>
+
+<script>
+  /* In-page tabs — switch panels without touching the rest of the page. */
+  document.querySelectorAll('[data-tabs]').forEach((root) => {
+    const tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
+    const panels = Array.prototype.slice.call(root.querySelectorAll('[role="tabpanel"]'));
+    if (!tabs.length) return;
+
+    function select(i) {
+      tabs.forEach((t, n) => {
+        const on = n === i;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.setAttribute('tabindex', on ? '0' : '-1');
+        if (on) panels[n].removeAttribute('hidden');
+        else panels[n].setAttribute('hidden', '');
+      });
+    }
+
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          const n = (i + 1) % tabs.length; tabs[n].focus(); select(n);
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          const n = (i - 1 + tabs.length) % tabs.length; tabs[n].focus(); select(n);
+        }
+      });
+    });
+
+    select(0);
+  });
+</script>

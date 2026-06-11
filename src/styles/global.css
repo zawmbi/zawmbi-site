@@ -396,6 +396,80 @@ a { color: inherit; text-decoration: none; }
 .arch-arrow { display: flex; align-items: center; font-family: var(--font-px); font-weight: 800; font-size: 20px; color: var(--clay); }
 .arch-col { display: flex; flex-direction: column; gap: 10px; }
 
+/* ---------- contact page ---------- */
+.contact-wrap { max-width: 760px; }
+.contact-form { background: var(--cream); border: var(--bd); box-shadow: var(--sh-lg); padding: 30px 32px; margin-top: 34px; display: flex; flex-direction: column; gap: 18px; }
+.contact-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.contact-field { display: flex; flex-direction: column; gap: 7px; }
+.contact-field > span { font-family: var(--font-px); font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--moss-deep); }
+.contact-input { width: 100%; padding: 13px 15px; border: var(--bd); background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 16px; outline: none; }
+.contact-input:focus { box-shadow: 4px 4px 0 var(--moss); }
+.contact-input::placeholder { color: var(--dim); }
+textarea.contact-input { resize: vertical; min-height: 130px; }
+.contact-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 4px; }
+.contact-foot { font-size: 14px; color: var(--dim); margin: 6px 0 0; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.contact-foot a { color: var(--moss-deep); font-weight: 700; text-decoration: underline; }
+.contact-copy { font-family: var(--font-px); font-weight: 700; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; padding: 4px 9px; border: 2px solid var(--ink); background: var(--paper); color: var(--ink); cursor: pointer; }
+.contact-copy:hover { background: var(--moss-band); }
+.contact-copied { font-family: var(--font-px); font-weight: 700; font-size: 12px; color: var(--moss-deep); }
+.contact-status { font-family: var(--font-px); font-weight: 700; font-size: 13px; letter-spacing: .02em; margin: 2px 0 0; }
+.contact-status.is-ok { color: var(--moss-deep); }
+.contact-status.is-err { color: var(--clay); }
+.btn:disabled { opacity: .6; cursor: default; transform: none; box-shadow: var(--sh-sm); }
+
+/* ---------- in-page tabs (folder-tab case study) ---------- */
+.mon-tabs-section { padding-top: 30px; }
+.mon-tablist { display: flex; gap: 6px; flex-wrap: wrap; padding-left: 8px; position: relative; z-index: 1; }
+.mon-tab {
+  font-family: var(--font-px); font-weight: 800; font-size: 14px; letter-spacing: .04em;
+  padding: 13px 24px; border: var(--bd); border-bottom: 0; background: var(--well); color: var(--dim);
+  cursor: pointer; margin-bottom: -2.5px; box-shadow: var(--sh-sm); transition: background .12s, color .12s;
+}
+.mon-tab:hover { background: var(--moss-band); color: var(--ink); }
+.mon-tab[aria-selected="true"] { background: var(--cream); color: var(--ink); box-shadow: none; }
+.mon-panels { border: var(--bd); background: var(--cream); box-shadow: var(--sh-lg); padding: 40px 42px; position: relative; z-index: 0; }
+.mon-panel[hidden] { display: none; }
+
+/* planning / panel content — dense, fills the width */
+.plan-title { font-family: var(--font-display); font-weight: 900; font-size: clamp(28px, 4vw, 44px); line-height: .98; letter-spacing: -.025em; margin: 0; color: var(--ink); text-wrap: balance; }
+.plan-lead { font-size: 18px; color: var(--dim); margin: 14px 0 0; max-width: 62ch; text-wrap: pretty; }
+.plan-top { display: grid; grid-template-columns: 1.4fr 1fr; gap: 30px; align-items: center; }
+.plan-bet { background: var(--ink); color: var(--cream); border: var(--bd); box-shadow: var(--sh); padding: 22px 24px; font-size: 16px; line-height: 1.5; text-wrap: pretty; }
+.plan-bet strong { color: var(--moss); font-family: var(--font-px); letter-spacing: .04em; }
+.plan-block { margin-top: 34px; }
+.plan-h {
+  font-family: var(--font-px); font-weight: 800; font-size: 12.5px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--moss-deep); margin: 0 0 14px; display: flex; align-items: center; gap: 12px;
+}
+.plan-h::after { content: ""; flex: 1; height: 2px; background: color-mix(in oklab, var(--ink), transparent 82%); }
+.plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.plan-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.plan-card { background: var(--paper); border: var(--bd); box-shadow: var(--sh-sm); padding: 18px 20px; }
+.plan-card .num { font-family: var(--font-px); font-weight: 800; font-size: 13px; color: var(--clay); }
+.plan-card h4 { font-family: var(--font-display); font-weight: 800; font-size: 17px; margin: 6px 0 6px; color: var(--ink); }
+.plan-card p { font-size: 14.5px; color: var(--dim); margin: 0; text-wrap: pretty; }
+.plan-card-moss { background: var(--moss-band); }
+.plan-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 34px; }
+.plan-list { display: flex; flex-direction: column; }
+.plan-row { display: grid; grid-template-columns: 200px 1fr; gap: 16px; padding: 13px 0; border-top: 2px dashed color-mix(in oklab, var(--ink), transparent 70%); }
+.plan-row:first-child { border-top: 0; }
+.plan-row b { font-family: var(--font-display); font-weight: 800; font-size: 15.5px; color: var(--ink); }
+.plan-row span { font-size: 14.5px; color: var(--dim); text-wrap: pretty; }
+/* panels reuse feat-grid / demo-list / arch with no extra top margin from sec-head */
+.mon-panel .feat-grid { grid-template-columns: repeat(3, 1fr); }
+
+@media (max-width: 860px) {
+  .plan-top { grid-template-columns: 1fr; }
+  .plan-grid, .plan-grid-3, .mon-panel .feat-grid { grid-template-columns: repeat(2, 1fr); }
+  .plan-cols { grid-template-columns: 1fr; gap: 0; }
+}
+@media (max-width: 560px) {
+  .mon-panels { padding: 26px 22px; }
+  .plan-grid, .plan-grid-3, .mon-panel .feat-grid { grid-template-columns: 1fr; }
+  .plan-row { grid-template-columns: 1fr; gap: 3px; }
+  .mon-tab { padding: 11px 16px; font-size: 13px; }
+}
+
 /* ---------- attendize project page ---------- */
 .atz-hero { background: linear-gradient(180deg, color-mix(in oklab, var(--spruce), transparent 88%), transparent); }
 .atz-hero-grid { display: grid; grid-template-columns: 1.25fr .75fr; gap: 44px; align-items: center; margin-top: 6px; }
@@ -492,4 +566,5 @@ a { color: inherit; text-decoration: none; }
   .swatches { grid-template-columns: 1fr; }
   .notify-form { flex-direction: column; }
   .hire-cta { padding: 30px 26px; }
+  .contact-row { grid-template-columns: 1fr; }
 }

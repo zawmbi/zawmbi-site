@@ -17,7 +17,7 @@ export const attendizeFacts: [string, string][] = [
   ['Role', 'Designed & built end-to-end, solo'],
   ['Platforms', 'iPhone + iPad'],
   ['Year', '2026'],
-  ['Status', 'Under Review'],
+  ['Status', 'Under'],
 ];
 
 /* Stack tags for the hero. */
