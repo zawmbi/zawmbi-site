@@ -4,7 +4,7 @@ export const monitr = {
   name: 'monitr',
   tagline: 'A live situation room for world events.',
   blurb:
-    'monitr aggregates 150+ news sources into an interactive dashboard — trending topics, a 3D world map, elections, conflicts, and markets — with a real-time social layer of chat, profiles, and presence layered on top.',
+    'monitr aggregates 150+ news sources into an interactive dashboard of trending topics, a 3D world map, elections, conflicts, and markets, with a real-time social layer of chat, profiles, and presence on top.',
   status: 'Live · Alpha',
   href: 'https://monitr.xyz',
   platforms: ['Web', 'Desktop', 'Mobile'],
@@ -75,7 +75,7 @@ export const monitrTour: TourShot[] = [
 export const monitrFeatures: [string, string][] = [
   ['Live news aggregation', '150+ sources, including GDELT global event data, distilled into trending topics with credibility scoring and a websocket-backed live feed.'],
   ['Interactive dashboards', 'A 3D globe and 2D maps, country deep-dives, an Elections mode, conflict and geopolitics panels (nuclear, tariffs, trade blocs), plus markets, weather, space, and live cams.'],
-  ['Watchlist & alerts', 'Track topics and countries with tiered alert sensitivity — off, important-only, or all — a daily AI-style digest, and browser notifications.'],
+  ['Watchlist & alerts', 'Track topics and countries with tiered alert sensitivity (off, important-only, or all), a daily AI-style digest, and browser notifications.'],
   ['Real-time social layer', 'Global chat with @mentions, friends and requests, public profiles with badges, live presence, and opt-in "what are you viewing" activity.'],
   ['Full moderation suite', 'An admin panel with user management, roles, a reports queue, word filters, a global chat kill-switch, badge granting, and an immutable audit log.'],
   ['Accounts', 'Google and X OAuth plus anonymous guest sessions and a username-onboarding gate.'],
@@ -85,7 +85,7 @@ export const monitrFeatures: [string, string][] = [
 export const monitrTech: [string, string][] = [
   ['Frontend', 'React + Vite SPA, code-split by feature so the Three.js globe, maps, and charts load on demand. Hook-driven with real-time Firestore listeners, optimistic UI with debounced cloud saves, and error boundaries that degrade a failed call inline instead of crashing the app.'],
   ['Backend', 'A Dockerized Node.js service on a DigitalOcean droplet (docker-compose + nginx reverse proxy) behind Cloudflare with origin TLS. PostgreSQL storage, a websocket server for live presence and feed, and scheduled news-ingestion and rundown jobs.'],
-  ['Serverless & data', 'Around 57 Firebase Cloud Functions (2nd-gen / Cloud Run), Firestore real-time DB, Cloud Storage, and Hosting — a deliberate hybrid of always-on droplet and serverless.'],
+  ['Serverless & data', 'Around 57 Firebase Cloud Functions (2nd-gen / Cloud Run), Firestore real-time DB, Cloud Storage, and Hosting: a deliberate hybrid of always-on droplet and serverless.'],
   ['Security engineering', 'Default-deny Firestore and Storage rules, server-side validation and sanitization, Firestore-backed sliding-window rate limiting, signed upload URLs with size caps, ban and mute enforcement at the request gate, roles re-derived server-side, App Check (reCAPTCHA) attestation, and audit logging of every admin action.'],
   ['Infra & cost engineering', 'Worked under a hard regional Cloud Run CPU quota: tuned per-function maxInstances and built a one-at-a-time deploy strategy to keep all ~57 functions shipping under the ceiling.'],
 ];
@@ -101,15 +101,15 @@ export const monitrArch = [
 /* ───────────────────────── "THE PROBLEM" PLANNING TAB ─────────────────────────
    The thinking behind monitr — written as a planning doc for the case study. */
 export const monitrProblem = {
-  lead: 'Staying genuinely informed about the world has never been harder. The raw information is out there, but it is scattered across hundreds of outlets, social feeds, market tickers, and maps — each with its own bias, refresh rate, and login. Holding a real-time picture in your head means juggling a dozen tabs and still missing how the pieces connect.',
-  bet: 'The bet: the real-time web, cheap global event data like GDELT, and serverless infrastructure have finally made a one-person “situation room” feasible — something that used to take a newsroom.',
+  lead: 'Staying genuinely informed about the world has never been harder. The raw information is out there, but it is scattered across hundreds of outlets, social feeds, market tickers, and maps, each with its own bias, refresh rate, and login. Holding a real-time picture in your head means juggling a dozen tabs and still missing how the pieces connect.',
+  bet: 'The bet: the real-time web, cheap global event data like GDELT, and serverless infrastructure have finally made a one-person “situation room” feasible, something that used to take a newsroom.',
 };
 
 export const monitrProblemPoints: [string, string][] = [
   ['Everything lives somewhere else', 'News, markets, conflict, elections, weather, even satellites each sit in a separate tool with its own mental model.'],
   ['The page is slower than the world', 'Most dashboards are static snapshots or refresh on a timer. Real events move faster than the screen in front of you.'],
   ['Noise drowns the signal', 'With no credibility weighting or de-duplication, ten versions of one story crowd out the one that matters.'],
-  ['Watching alone', 'Following world events is oddly isolating — there is no shared space to react, discuss, or see what others track.'],
+  ['Watching alone', 'Following world events is oddly isolating; there is no shared space to react, discuss, or see what others track.'],
   ['The context-switching tax', 'Every jump between apps drops the thread; the link between a market move and a headline gets lost in the gaps.'],
   ['No room of your own', 'Off-the-shelf readers can’t be arranged, themed, or tuned to the handful of things any one person actually watches.'],
 ];
@@ -131,7 +131,7 @@ export const monitrGoals: [string, string][] = [
 ];
 
 export const monitrPrinciples: [string, string][] = [
-  ['Aggregate, don’t replace', 'Surface and connect primary sources, and always link back out — never pretend to be the origin.'],
-  ['Security & cost are features', 'Default-deny rules, rate limiting, and quota-aware deploys are part of the product, not an afterthought.'],
+  ['Aggregate, don’t replace', 'Surface and connect primary sources, and always link back out to them, never posing as the origin.'],
+  ['Security & cost are features', 'Default-deny rules, rate limiting, and quota-aware deploys are part of the product, built in from the start.'],
   ['Runnable by one person', 'Cheap data feeds, serverless, and a hybrid backend keep a one-operator situation room sustainable.'],
 ];

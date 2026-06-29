@@ -127,15 +127,6 @@ a { color: inherit; text-decoration: none; }
 .hero-ticker strong { color: var(--ink); font-weight: 800; }
 .tick-label { color: var(--moss-deep); }
 .tick-sep { color: var(--clay); }
-.dot {
-  width: 9px; height: 9px; background: var(--clay); display: inline-block; flex: none; border: 1.5px solid var(--ink);
-  box-shadow: 0 0 0 0 var(--clay); animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--clay), transparent 30%); }
-  70% { box-shadow: 0 0 0 8px transparent; }
-  100% { box-shadow: 0 0 0 0 transparent; }
-}
 
 /* ---------- profile card (trading-card) ---------- */
 .hero-card {
