@@ -4,7 +4,7 @@ export const navLinks: [string, string][] = [
   ['Apps', '/#apps'],
   ['monitr', '/monitr'],
   ['Hire', '/#hire'],
-  ['Studio', '/#studio'],
+  ['About', '/#studio'],
   ['Contact', '/contact'],
 ];
 
