@@ -1,0 +1,229 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Carousel from '../components/Carousel.astro';
+import {
+  phylabeler,
+  phylabelerTechTags,
+  phylabelerTour,
+  phylabelerFeatures,
+  phylabelerTech,
+  phylabelerArch,
+  phylabelerProblem,
+  phylabelerProblemPoints,
+  phylabelerAudience,
+  phylabelerGoals,
+  phylabelerPrinciples,
+} from '../data/research';
+---
+
+<Base
+  title="PhyLabeler · finding where a phylogeny disagrees with the taxonomy · Zawmbi"
+  description={phylabeler.desc}
+>
+  <Nav />
+
+  {/* ---------------- HERO ---------------- */}
+  <section class="hero mon-hero phy-hero" id="top">
+    <div class="wrap">
+      <a class="mon-back" href="/#research">← Back to research work</a>
+      <div class="eyebrow" style="margin-top: 18px;">Bioinformatics · Computational biology</div>
+      <h1 class="mon-title">PhyLabeler</h1>
+      <p class="mon-tag">{phylabeler.tagline}</p>
+      <p class="mon-blurb">{phylabeler.desc}</p>
+      <div class="mon-cta">
+        <a class="btn btn-solid btn-lg" href={phylabeler.repo} target="_blank" rel="noreferrer">View the code ↗</a>
+        <div class="mon-meta">
+          <span class="badge">Python</span>
+          <span class="badge">Desktop &amp; CLI</span>
+          <span class="badge badge-status">Open source</span>
+        </div>
+      </div>
+      <div class="mon-tags">
+        {phylabelerTechTags.map((t) => <span class="badge">{t}</span>)}
+      </div>
+      <div class="mon-stats">
+        {phylabeler.stats.map(([n, l]) => (
+          <div class="mon-stat">
+            <div class="mon-stat-n">{n}</div>
+            <div class="mon-stat-l">{l}</div>
+          </div>
+        ))}
+      </div>
+      <div class="phy-shot">
+        <img src={phylabeler.shot} alt={phylabeler.shotAlt} width="2200" height="1378" />
+      </div>
+      <p class="phy-caption">A 232-tip plant tree checked against 2,892,390 NCBI taxa — 110 groups monophyletic, 22 broken</p>
+    </div>
+  </section>
+
+  {/* ---------------- TABBED CASE STUDY ---------------- */}
+  <section class="section mon-tabs-section" id="case">
+    <div class="wrap">
+      <div class="mon-tabs" data-tabs>
+        <div class="mon-tablist" role="tablist" aria-label="PhyLabeler case study">
+          <button class="mon-tab" role="tab" id="tab-problem" aria-controls="panel-problem" aria-selected="true">The problem</button>
+          <button class="mon-tab" role="tab" id="tab-product" aria-controls="panel-product" aria-selected="false">What it does</button>
+          <button class="mon-tab" role="tab" id="tab-tour" aria-controls="panel-tour" aria-selected="false">The tour</button>
+          <button class="mon-tab" role="tab" id="tab-build" aria-controls="panel-build" aria-selected="false">Under the hood</button>
+        </div>
+
+        <div class="mon-panels">
+          {/* ---- THE PROBLEM ---- */}
+          <section class="mon-panel" role="tabpanel" id="panel-problem" aria-labelledby="tab-problem">
+            <div class="plan-top">
+              <div>
+                <h2 class="plan-title">Is this group<br />really a clade?</h2>
+                <p class="plan-lead">{phylabelerProblem.lead}</p>
+              </div>
+              <div class="plan-bet" set:html={phylabelerProblem.bet.replace('The bet:', '<strong>The bet:</strong>')}></div>
+            </div>
+
+            <div class="plan-block">
+              <h3 class="plan-h">Why it's hard</h3>
+              <div class="plan-grid">
+                {phylabelerProblemPoints.map(([t, d], i) => (
+                  <div class="plan-card">
+                    <span class="num">{String(i + 1).padStart(2, '0')}</span>
+                    <h4>{t}</h4>
+                    <p>{d}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div class="plan-cols">
+              <div class="plan-block">
+                <h3 class="plan-h">Who it's for</h3>
+                <div class="plan-list">
+                  {phylabelerAudience.map(([t, d]) => (
+                    <div class="plan-row"><b>{t}</b><span>{d}</span></div>
+                  ))}
+                </div>
+              </div>
+              <div class="plan-block">
+                <h3 class="plan-h">What good looks like</h3>
+                <div class="plan-list">
+                  {phylabelerGoals.map(([t, d]) => (
+                    <div class="plan-row"><b>{t}</b><span>{d}</span></div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div class="plan-block">
+              <h3 class="plan-h">Operating principles</h3>
+              <div class="plan-grid plan-grid-3">
+                {phylabelerPrinciples.map(([t, d]) => (
+                  <div class="plan-card plan-card-moss">
+                    <h4>{t}</h4>
+                    <p>{d}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* ---- WHAT IT DOES ---- */}
+          <section class="mon-panel" role="tabpanel" id="panel-product" aria-labelledby="tab-product" hidden>
+            <h2 class="plan-title">A report you can act on</h2>
+            <p class="plan-lead">The whole interface is arranged around one question: which sequence do I check first?</p>
+            <div class="feat-grid plan-block">
+              {phylabelerFeatures.map(([t, d]) => (
+                <div class="feat-card">
+                  <h4>{t}</h4>
+                  <p>{d}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* ---- THE TOUR ---- */}
+          <section class="mon-panel" role="tabpanel" id="panel-tour" aria-labelledby="tab-tour" hidden>
+            <h3 class="plan-h">A guided tour</h3>
+            <Carousel items={phylabelerTour} aspect="16 / 10" interval={4600} />
+          </section>
+
+          {/* ---- UNDER THE HOOD ---- */}
+          <section class="mon-panel" role="tabpanel" id="panel-build" aria-labelledby="tab-build" hidden>
+            <h2 class="plan-title">The engineering</h2>
+            <p class="plan-lead">Roughly 6,300 lines of Python across the runtime modules, and not one third-party import outside the test suite.</p>
+            <div class="demo-list plan-block">
+              {phylabelerTech.map(([t, d]) => (
+                <div class="demo-row">
+                  <h4>{t}</h4>
+                  <p>{d}</p>
+                </div>
+              ))}
+            </div>
+            <h3 class="plan-h" style="margin-top: 34px;">Architecture at a glance</h3>
+            <div class="arch phy-arch">
+              <div class="arch-node"><h5>{phylabelerArch[0].title}</h5><p>{phylabelerArch[0].detail}</p></div>
+              <span class="arch-arrow">→</span>
+              <div class="arch-node"><h5>{phylabelerArch[1].title}</h5><p>{phylabelerArch[1].detail}</p></div>
+              <span class="arch-arrow">→</span>
+              <div class="arch-node"><h5>{phylabelerArch[2].title}</h5><p>{phylabelerArch[2].detail}</p></div>
+              <span class="arch-arrow">→</span>
+              <div class="arch-node"><h5>{phylabelerArch[3].title}</h5><p>{phylabelerArch[3].detail}</p></div>
+              <span class="arch-arrow">→</span>
+              <div class="arch-col">
+                <div class="arch-node"><h5>{phylabelerArch[4].title}</h5><p>{phylabelerArch[4].detail}</p></div>
+                <div class="arch-node"><h5>{phylabelerArch[5].title}</h5><p>{phylabelerArch[5].detail}</p></div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- CTA ---------------- */}
+  <section class="section section-alt" id="why">
+    <div class="wrap">
+      <div class="hire-cta pxc">
+        <div>
+          <h3 class="hire-cta-title">Want this kind of work?</h3>
+          <p class="hire-cta-sub">Research code that a reviewer can actually check, wrapped in something a biologist can actually run. Open to data, bioinformatics, and research-engineering roles.</p>
+        </div>
+        <a class="btn btn-solid btn-lg" href="/#hire">Work with me</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>
+
+<script>
+  /* In-page tabs — switch panels without touching the rest of the page. */
+  document.querySelectorAll('[data-tabs]').forEach((root) => {
+    const tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
+    const panels = Array.prototype.slice.call(root.querySelectorAll('[role="tabpanel"]'));
+    if (!tabs.length) return;
+
+    function select(i) {
+      tabs.forEach((t, n) => {
+        const on = n === i;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.setAttribute('tabindex', on ? '0' : '-1');
+        if (on) panels[n].removeAttribute('hidden');
+        else panels[n].setAttribute('hidden', '');
+      });
+    }
+
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          const n = (i + 1) % tabs.length; tabs[n].focus(); select(n);
+        } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          const n = (i - 1 + tabs.length) % tabs.length; tabs[n].focus(); select(n);
+        }
+      });
+    });
+
+    select(0);
+  });
+</script>

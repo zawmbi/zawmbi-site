@@ -159,6 +159,7 @@ a { color: inherit; text-decoration: none; }
 .section { padding: 92px 0; position: relative; }
 .section-alt { background: var(--moss-band); border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); }
 #lab.section-alt { background: var(--clay-band); }
+.section-well { background: var(--well); border-top: 3px solid var(--ink); border-bottom: 3px solid var(--ink); }
 .sec-head { max-width: 680px; margin-bottom: 52px; }
 .sec-title {
   font-family: var(--font-display); font-weight: 900; font-size: clamp(34px, 4.4vw, 56px);
@@ -199,6 +200,53 @@ a { color: inherit; text-decoration: none; }
 }
 .badge-status { background: var(--moss); color: var(--ink); }
 .app-actions { margin-top: auto; display: flex; flex-wrap: wrap; gap: 10px; }
+/* an app icon that is a real logo file sheds the clay tile and shows the artwork */
+.app-icon-logo { background: transparent; border: 0; box-shadow: none; padding: 0; }
+.app-icon-img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+/* ---------- client websites ---------- */
+.site-list { display: flex; flex-direction: column; gap: 34px; }
+.site-card { display: flex; flex-direction: column; background: var(--cream); border: var(--bd); box-shadow: var(--sh-lg); }
+.site-frame {
+  display: flex; flex-direction: column; background: var(--ink); padding: 13px;
+  border-bottom: var(--bd); text-decoration: none; overflow: hidden;
+}
+.site-bar { display: flex; align-items: center; gap: 12px; padding: 0 4px 11px; }
+.site-dots { display: inline-flex; gap: 6px; flex: none; }
+.site-dots i { width: 10px; height: 10px; background: var(--cream); border-radius: 50%; opacity: .55; }
+.site-dots i:first-child { background: var(--clay); opacity: 1; }
+.site-url {
+  flex: 1; font-family: var(--font-px); font-weight: 700; font-size: 12px; letter-spacing: .06em;
+  color: var(--cream); background: color-mix(in oklab, var(--cream), transparent 88%);
+  padding: 6px 12px; border-radius: 999px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+/* the capture is a full-page screenshot — show it at full width and crop the tail */
+.site-shot { position: relative; width: 100%; aspect-ratio: 16 / 9; background: var(--well); }
+.site-shot .image-slot {
+  border: 0 !important; border-radius: 0 !important; overflow: hidden;
+  position: absolute; inset: 0;
+}
+/* the screenshot is a full-page capture: pin it to the top so the hero always reads */
+.site-shot .image-slot__img { object-fit: cover; object-position: top center; }
+.site-frame:hover .site-shot .image-slot__img { transform: scale(1.02); }
+.site-shot .image-slot__img { transition: transform .3s ease; }
+.site-body { padding: 42px 46px; display: grid; grid-template-columns: 1fr 1fr; gap: 46px; align-items: start; }
+.site-body-main { display: flex; flex-direction: column; align-items: flex-start; height: 100%; }
+.site-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 18px; }
+.site-icon {
+  width: 56px; height: 56px; flex: none; border: var(--bd); box-shadow: var(--sh-sm);
+  background: var(--paper); display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.site-icon img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.site-points { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+.site-points li { position: relative; padding-left: 22px; font-size: 15.5px; color: var(--dim); text-wrap: pretty; }
+.site-points li::before {
+  content: ""; position: absolute; left: 0; top: .5em; width: 9px; height: 9px;
+  background: var(--moss); border: 1.5px solid var(--ink);
+}
+.site-foot { margin-top: auto; padding-top: 8px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.site-body-side .app-meta { margin-bottom: 0; }
+.site-meta { font-family: var(--font-px); font-weight: 700; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--dim); }
 
 /* ---------- hire ---------- */
 .serv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 22px; }
@@ -521,6 +569,32 @@ textarea.contact-input { resize: vertical; min-height: 130px; }
   .atz-components { grid-template-columns: 1fr; }
 }
 
+/* ---------- research / bioinformatics card (reuses .site-card) ---------- */
+/* The PhyLabeler capture is 3020×1892 — exactly 16:10 — so `cover` shows the
+   whole window with nothing cropped off the results table. */
+.rsch .site-shot { aspect-ratio: 16 / 10; background: var(--ink); }
+.rsch .site-shot .image-slot__img { object-position: center; }   /* fits exactly — nothing to crop */
+.rsch-icon { background: var(--ink); }
+.rsch-icon .ag { width: 100%; height: 100%; fill: none; stroke: var(--moss); stroke-width: 2.6; stroke-linecap: square; }
+.rsch-stats { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 3px solid var(--ink); background: var(--paper); }
+.rsch-stats .mon-stat { padding: 20px 18px; }
+.rsch-stats .mon-stat + .mon-stat { border-left: 2px dashed var(--ink); }
+.rsch-stats .mon-stat-n { font-size: clamp(22px, 2.8vw, 34px); }
+
+/* ---------- phylabeler case study ---------- */
+.phy-hero .badge-status { background: var(--moss); }
+.phy-shot { border: var(--bd); box-shadow: var(--sh-lg); background: var(--ink); margin-top: 38px; }
+.phy-shot img { display: block; width: 100%; height: auto; }
+.phy-caption { font-family: var(--font-px); font-weight: 700; font-size: 11.5px; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--dim); margin: 10px 0 0; }
+.phy-arch .arch-node { flex: 1 1 0; min-width: 148px; }
+
+@media (max-width: 720px) {
+  .rsch-stats { grid-template-columns: repeat(2, 1fr); }
+  .rsch-stats .mon-stat:nth-child(3) { border-left: 0; }
+  .rsch-stats .mon-stat:nth-child(n+3) { border-top: 2px dashed var(--ink); }
+}
+
 /* ---------- creature (pixel mark) animation ---------- */
 .z2 { display: inline-flex; line-height: 0; }
 .z2 svg { display: block; shape-rendering: crispEdges; }
@@ -547,10 +621,14 @@ textarea.contact-input { resize: vertical; min-height: 130px; }
   .studio-grid { grid-template-columns: 1fr; gap: 36px; }
   .approw, .approw-flip { grid-template-columns: 1fr; }
   .approw-media, .approw-flip .approw-media { order: 0; border-right: 0; border-left: 0; border-bottom: var(--bd); }
+  .site-body { grid-template-columns: 1fr; gap: 28px; padding: 34px 28px; }
+  .site-shot { aspect-ratio: 16 / 11; }
+  .site-foot { margin-top: 4px; }
   .serv-grid, .how-strip { grid-template-columns: 1fr; }
   .press-grid { grid-template-columns: repeat(2, 1fr); }
   .swatches { grid-template-columns: repeat(2, 1fr); }
   .lab-grid { grid-template-columns: 1fr; }
+  .rsch .site-shot { aspect-ratio: 16 / 11; }
   .footer-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
   .nav-cta { margin-left: auto; }   /* links are hidden — keep the CTA at the right edge */

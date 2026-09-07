@@ -7,6 +7,8 @@ import ImageSlot from '../components/ImageSlot.astro';
 import Carousel from '../components/Carousel.astro';
 import { socials } from '../data/site';
 import { monitrThemes } from '../data/monitr';
+import { websites } from '../data/websites';
+import { researchProjects } from '../data/research';
 
 /* ─────────────────────────── YOUR IMAGES ───────────────────────────
    Drop image files into  public/attachments/  then point each path here.
@@ -26,6 +28,7 @@ const apps = [
     id: 'monitr',
     name: 'monitr',
     icon: 'mono',
+    logo: '',
     tagline: 'Keep tabs on what matters.',
     desc: 'A real-time dashboard for watching the world: live news, conflict, markets, elections, even satellites, all on one interactive globe you arrange yourself.',
     platforms: ['Web', 'Desktop', 'Mobile'],
@@ -38,6 +41,7 @@ const apps = [
     id: 'attendize',
     name: 'Attendize',
     icon: 'check',
+    logo: '/attachments/attendize/icon.png',
     tagline: 'Attendance, with momentum.',
     desc: 'A gamified attendance tracker for college and grad students. Log Present, Late, or Absent per class, see how many you can still safely miss, forecast your end-of-term percentage, and earn XP, ranks, streaks, and badges.',
     platforms: ['iPhone', 'iPad'],
@@ -90,7 +94,7 @@ const steps = [
   ['Launch and refine', 'We release early, observe how the product is used, and improve the areas that matter most.'],
 ];
 
-const tools = ['Swift & SwiftUI', 'React', 'TypeScript', 'Node.js', 'App Store shipping'];
+const tools = ['Swift & SwiftUI', 'React', 'TypeScript', 'Node.js', 'Python', 'Bioinformatics', 'App Store shipping'];
 
 const principles = [
   ['Focused', 'Each app is built to do one job well, without unnecessary features and minimizing clutter.'],
@@ -98,7 +102,7 @@ const principles = [
   ['Built for real use', 'Designed for people who are busy and value their time.'],
 ];
 
-const marqueeItems = ['Independent developer', 'Open for work', 'iOS + web', 'Built start to finish', 'Full-Stack', 'AI Integrations'];
+const marqueeItems = ['Independent developer', 'Open for work', 'iOS + web', 'Built start to finish', 'Full-Stack', 'Bioinformatics', 'AI Integrations'];
 const marqueeRun = [...marqueeItems, ...marqueeItems];
 ---
 
@@ -193,14 +197,17 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
             </div>
             <div class="approw-body">
               <div class="approw-head">
-                <div class="app-icon pxc-sm">
-                  {app.icon === 'check' && (
+                <div class:list={['app-icon', 'pxc-sm', { 'app-icon-logo': app.logo }]}>
+                  {app.logo && (
+                    <img class="app-icon-img" src={app.logo} alt={`${app.name} app icon`} width="56" height="56" />
+                  )}
+                  {!app.logo && app.icon === 'check' && (
                     <svg viewBox="0 0 40 40" class="ag"><path d="M11 21 l6 6 l12 -14" /></svg>
                   )}
-                  {app.icon === 'cal' && (
+                  {!app.logo && app.icon === 'cal' && (
                     <svg viewBox="0 0 40 40" class="ag"><rect x="9" y="11" width="22" height="20" rx="3" /><path d="M9 17 H31 M15 8 V13 M25 8 V13" /></svg>
                   )}
-                  {app.icon === 'mono' && (
+                  {!app.logo && app.icon === 'mono' && (
                     <svg viewBox="0 0 40 40" class="ag"><path d="M8 26 l7 -9 l6 5 l5 -10 l6 8" /></svg>
                   )}
                 </div>
@@ -222,6 +229,132 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
                   rel="noreferrer"
                 >{app.cta}</a>
                 {app.id === 'monitr' && <a class="btn btn-ghost" href="/monitr">See the case study →</a>}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  {/* ---------------- RESEARCH / BIOINFORMATICS ---------------- */}
+  <section class="section section-well" id="research">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Research &amp; data</div>
+        <h2 class="sec-title">Bioinformatics tooling</h2>
+        <p class="sec-lead">Scientific software: algorithms over phylogenetic trees and reference taxonomies, written so that a researcher can run it, read the answer, and check the answer is right.</p>
+      </div>
+      <div class="site-list">
+        {researchProjects.map((r) => (
+          <article class="site-card rsch pxc">
+            <a class="site-frame" href={r.href} aria-label={`Read the ${r.name} case study`}>
+              <div class="site-bar">
+                <span class="site-dots"><i></i><i></i><i></i></span>
+                <span class="site-url">{r.barLabel}</span>
+              </div>
+              <div class="site-shot">
+                <ImageSlot
+                  src={r.cardShot}
+                  alt={r.shotAlt}
+                  placeholder={`${r.name} screenshot`}
+                  style="width: 100%; height: 100%;"
+                />
+              </div>
+            </a>
+            <div class="site-body">
+              <div class="site-body-main">
+                <div class="site-head">
+                  <span class="site-icon rsch-icon pxc-sm">
+                    <svg viewBox="0 0 40 40" class="ag" aria-hidden="true">
+                      <path d="M7 20 H14 M14 9 V31 M14 9 H22 M14 31 H22 M22 9 V15 M22 15 H30 M22 9 H30 M22 31 V25 M22 25 H30 M22 31 H30" />
+                    </svg>
+                  </span>
+                  <div>
+                    <h3 class="app-name">{r.name}</h3>
+                    <div class="app-tag">{r.tagline}</div>
+                  </div>
+                </div>
+                <p class="app-desc">{r.desc}</p>
+                <div class="site-foot">
+                  <a class="btn btn-solid" href={r.href}>Read the case study →</a>
+                  <a class="btn btn-ghost" href={r.repo} target="_blank" rel="noreferrer">View the code ↗</a>
+                  <span class="site-meta">{r.meta.join(' · ')}</span>
+                </div>
+              </div>
+              <div class="site-body-side">
+                <ul class="site-points">
+                  {r.points.map((p) => <li>{p}</li>)}
+                </ul>
+                <div class="app-meta">
+                  {r.tags.map((t) => <span class="badge badge-plat">{t}</span>)}
+                </div>
+              </div>
+            </div>
+            <div class="rsch-stats">
+              {r.stats.map(([n, l]) => (
+                <div class="mon-stat">
+                  <div class="mon-stat-n">{n}</div>
+                  <div class="mon-stat-l">{l}</div>
+                </div>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- WEBSITES ---------------- */}
+  <section class="section" id="websites">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Client work</div>
+        <h2 class="sec-title">Websites I've built</h2>
+        <p class="sec-lead">Sites for real businesses, designed and built end to end, then handed over running. Each one is live right now.</p>
+      </div>
+      <div class="site-list">
+        {websites.map((w) => (
+          <article class="site-card pxc">
+            <a class="site-frame" href={w.href} target="_blank" rel="noreferrer" aria-label={`Visit ${w.domain}`}>
+              <div class="site-bar">
+                <span class="site-dots"><i></i><i></i><i></i></span>
+                <span class="site-url">{w.domain}</span>
+              </div>
+              <div class="site-shot">
+                <ImageSlot
+                  src={w.shot}
+                  alt={w.shotAlt}
+                  placeholder={`${w.name} screenshot`}
+                  style="width: 100%; height: 100%;"
+                />
+              </div>
+            </a>
+            <div class="site-body">
+              <div class="site-body-main">
+                <div class="site-head">
+                  <span class="site-icon pxc-sm">
+                    <img src={w.icon} alt={`${w.name} logo`} width="52" height="52" />
+                  </span>
+                  <div>
+                    <h3 class="app-name">{w.name}</h3>
+                    <div class="app-tag">{w.tagline}</div>
+                  </div>
+                </div>
+                <p class="app-desc">{w.desc}</p>
+                <div class="site-foot">
+                  <a class="btn btn-solid" href={w.href} target="_blank" rel="noreferrer">Visit {w.domain} →</a>
+                  <span class="site-meta">{w.meta.join(' · ')}</span>
+                </div>
+              </div>
+              <div class="site-body-side">
+                <ul class="site-points">
+                  {w.points.map((p) => <li>{p}</li>)}
+                </ul>
+                <div class="app-meta">
+                  {w.tags.map((t) => <span class="badge badge-plat">{t}</span>)}
+                </div>
               </div>
             </div>
           </article>
@@ -279,16 +412,17 @@ const marqueeRun = [...marqueeItems, ...marqueeItems];
     <div class="wrap studio-grid">
       <div class="studio-copy">
         <div class="eyebrow">About me</div>
-        <h2 class="sec-title">One person,<br />start to finish</h2>
+        <h2 class="sec-title">What I<br />build</h2>
         <p class="studio-p">
-          It began with a recurring pattern: I kept encountering the
-          same fixable problems and wanted better tools to deal with them. So I built
-          those tools myself, and the ones that worked well ended up here.
+          I studied data science, and most of what I build comes back to data:
+          gathering it, making sense of it, and turning it into something people can
+          actually use. The projects here started from problems I kept running into,
+          and the ones that worked well ended up on this page.
         </p>
         <p class="studio-p">
-          The apps differ on the surface, but they share a common principle. I believe
-          software should respect the time of the people using it, and I keep that in
-          mind across everything I build.
+          These projects differ on the surface, but they share a common principle. I
+          believe software should respect the time of the people using it, and I keep
+          that in mind across everything I build.
         </p>
         <div class="maker">
           <ImageSlot

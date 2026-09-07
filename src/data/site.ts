@@ -3,6 +3,8 @@
 export const navLinks: [string, string][] = [
   ['Apps', '/#apps'],
   ['monitr', '/monitr'],
+  ['Research', '/#research'],
+  ['Websites', '/#websites'],
   ['Hire', '/#hire'],
   ['About', '/#studio'],
   ['Contact', '/contact'],
