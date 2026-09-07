@@ -10,6 +10,7 @@ export const attendize = {
   status: 'App Store submission ready',
   platforms: ['iPhone', 'iPad'],
   heroShot: '/attachments/attendize/dashboard-ring.png',
+  icon: '/attachments/attendize/icon.png',
 };
 
 /* Quick facts strip. */
@@ -17,7 +18,7 @@ export const attendizeFacts: [string, string][] = [
   ['Role', 'Designed & built end-to-end, solo'],
   ['Platforms', 'iPhone + iPad'],
   ['Year', '2026'],
-  ['Status', 'Under'],
+  ['Status', 'App Store submission ready'],
 ];
 
 /* Stack tags for the hero. */

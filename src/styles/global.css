@@ -469,6 +469,19 @@ textarea.contact-input { resize: vertical; min-height: 130px; }
 /* a clean phone mockup for the screenshots */
 .device-phone { background: var(--ink); border: var(--bd); border-radius: 36px; padding: 9px; box-shadow: var(--sh-lg); width: 100%; max-width: 264px; }
 .device-phone .image-slot { border: 0 !important; border-radius: 27px !important; overflow: hidden; width: 100%; aspect-ratio: 9 / 19.5; }
+/* app-icon lockup beside the title */
+.atz-lockup { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 18px; }
+.atz-lockup .mon-title, .atz-lockup .mon-tag { margin-top: 0; }
+.atz-appicon { width: 84px; height: 84px; flex: none; border: var(--bd); box-shadow: var(--sh-sm); border-radius: 19px; display: block; }
+/* the mark, shown large in the design section */
+.atz-mark {
+  display: grid; grid-template-columns: 132px 1fr; gap: 30px; align-items: center;
+  background: var(--cream); border: var(--bd); box-shadow: var(--sh); padding: 28px 32px; margin-bottom: 22px;
+}
+.atz-mark-img { width: 132px; height: 132px; border: var(--bd); box-shadow: var(--sh-sm); border-radius: 29px; display: block; }
+.atz-mark-copy h4 { font-family: var(--font-display); font-weight: 800; font-size: 21px; margin: 0 0 8px; color: var(--ink); }
+.atz-mark-copy p { font-size: 16px; color: var(--dim); margin: 0 0 14px; max-width: 44em; text-wrap: pretty; }
+.atz-mark-chips { display: flex; gap: 8px; flex-wrap: wrap; }
 .atz-facts { display: grid; grid-template-columns: repeat(4, 1fr); background: var(--cream); border: var(--bd); box-shadow: var(--sh); margin-top: 40px; }
 .atz-fact { padding: 20px 22px; }
 .atz-fact + .atz-fact { border-left: 2px dashed var(--ink); }
@@ -508,6 +521,9 @@ textarea.contact-input { resize: vertical; min-height: 130px; }
   .atz-facts { grid-template-columns: repeat(2, 1fr); }
   .atz-fact:nth-child(3) { border-left: 0; }
   .atz-fact:nth-child(n+3) { border-top: 2px dashed var(--ink); }
+  .atz-lockup { gap: 16px; }
+  .atz-appicon { width: 62px; height: 62px; border-radius: 14px; }
+  .atz-mark { grid-template-columns: 1fr; gap: 20px; }
   .atz-sig, .atz-sig-flip { grid-template-columns: 1fr; gap: 24px; }
   .atz-sig-flip .atz-sig-shot { order: 0; }
   .atz-components { grid-template-columns: 1fr; }

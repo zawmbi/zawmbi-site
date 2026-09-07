@@ -32,8 +32,13 @@ import {
       <div class="atz-hero-grid">
         <div>
           <div class="eyebrow" style="margin-top: 18px;">iPhone + iPad project</div>
-          <h1 class="mon-title">Attendize</h1>
-          <p class="mon-tag">{attendize.tagline}</p>
+          <div class="atz-lockup">
+            <img class="atz-appicon" src={attendize.icon} alt="The Attendize app icon" width="84" height="84" />
+            <div>
+              <h1 class="mon-title">Attendize</h1>
+              <p class="mon-tag">{attendize.tagline}</p>
+            </div>
+          </div>
           <p class="mon-blurb">{attendize.blurb}</p>
           <div class="mon-cta">
             <a class="btn btn-solid btn-lg" href="/#hire">Work with me</a>
@@ -143,6 +148,23 @@ import {
         <p class="sec-lead">Light and dark, tokenized end to end, with two brand objects doing the heavy lifting.</p>
       </div>
 
+      <div class="atz-mark">
+        <img class="atz-mark-img" src={attendize.icon} alt="The Attendize app icon" width="132" height="132" />
+        <div class="atz-mark-copy">
+          <h4>The mark</h4>
+          <p>
+            A single honey-gold check on deep spruce. The check is the app's whole
+            job in one stroke, and the two brand colors do all the work, so the icon
+            still reads at 40 points on a crowded home screen.
+          </p>
+          <div class="atz-mark-chips">
+            <span class="badge">1024 × 1024</span>
+            <span class="badge">Light + dark home screens</span>
+            <span class="badge">Spruce &amp; honey gold</span>
+          </div>
+        </div>
+      </div>
+
       <div class="atz-swatches">
         {attendizeTokens.map((t) => (
           <div class="atz-swatch">
@@ -236,6 +258,7 @@ import {
         </div>
         <a class="btn btn-solid btn-lg" href="/#hire">Work with me</a>
       </div>
+      <a class="mon-back" href="/attendize/privacy" style="display: inline-block; margin-top: 24px;">Attendize privacy policy →</a>
     </div>
   </section>
 

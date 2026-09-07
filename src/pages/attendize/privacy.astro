@@ -1,0 +1,225 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+const updated = 'June 30, 2026';
+
+/* The short version — the summary strip, as scannable cards. */
+const summary: [string, string][] = [
+  ['Local by default', 'Your classes and attendance records are stored on your device. They stay there unless you turn on Cloud Backup & Sync.'],
+  ['Optional cloud sync', 'If you sign in and enable it, records and settings back up to Google Firebase (Firestore) under your account, so you can restore or sync across devices.'],
+  ['Location stays on device', 'Location (if you allow it) powers proximity reminders on your device. We never collect, store, or share it.'],
+  ['No ads, no selling', 'We do not sell your data, and we never use it for advertising or cross-app tracking.'],
+  ['Store-handled payments', 'Subscriptions go through Apple In-App Purchase or Google Play. We only ever see your subscription status, never your card.'],
+  ['Delete anytime', 'Settings → Delete account permanently removes your account and all data, local and cloud, whenever you want.'],
+];
+---
+
+<Base
+  title="Attendize · Privacy Policy · Zawmbi"
+  description="How Attendize handles your data. Attendance stays on your device by default; cloud backup is optional; nothing is sold or used for advertising."
+>
+  <Nav />
+
+  {/* ---------------- HERO ---------------- */}
+  <section class="hero mon-hero legal-hero" id="top">
+    <div class="wrap">
+      <a class="mon-back" href="/attendize">← Back to Attendize</a>
+      <div class="eyebrow" style="margin-top: 18px;">Attendize</div>
+      <h1 class="legal-title">Privacy Policy</h1>
+      <p class="legal-updated">Last updated {updated}</p>
+      <p class="mon-blurb">
+        Attendize ("the app", "we", "us") helps you track class attendance. This policy
+        explains what data the app handles and how. We've tried to keep it plain.
+      </p>
+    </div>
+  </section>
+
+  {/* ---------------- THE SHORT VERSION ---------------- */}
+  <section class="section section-alt" id="summary">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">The short version</div>
+        <h2 class="sec-title">Your data<br />stays yours</h2>
+        <p class="sec-lead">The essentials at a glance. The full policy is right below.</p>
+      </div>
+      <div class="feat-grid legal-summary">
+        {summary.map(([t, d]) => (
+          <div class="feat-card">
+            <h4>{t}</h4>
+            <p>{d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- FULL POLICY ---------------- */}
+  <section class="section" id="policy">
+    <div class="wrap">
+      <article class="legal">
+        <h2 id="information-we-handle">Information we handle</h2>
+
+        <p>
+          <strong>Account information.</strong> If you sign up or sign in (including with Google
+          or Apple), we receive your email address and display name through
+          <strong>Google Firebase Authentication</strong> in order to create and secure your
+          account. We do not receive your password.
+        </p>
+
+        <p>
+          <strong>Class and attendance data.</strong> The classes you add and the attendance you
+          log are stored <strong>locally on your device</strong> using on-device storage. They
+          stay on your device unless you remove them or enable Cloud Backup &amp; Sync.
+        </p>
+
+        <p>
+          <strong>Cloud Backup &amp; Sync (optional).</strong> If you are signed in and choose to
+          back up or sync, your classes, attendance records, and app settings are uploaded to and
+          stored in <strong>Google Firebase Firestore</strong> under your account, so you can
+          restore them or keep multiple devices in sync. You control this: it only happens when
+          you sign in and use the backup/sync feature, and you can delete the cloud copy at any
+          time by deleting your account.
+        </p>
+
+        <p>
+          <strong>Location data.</strong> With your permission, the app may use your location to
+          provide proximity-based class reminders. This processing happens on your device; we do
+          not collect or transmit your location.
+        </p>
+
+        <p>
+          <strong>Reminders / notifications.</strong> Class reminders are scheduled and delivered
+          locally on your device. We do not send your schedule to a server to generate them.
+        </p>
+
+        <p>
+          <strong>Subscriptions.</strong> Optional Premium features are unlocked via an
+          auto-renewable subscription purchased through Apple In-App Purchase (or Google Play on
+          Android). The app store handles the transaction and billing; we receive only your
+          subscription status (active or not), never your payment information.
+        </p>
+
+        <p>
+          <strong>Diagnostics.</strong> We do not collect analytics or advertising identifiers.
+        </p>
+
+        <h2 id="how-we-use-information">How we use information</h2>
+        <ul>
+          <li>To authenticate you and keep your account secure.</li>
+          <li>To provide app features you request (tracking, reminders, forecasts, and — if you enable it — cloud backup and sync).</li>
+          <li>To make Premium features available to active subscribers.</li>
+          <li>We do <strong>not</strong> use your information for advertising, profiling, or tracking across apps or websites.</li>
+        </ul>
+
+        <h2 id="third-party-services">Third-party services</h2>
+        <ul>
+          <li><strong>Google Firebase Authentication</strong> — handles sign-in. See Google's <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a>.</li>
+          <li><strong>Google Firebase Firestore</strong> — stores your cloud backup if you enable Cloud Backup &amp; Sync. The same Google Privacy Policy applies.</li>
+          <li><strong>Sign in with Apple</strong> (if used) — see Apple's <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noreferrer">Privacy Policy</a>.</li>
+          <li><strong>Apple In-App Purchase / Google Play Billing</strong> — processes subscription purchases. See Apple's and Google's respective privacy policies.</li>
+        </ul>
+
+        <h2 id="data-storage">Data storage and international transfer</h2>
+        <p>
+          Cloud backups are stored on Google Firebase infrastructure, which may process and store
+          data on servers located outside your country (including the United States). Data is
+          protected in transit and at rest using industry-standard encryption provided by these
+          platforms.
+        </p>
+
+        <h2 id="data-retention">Data retention and deletion</h2>
+        <p>
+          On-device data persists until you remove it. Any cloud backup persists until you delete
+          your account. You can, at any time from within the app:
+        </p>
+        <ul>
+          <li><strong>Settings → Delete account</strong> — permanently deletes your authentication account, your cloud backup (Firestore), and your on-device data.</li>
+          <li><strong>Settings → Clear all data &amp; start fresh</strong> — wipes the data stored locally on your device.</li>
+        </ul>
+        <p>
+          Deleting the app also removes locally stored data (but not a cloud backup — use Delete
+          account to remove that).
+        </p>
+
+        <h2 id="your-rights">Your rights</h2>
+        <p>
+          Depending on where you live, you may have the right to access, correct, or delete your
+          personal data. The in-app <strong>Delete account</strong> option fulfills deletion
+          directly; for other requests, contact us using the details below.
+        </p>
+
+        <h2 id="childrens-privacy">Children's privacy</h2>
+        <p>
+          Attendize is not directed to children under 13, and we do not knowingly collect personal
+          information from them.
+        </p>
+
+        <h2 id="changes">Changes to this policy</h2>
+        <p>
+          We may update this policy; the "Last updated" date will change accordingly. Material
+          changes will be reflected here.
+        </p>
+      </article>
+    </div>
+  </section>
+
+  {/* ---------------- CONTACT ---------------- */}
+  <section class="section section-alt" id="contact">
+    <div class="wrap">
+      <div class="hire-cta pxc">
+        <div>
+          <h3 class="hire-cta-title">Questions about this policy?</h3>
+          <p class="hire-cta-sub">Reach out any time and I'll get back to you.</p>
+        </div>
+        <a class="btn btn-solid btn-lg" href="mailto:support@zawmbi.com">support@zawmbi.com</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>
+
+<style>
+  /* Hero — a calmer variant of the case-study hero for a text page. */
+  .legal-hero { padding: 64px 0 44px; }
+  .legal-title {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(42px, 6.4vw, 76px); line-height: .92; letter-spacing: -.03em;
+    margin: 16px 0 0; color: var(--ink);
+  }
+  .legal-updated {
+    font-family: var(--font-px); font-weight: 700; font-size: 13px; letter-spacing: .04em;
+    color: var(--moss-deep); margin: 14px 0 0;
+  }
+
+  /* Summary grid: three across on wide screens reads better than two. */
+  .legal-summary { grid-template-columns: repeat(3, 1fr); }
+
+  /* Long-form legal body — narrow measure, generous rhythm, on-brand accents. */
+  .legal { max-width: 760px; }
+  .legal h2 {
+    font-family: var(--font-display); font-weight: 900; font-size: clamp(24px, 3vw, 30px);
+    letter-spacing: -.02em; color: var(--ink); margin: 52px 0 4px; padding-bottom: 12px;
+    border-bottom: 2.5px solid var(--ink); text-wrap: balance;
+  }
+  .legal h2:first-child { margin-top: 0; }
+  .legal p { font-size: 17px; line-height: 1.7; color: var(--ink); margin: 16px 0 0; text-wrap: pretty; }
+  .legal ul { margin: 12px 0 0; padding-left: 0; list-style: none; }
+  .legal li {
+    position: relative; font-size: 17px; line-height: 1.7; color: var(--ink);
+    padding-left: 26px; margin-top: 10px; text-wrap: pretty;
+  }
+  .legal li::before {
+    content: ""; position: absolute; left: 4px; top: .62em;
+    width: 8px; height: 8px; background: var(--gold); border: 2px solid var(--ink);
+  }
+  .legal strong { font-weight: 700; color: var(--ink); }
+  .legal a { color: var(--moss-deep); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+  .legal a:hover { color: var(--clay); }
+
+  @media (max-width: 900px) {
+    .legal-summary { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,0 +1,9 @@
+# Privacy policy URL stability. The App Store listing points at
+# /privacy/animal-restaurant-tracker/ forever; these 301s catch the plausible
+# near-misses so a mistyped or legacy link never 404s on a live listing.
+# Targets keep the trailing slash: that form serves 200 directly, so an alias
+# resolves in a single hop instead of chaining through a second redirect.
+/animal-restaurant-tracker/privacy   /privacy/animal-restaurant-tracker/   301
+/privacy/animal-restaurant-tracker-app   /privacy/animal-restaurant-tracker/   301
+/privacy/animalrestauranttracker   /privacy/animal-restaurant-tracker/   301
+/privacy/attendize   /attendize/privacy/   301

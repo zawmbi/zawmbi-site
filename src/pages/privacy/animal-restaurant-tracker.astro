@@ -1,0 +1,503 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+/* Published verbatim from the app repo's docs/PRIVACY_POLICY.md. The wording is
+   load-bearing — App Store reviewers check it against the App Privacy
+   questionnaire — so this page restyles the text but never rewords it.
+   Keep this URL stable; 301 it if it ever has to move. */
+const effective = 'September 4, 2026';
+const updated = 'September 4, 2026';
+
+/* Section 6's provider table, kept as data so it renders as a real table. */
+const providers: [string, string, string, string][] = [
+  [
+    'Google Firebase (Authentication, Cloud Firestore) — Google LLC',
+    'Account creation and sign-in; storage of your synced progress record',
+    'firebase.google.com/support/privacy',
+    'https://firebase.google.com/support/privacy',
+  ],
+  [
+    'Google Sign-In — Google LLC',
+    'Only if you choose that sign-in method',
+    'policies.google.com/privacy',
+    'https://policies.google.com/privacy',
+  ],
+  [
+    'Sign in with Apple — Apple Inc.',
+    'Only if you choose that sign-in method',
+    'apple.com/legal/privacy',
+    'https://www.apple.com/legal/privacy/',
+  ],
+  [
+    'Vercel Inc.',
+    'Hosts the endpoint that receives in-app feedback messages',
+    'vercel.com/legal/privacy-policy',
+    'https://vercel.com/legal/privacy-policy',
+  ],
+];
+---
+
+<Base
+  title="Animal Restaurant Tracker · Privacy Policy · Zawmbi"
+  description="How Animal Restaurant Tracker handles your data. The app works fully without an account, has no ads or analytics, and nothing is ever sold."
+>
+  <Nav />
+
+  {/* ---------------- HERO ---------------- */}
+  <section class="hero mon-hero legal-hero" id="top">
+    <div class="wrap">
+      <a class="mon-back" href="/privacy">← All privacy policies</a>
+      <div class="eyebrow" style="margin-top: 18px;">Animal Restaurant Tracker</div>
+      <h1 class="legal-title">Privacy Policy</h1>
+      <p class="legal-updated">
+        Effective date: {effective}
+        <span class="legal-dot">·</span>
+        Last updated: {updated}
+      </p>
+      <p class="mon-blurb">
+        Animal Restaurant Tracker ("the app") is a progress tracker for the mobile game
+        Animal Restaurant. It is developed and operated by Linda Mansour ("we", "us"),
+        an independent developer. The app is unofficial and is not affiliated with,
+        endorsed by, or connected to the developers or publishers of Animal Restaurant.
+      </p>
+      <p class="mon-blurb">
+        This policy explains what the app collects, why, who it is shared with, and how
+        you can get it deleted. It applies to the iOS and Android versions of the app.
+      </p>
+    </div>
+  </section>
+
+  {/* ---------------- THE SHORT VERSION ---------------- */}
+  <section class="section section-alt" id="summary">
+    <div class="wrap">
+      <div class="legal-tldr pxc">
+        <div class="eyebrow" style="margin-bottom: 18px;">The short version</div>
+        <p>
+          The app is a checklist for a game. You can use all of it without ever creating
+          an account, and in that mode your data never leaves your phone. There are no
+          ads, no analytics, no tracking, and nothing is ever sold. If you choose to sign
+          in, your progress is synced to a private cloud record so you can restore it on
+          another device, and you can delete that record and your account from inside the
+          app at any time.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- FULL POLICY ---------------- */}
+  <section class="section" id="policy">
+    <div class="wrap">
+      <article class="legal">
+        <h2 id="information-you-give-us"><span class="legal-num">1.</span> Information you give us</h2>
+
+        <p>
+          <strong>Account information (optional).</strong> The app works fully without an
+          account. If you choose to create one so your progress syncs across devices, we
+          collect:
+        </p>
+        <ul>
+          <li>
+            <strong>Email and password sign-in</strong> — your email address. Your password is
+            sent directly to Google Firebase Authentication, which stores it in hashed form.
+            We never see, receive, or store your password.
+          </li>
+          <li>
+            <strong>Sign in with Google</strong> — your email address and Google account
+            identifier, as provided to us by Google.
+          </li>
+          <li>
+            <strong>Sign in with Apple</strong> — your email address, as provided to us by
+            Apple. If you use Apple's <strong>Hide My Email</strong>, we only ever receive
+            Apple's private relay address, never your real one.
+          </li>
+          <li>
+            <strong>Guest sign-in</strong> — an anonymous account identifier only. No email,
+            no name, nothing that identifies you.
+          </li>
+        </ul>
+        <p>
+          In every case, Firebase Authentication assigns your account a random user ID
+          (a "UID"). That UID, not your name, is what your saved progress is filed under.
+        </p>
+        <p>
+          <strong>Feedback you send us.</strong> The app has a feedback form. If you use it,
+          we receive the message you wrote and, only if you choose to fill in the optional
+          contact field, the contact details you typed there. The form does not attach your
+          account, your email, or your device information to the message — if you do not
+          fill in the contact field, we have no way to tell who sent it or to reply.
+        </p>
+
+        <h2 id="information-created-by-using-the-app"><span class="legal-num">2.</span> Information created by using the app</h2>
+
+        <p>
+          As you tick things off, the app records your in-game progress: which customers,
+          dishes, letters, facilities, courtyard facilities, posters, movie acts, acorns,
+          pets, staff, mementos and battle pass rewards you have marked as unlocked or
+          collected, along with your income figures, timers, and your theme preference.
+        </p>
+        <p>
+          This is game progress about a fictional restaurant. It contains no personal
+          information unless you deliberately type some into a free-text field.
+        </p>
+        <p>Where it lives depends on whether you are signed in:</p>
+        <ul>
+          <li>
+            <strong>Signed out (guest).</strong> Progress is stored only in the app's own
+            storage on your device. It is never transmitted anywhere. Deleting the app
+            deletes it.
+          </li>
+          <li>
+            <strong>Signed in.</strong> Progress is stored on your device <em>and</em> synced
+            to a single private record in Google Cloud Firestore, filed under your account's
+            UID. Security rules restrict that record so that it can only be read or written
+            by someone signed in as you.
+          </li>
+        </ul>
+
+        <h2 id="information-collected-automatically"><span class="legal-num">3.</span> Information collected automatically</h2>
+
+        <p>
+          The app contains <strong>no</strong> analytics SDK, <strong>no</strong> advertising
+          SDK, <strong>no</strong> crash or performance reporting, and <strong>no</strong>
+          tracking or attribution technology of any kind. We do not use cookies or similar
+          identifiers, and we do not access the Advertising Identifier (IDFA). We never ask
+          for and never receive your location, contacts, photos, camera, microphone, health
+          data, or files.
+        </p>
+        <p>
+          We do not track you across other companies' apps or websites, and we do not build
+          advertising or marketing profiles.
+        </p>
+        <p>
+          The one unavoidable exception is ordinary server logging. When the app talks to a
+          server over the internet — to sign you in, to sync your progress, or to deliver
+          feedback you have sent — that server necessarily sees the connection's
+          <strong>IP address</strong> and basic technical details such as the time of the
+          request and the type of client making it. This is inherent to how the internet
+          works. Our service providers (see section 5) keep such logs for their own security and operational purposes under their own
+          privacy policies. We do not use these logs to identify or profile you.
+        </p>
+
+        <h2 id="notifications"><span class="legal-num">4.</span> Notifications</h2>
+
+        <p>
+          The app can set timers for in-game events such as the buffet, tip jar, takeout and
+          performers, and notify you when they finish. These are <strong>local
+          notifications</strong>: they are scheduled and delivered entirely by your own
+          device's operating system, using your device's clock and time zone. There is no
+          push notification server, no push token, and nothing about your timers is sent to
+          us or to anyone else. You can decline or revoke notification permission at any
+          time in your device settings; the rest of the app continues to work.
+        </p>
+
+        <h2 id="how-we-use-your-information"><span class="legal-num">5.</span> How we use your information</h2>
+
+        <p>We use the limited information described above only to:</p>
+        <ul>
+          <li>Provide the app's core function of saving and displaying your progress;</li>
+          <li>
+            Authenticate you and sync your progress between your devices when you have
+            chosen to sign in;
+          </li>
+          <li>
+            Read and, where you have supplied contact details, respond to feedback you
+            send us;
+          </li>
+          <li>
+            Keep the service working, diagnose problems, prevent abuse, and keep accounts
+            secure;
+          </li>
+          <li>Comply with legal obligations.</li>
+        </ul>
+        <p>
+          We do <strong>not</strong> use your information for advertising, profiling,
+          automated decision-making, or any purpose unrelated to running the app.
+        </p>
+
+        <h2 id="who-we-share-it-with"><span class="legal-num">6.</span> Who we share it with</h2>
+
+        <p>
+          <strong>We do not sell your personal information, and we do not share it for
+          advertising or cross-context behavioural advertising.</strong> We do not disclose
+          it to data brokers.
+        </p>
+        <p>
+          We rely on a small number of service providers, who process data on our behalf and
+          are contractually restricted to that purpose:
+        </p>
+
+        <div class="legal-table-wrap">
+          <table class="legal-table">
+            <thead>
+              <tr>
+                <th scope="col">Provider</th>
+                <th scope="col">What it handles</th>
+                <th scope="col">Their policy</th>
+              </tr>
+            </thead>
+            <tbody>
+              {providers.map(([name, handles, linkText, href]) => (
+                <tr>
+                  <th scope="row">{name}</th>
+                  <td>{handles}</td>
+                  <td><a href={href} target="_blank" rel="noreferrer">{linkText}</a></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          The app also contains an optional link to <strong>Buy Me a Coffee</strong>, which
+          opens in your browser outside the app. If you follow it and choose to donate, you
+          are dealing with Buy Me a Coffee and its payment processors directly under their
+          own privacy policy. We never see, receive, or store your payment card details, and
+          no payment is ever taken inside the app.
+        </p>
+        <p>
+          Beyond this, we may disclose information only where we are legally required to —
+          for example in response to a valid legal demand — or where necessary to protect
+          our rights or someone's safety. We will not do so voluntarily otherwise.
+        </p>
+
+        <h2 id="where-your-data-is-processed"><span class="legal-num">7.</span> Where your data is processed</h2>
+
+        <p>
+          Our service providers process and store data on servers in the
+          <strong>United States</strong> and in other countries where they operate. If you
+          use the app from the European Economic Area, the United Kingdom, or Switzerland,
+          this means your information may be transferred outside your home country. Where
+          such a transfer takes place, it is covered by the transfer mechanisms our
+          providers maintain, including the European Commission's Standard Contractual
+          Clauses and, where applicable, the EU-US Data Privacy Framework.
+        </p>
+
+        <h2 id="how-long-we-keep-it"><span class="legal-num">8.</span> How long we keep it</h2>
+
+        <ul>
+          <li>
+            <strong>Guest progress</strong> stays on your device until you clear it in the
+            app or delete the app. We never hold a copy.
+          </li>
+          <li>
+            <strong>Synced progress and your account</strong> are kept for as long as your
+            account exists. Deleting your account
+            (<a href="#your-choices-and-your-rights">section 9</a>) removes both,
+            immediately and permanently.
+          </li>
+          <li>
+            <strong>Feedback messages</strong> are kept for as long as needed to act on
+            them, and in any event no longer than 24 months, after which they are deleted.
+          </li>
+          <li>
+            <strong>Service providers' server logs</strong> are retained according to their
+            own schedules, which are typically measured in days or months.
+          </li>
+        </ul>
+
+        <h2 id="your-choices-and-your-rights"><span class="legal-num">9.</span> Your choices and your rights</h2>
+
+        <p>
+          <strong>You can use the entire app without an account.</strong> No feature is
+          locked behind signing in; an account only adds cloud sync.
+        </p>
+        <p><strong>You can delete everything yourself, from inside the app:</strong></p>
+        <ul>
+          <li>
+            <strong>Settings → Wipe all data</strong> clears the progress stored on your
+            device.
+          </li>
+          <li>
+            <strong>Settings → Delete account</strong> permanently deletes both your account
+            and the synced progress record that goes with it. This is irreversible. If you
+            have been signed in for a long time, your device may ask you to sign in again
+            first as a security check before it will complete the deletion.
+          </li>
+        </ul>
+        <p>
+          <strong>You can also revoke the app's access from outside it</strong> — for
+          example, by removing it under "Sign in with Apple" in your Apple ID settings, or
+          under third-party app access in your Google account.
+        </p>
+        <p>
+          <strong>If you are in the EEA, the UK, or Switzerland</strong>, the GDPR gives you
+          the right to access your personal data, to have it corrected, to have it erased,
+          to restrict or object to how we process it, to receive it in a portable format,
+          and to withdraw consent at any time without affecting processing already carried
+          out. Our legal bases for processing are: <strong>performance of a contract</strong>
+          (running the account and sync features you asked for), <strong>your consent</strong>
+          (optional feedback, optional notifications), and our <strong>legitimate
+          interests</strong> (keeping the app working and secure). You also have the right to
+          lodge a complaint with your local data protection supervisory authority.
+        </p>
+        <p>
+          <strong>If you are a California resident</strong>, the CCPA/CPRA gives you the
+          right to know what personal information we collect and how it is used, to have it
+          deleted, to have it corrected, and to opt out of its sale or sharing. As stated
+          above, <strong>we do not sell or share personal information</strong>, and we do not
+          use or disclose sensitive personal information for any purpose beyond providing
+          the app. We will never discriminate against you for exercising these rights.
+          Residents of other US states with comparable privacy laws have equivalent rights.
+        </p>
+        <p>
+          To exercise any of these rights, use the in-app deletion controls above or email us
+          at <a href="mailto:privacy@zawmbi.com"><strong>privacy@zawmbi.com</strong></a>. We
+          will respond within the time limit the applicable law sets — no later than 30 days
+          under the GDPR, or 45 days under the CCPA. We may need to ask you for information
+          to verify that the account is yours before we act on a request.
+        </p>
+
+        <h2 id="children"><span class="legal-num">10.</span> Children</h2>
+
+        <p>
+          The app is not directed to children under 13, and we do not knowingly collect
+          personal information from them. The app shows no ads, has no social features, no
+          chat, no user-to-user contact, and no in-app purchases.
+        </p>
+        <p>
+          If you are a parent or guardian and believe your child has created an account with
+          us, email <a href="mailto:privacy@zawmbi.com"><strong>privacy@zawmbi.com</strong></a>
+          and we will delete the account and its data promptly. You can also delete it
+          yourself using the in-app control described in
+          <a href="#your-choices-and-your-rights">section 9</a>.
+        </p>
+
+        <h2 id="security"><span class="legal-num">11.</span> Security</h2>
+
+        <p>
+          Traffic between the app and our service providers is encrypted in transit using
+          TLS. Passwords are hashed by Firebase Authentication and are never visible to us.
+          Firestore security rules are configured so that a stored progress record can only
+          be accessed by the account that owns it.
+        </p>
+        <p>
+          No method of transmission or storage is completely secure, and we cannot guarantee
+          absolute security. Please use a strong, unique password if you sign in with email.
+        </p>
+
+        <h2 id="changes-to-this-policy"><span class="legal-num">12.</span> Changes to this policy</h2>
+
+        <p>
+          If we change this policy, we will post the updated version at this address and
+          update the "Last updated" date above. If a change materially affects how we handle
+          your information, we will give notice in the app before it takes effect. Continuing
+          to use the app after a change takes effect means you accept the updated policy.
+        </p>
+
+        <h2 id="contact-us"><span class="legal-num">13.</span> Contact us</h2>
+
+        <p>Questions, privacy requests, or complaints:</p>
+        <dl class="legal-contact">
+          <div>
+            <dt>Email</dt>
+            <dd><a href="mailto:privacy@zawmbi.com">privacy@zawmbi.com</a></dd>
+          </div>
+          <div>
+            <dt>Developer</dt>
+            <dd>Linda Mansour</dd>
+          </div>
+          <div>
+            <dt>App</dt>
+            <dd>Animal Restaurant Tracker (<code>com.lindamansour.animalRestaurantTracker</code>)</dd>
+          </div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  {/* ---------------- CONTACT ---------------- */}
+  <section class="section section-alt" id="contact">
+    <div class="wrap">
+      <div class="hire-cta pxc">
+        <div>
+          <h3 class="hire-cta-title">Questions about this policy?</h3>
+          <p class="hire-cta-sub">Email me and I'll get back to you.</p>
+        </div>
+        <a class="btn btn-solid btn-lg" href="mailto:privacy@zawmbi.com">privacy@zawmbi.com</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>
+
+<style>
+  /* Hero — a calmer variant of the case-study hero for a text page. */
+  .legal-hero { padding: 64px 0 44px; }
+  .legal-title {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(42px, 6.4vw, 76px); line-height: .92; letter-spacing: -.03em;
+    margin: 16px 0 0; color: var(--ink);
+  }
+  .legal-updated {
+    font-family: var(--font-px); font-weight: 700; font-size: 13px; letter-spacing: .04em;
+    color: var(--moss-deep); margin: 14px 0 0;
+  }
+  .legal-dot { margin: 0 8px; opacity: .55; }
+  .legal-hero .mon-blurb + .mon-blurb { margin-top: 14px; font-size: 17px; }
+
+  /* "The short version" — the policy's own summary paragraph, given a card. */
+  .legal-tldr {
+    background: var(--cream); border: var(--bd); box-shadow: var(--sh-lg);
+    padding: 34px 38px; max-width: 860px;
+  }
+  .legal-tldr p {
+    font-size: 18.5px; line-height: 1.65; color: var(--ink); margin: 0; text-wrap: pretty;
+  }
+
+  /* Long-form legal body — narrow measure, generous rhythm, on-brand accents. */
+  .legal { max-width: 760px; }
+  .legal h2 {
+    font-family: var(--font-display); font-weight: 900; font-size: clamp(24px, 3vw, 30px);
+    letter-spacing: -.02em; color: var(--ink); margin: 52px 0 4px; padding-bottom: 12px;
+    border-bottom: 2.5px solid var(--ink); text-wrap: balance;
+  }
+  .legal h2:first-child { margin-top: 0; }
+  .legal-num { color: var(--moss-deep); margin-right: 10px; }
+  .legal p { font-size: 17px; line-height: 1.7; color: var(--ink); margin: 16px 0 0; text-wrap: pretty; }
+  .legal ul { margin: 12px 0 0; padding-left: 0; list-style: none; }
+  .legal li {
+    position: relative; font-size: 17px; line-height: 1.7; color: var(--ink);
+    padding-left: 26px; margin-top: 10px; text-wrap: pretty;
+  }
+  .legal li::before {
+    content: ""; position: absolute; left: 4px; top: .62em;
+    width: 8px; height: 8px; background: var(--gold); border: 2px solid var(--ink);
+  }
+  .legal strong { font-weight: 700; color: var(--ink); }
+  .legal a { color: var(--moss-deep); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+  .legal a:hover { color: var(--clay); }
+  .legal code {
+    font-family: var(--font-px); font-size: .92em; font-weight: 700;
+    background: var(--well); border: 1.5px solid var(--ink); padding: 1px 6px;
+  }
+
+  /* Section 6's provider table — a real table, scrollable on small screens. */
+  .legal-table-wrap { margin: 26px 0 0; overflow-x: auto; border: var(--bd); box-shadow: var(--sh-sm); }
+  .legal-table { width: 100%; min-width: 560px; border-collapse: collapse; background: var(--cream); }
+  .legal-table th, .legal-table td {
+    text-align: left; vertical-align: top; padding: 14px 16px; font-size: 15.5px;
+    line-height: 1.55; border-bottom: 1.5px solid color-mix(in oklab, var(--ink), transparent 78%);
+  }
+  .legal-table thead th {
+    font-family: var(--font-px); font-weight: 800; font-size: 12.5px; letter-spacing: .12em;
+    text-transform: uppercase; background: var(--moss); border-bottom: 2.5px solid var(--ink);
+  }
+  .legal-table tbody th { font-weight: 700; width: 34%; }
+  .legal-table tbody tr:last-child th, .legal-table tbody tr:last-child td { border-bottom: 0; }
+
+  /* Section 13's contact block. */
+  .legal-contact { margin: 20px 0 0; display: grid; gap: 10px; }
+  .legal-contact > div { display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; }
+  .legal-contact dt {
+    font-family: var(--font-px); font-weight: 800; font-size: 12.5px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--dim); min-width: 106px;
+  }
+  .legal-contact dd { margin: 0; font-size: 17px; color: var(--ink); }
+
+  @media (max-width: 900px) {
+    .legal-tldr { padding: 26px 24px; }
+  }
+</style>

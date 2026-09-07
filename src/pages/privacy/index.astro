@@ -1,0 +1,124 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+/* Index of per-app privacy policies. Each app gets its own page and its own
+   permanent URL — the App Store listing points straight at it — so this page
+   is a directory, never a redirect target. */
+const policies = [
+  {
+    name: 'Animal Restaurant Tracker',
+    href: '/privacy/animal-restaurant-tracker',
+    platform: 'iOS · Android',
+    updated: 'September 4, 2026',
+    blurb:
+      'A progress tracker for the mobile game Animal Restaurant. Works fully without an account; no ads, no analytics, optional cloud sync you can delete from inside the app.',
+  },
+  {
+    name: 'Attendize',
+    href: '/attendize/privacy',
+    platform: 'iPhone · iPad',
+    updated: 'June 30, 2026',
+    blurb:
+      'A gamified attendance tracker for students. Classes and attendance stay on your device by default; cloud backup is optional; nothing is sold or used for advertising.',
+  },
+];
+---
+
+<Base
+  title="Privacy Policies · Zawmbi"
+  description="Privacy policies for the apps I build: Animal Restaurant Tracker and Attendize."
+>
+  <Nav />
+
+  <section class="hero mon-hero legal-hero" id="top">
+    <div class="wrap">
+      <a class="mon-back" href="/">← Back to zawmbi.com</a>
+      <div class="eyebrow" style="margin-top: 18px;">Legal</div>
+      <h1 class="legal-title">Privacy<br />Policies</h1>
+      <p class="mon-blurb">
+        Each app I ship has its own policy, because each one handles data differently.
+        Pick the app you're using. The short version for all of them: no ads, no
+        analytics, nothing sold.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="policies">
+    <div class="wrap">
+      <div class="policy-list">
+        {policies.map((p) => (
+          <a class="policy-card pxc" href={p.href}>
+            <div class="policy-head">
+              <h2>{p.name}</h2>
+              <span class="policy-plat">{p.platform}</span>
+            </div>
+            <p>{p.blurb}</p>
+            <div class="policy-foot">
+              <span class="policy-updated">Updated {p.updated}</span>
+              <span class="policy-go">Read the policy →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="wrap">
+      <div class="hire-cta pxc">
+        <div>
+          <h3 class="hire-cta-title">Privacy question or request?</h3>
+          <p class="hire-cta-sub">
+            Deletion, access, or anything else — email me directly and I'll handle it.
+          </p>
+        </div>
+        <a class="btn btn-solid btn-lg" href="mailto:privacy@zawmbi.com">privacy@zawmbi.com</a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>
+
+<style>
+  .legal-hero { padding: 64px 0 44px; }
+  .legal-title {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(42px, 6.4vw, 76px); line-height: .92; letter-spacing: -.03em;
+    margin: 16px 0 0; color: var(--ink);
+  }
+
+  .policy-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  .policy-card {
+    display: block; background: var(--cream); border: var(--bd); box-shadow: var(--sh);
+    padding: 30px 32px; transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .policy-card:hover { transform: translate(-3px, -3px); box-shadow: var(--sh-lg); }
+  .policy-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .policy-card h2 {
+    font-family: var(--font-display); font-weight: 900; font-size: 25px;
+    letter-spacing: -.02em; color: var(--ink); margin: 0;
+  }
+  .policy-plat {
+    font-family: var(--font-px); font-weight: 700; font-size: 11.5px; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--dim);
+  }
+  .policy-card p { font-size: 16px; line-height: 1.6; color: var(--dim); margin: 14px 0 0; text-wrap: pretty; }
+  .policy-foot {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    flex-wrap: wrap; margin-top: 22px; padding-top: 16px;
+    border-top: 2px dashed color-mix(in oklab, var(--ink), transparent 72%);
+  }
+  .policy-updated, .policy-go {
+    font-family: var(--font-px); font-weight: 700; font-size: 12.5px; letter-spacing: .06em;
+  }
+  .policy-updated { color: var(--dim); }
+  .policy-go { color: var(--moss-deep); }
+  .policy-card:hover .policy-go { color: var(--clay); }
+
+  @media (max-width: 900px) {
+    .policy-list { grid-template-columns: 1fr; }
+  }
+</style>

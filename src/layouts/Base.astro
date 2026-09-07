@@ -42,6 +42,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? 'https://zawmbi.com'
     />
 
     <title>{title}</title>
+
+    <!-- Without JS the splash never gets removed, which would hide otherwise
+         fully server-rendered pages (App Store reviewers read the privacy
+         policy, sometimes with JS off). Drop it when scripting is disabled. -->
+    <noscript><style>.preloader { display: none !important; }</style></noscript>
   </head>
   <body>
     <div id="preloader" class="preloader" role="status" aria-live="polite" aria-label="Loading">
