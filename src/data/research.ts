@@ -113,7 +113,7 @@ export const phylabelerPrinciples: [string, string][] = [
 export const phylabelerFeatures: [string, string][] = [
   ['Per-group conflict report', 'Broken groups sorted by tips-to-move, each labelled intruded, scattered, or both, with the intruding tips named inline.'],
   ['Ranked conflicting tips', 'Tips ordered by how many groups their removal would repair, so the one sequence worth checking first is at the top.'],
-  ['Alternative repairs', 'When several tips fix a group equally well the cell reads "Cucurbita_pepo or 2 others", and selecting the row lists every option.'],
+  ['Alternative repairs', 'When several tips fix a group equally well the cell reads "Macadamia_integrifolia or 1 other", and selecting the row names them all: any one of them repairs Proteales.'],
   ['Merged identical ranks', 'Where nested ranks contain exactly the same sampled tips the tree cannot separate them, so they share one expandable row.'],
   ['Tip-matching audit', 'Which labels failed to match, which matched only after dropping name tokens, and which are ambiguous across unrelated taxa.'],
   ['Two tree views', 'A rectangular cladogram and a circular fan. The bundled 232-tip tree takes nine screenfuls as a rectangle and under three as a circle.'],
@@ -128,13 +128,12 @@ export const phylabelerFeatures: [string, string][] = [
 export const phylabelerTour = [
   { name: 'The full workspace', src: '/attachments/phylabeler/card.png', accent: 'var(--moss)' },
   { name: 'Circular fan view', src: '/attachments/phylabeler/tour-circular.png', accent: 'var(--moss)' },
-  { name: 'Rectangular cladogram', src: '/attachments/phylabeler/tour-rectangular.png', accent: 'var(--clay)' },
-  { name: 'Broken groups table', src: '/attachments/phylabeler/tour-broken-groups.png', accent: 'var(--plum)' },
-  { name: 'Conflicting tips', src: '/attachments/phylabeler/tour-conflicting-tips.png', accent: 'var(--clay)' },
-  { name: 'Tip matching audit', src: '/attachments/phylabeler/tour-tip-matching.png', accent: 'var(--moss-deep)' },
-  { name: 'Selected clade, highlighted', src: '/attachments/phylabeler/tour-selected-clade.png', accent: 'var(--plum)' },
-  { name: 'Built-in help', src: '/attachments/phylabeler/tour-help.png', accent: 'var(--moss)' },
+  { name: 'Broken groups, ranked by tips to move', src: '/attachments/phylabeler/tour-broken-groups.png', accent: 'var(--plum)' },
+  { name: 'Conflicting tips, ranked by groups repaired', src: '/attachments/phylabeler/tour-conflicting-tips.png', accent: 'var(--clay)' },
+  { name: 'When it cannot tell, it says so', src: '/attachments/phylabeler/tour-ambiguity.png', accent: 'var(--plum)' },
   { name: 'The CLI and its report', src: '/attachments/phylabeler/tour-cli.png', accent: 'var(--clay)' },
+  { name: 'Tip matching audit', src: '/attachments/phylabeler/tour-tip-matching.png', accent: 'var(--moss-deep)' },
+  { name: 'Built-in help', src: '/attachments/phylabeler/tour-help.png', accent: 'var(--moss)' },
   { name: 'validate.py passing', src: '/attachments/phylabeler/tour-validate.png', accent: 'var(--moss-deep)' },
 ];
 
