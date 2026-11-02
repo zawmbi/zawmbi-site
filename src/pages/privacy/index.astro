@@ -3,10 +3,20 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 
-/* Index of per-app privacy policies. Each app gets its own page and its own
-   permanent URL — the App Store listing points straight at it — so this page
-   is a directory, never a redirect target. */
+/* Index of per-app privacy policies. Each app gets its own permanent URL — the
+   App Store listing points straight at it — so this page is a directory, never
+   a redirect target. Most apps have their own page; Shut's policy is short and
+   lives on this page at #shut, which its App Store listing links to. Keep that
+   anchor stable. */
 const policies = [
+  {
+    name: 'Shut',
+    href: '#shut',
+    platform: 'iPhone',
+    updated: 'October 29, 2026',
+    blurb:
+      'A focus timer. Data Not Collected: no account, no analytics, no network requests of its own. Everything it stores stays on your phone.',
+  },
   {
     name: 'Animal Restaurant Tracker',
     href: '/privacy/animal-restaurant-tracker',
@@ -24,11 +34,14 @@ const policies = [
       'A gamified attendance tracker for students. Classes and attendance stay on your device by default; cloud backup is optional; nothing is sold or used for advertising.',
   },
 ];
+
+/* Shut's policy, rendered in full at #shut below. */
+const shutEffective = 'October 29, 2026';
 ---
 
 <Base
   title="Privacy Policies · Zawmbi"
-  description="Privacy policies for the apps I build: Animal Restaurant Tracker and Attendize."
+  description="Privacy policies for the apps I build: Shut, Animal Restaurant Tracker and Attendize."
 >
   <Nav />
 
@@ -65,7 +78,91 @@ const policies = [
     </div>
   </section>
 
-  <section class="section" id="contact">
+  {/* ---------------- SHUT ---------------- */}
+  <section class="section" id="shut">
+    <div class="wrap">
+      <div class="eyebrow">Shut</div>
+      <h2 class="legal-title shut-title">Privacy Policy</h2>
+      <p class="legal-updated">Effective date: {shutEffective}</p>
+      <p class="mon-blurb">
+        This policy covers Shut, an iOS focus timer by Zawmbi Productions LLC, Illinois, USA
+        ("we", "us").
+      </p>
+
+      <div class="legal-tldr pxc">
+        <div class="eyebrow" style="margin-bottom: 18px;">The short version</div>
+        <p>
+          <strong>Data Not Collected.</strong> Shut collects no personal data. Everything it
+          stores stays on your phone, and the app makes no network requests of its own.
+        </p>
+      </div>
+
+      <article class="legal">
+        <h3 id="shut-what-we-collect">What we collect</h3>
+        <p>
+          Nothing. Shut collects no personal data. There is no account, no sign-in, no
+          analytics, no advertising, no crash reporting, no tracking, and no third-party
+          SDKs. On the App Store this is labelled <strong>Data Not Collected</strong>.
+        </p>
+
+        <h3 id="shut-on-your-device">What stays on your device</h3>
+        <p>Shut stores two things, both on your phone:</p>
+        <ul>
+          <li>
+            <strong>Focus sessions</strong>: the start and end time, length, outcome, and an
+            optional label.
+          </li>
+          <li><strong>Settings</strong>: theme, colours, and timer preferences.</li>
+        </ul>
+        <p>
+          This is kept in the app's local storage. It is never sent to us or to anyone else,
+          and it is deleted when you delete the app. There is no iCloud sync. Your data does
+          not leave the phone.
+        </p>
+
+        <h3 id="shut-network">Network activity</h3>
+        <p>
+          Shut makes no network requests of its own. The only network activity is Apple's
+          StoreKit, when you buy or restore Shut Pro. Apple processes that purchase under
+          <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noreferrer">Apple's
+          privacy policy</a>. We receive no personal or payment information.
+        </p>
+
+        <h3 id="shut-notifications">Notifications</h3>
+        <p>
+          Notifications are scheduled locally on your device, to tell you when a focus block
+          ends. No push notification server is involved.
+        </p>
+
+        <h3 id="shut-permissions">What Shut doesn't use</h3>
+        <p>
+          Shut does not use the camera, microphone, location, contacts, photos, health data,
+          or the advertising identifier.
+        </p>
+
+        <h3 id="shut-children">Children</h3>
+        <p>Shut collects nothing from anyone, including children.</p>
+
+        <h3 id="shut-contact">Contact</h3>
+        <dl class="legal-contact">
+          <div>
+            <dt>Email</dt>
+            <dd><a href="mailto:support@zawmbi.com">support@zawmbi.com</a></dd>
+          </div>
+          <div>
+            <dt>Developer</dt>
+            <dd>Zawmbi Productions LLC, Illinois, USA</dd>
+          </div>
+          <div>
+            <dt>App</dt>
+            <dd>Shut (<code>com.zawmbi.shut</code>)</dd>
+          </div>
+        </dl>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="contact">
     <div class="wrap">
       <div class="hire-cta pxc">
         <div>
@@ -118,7 +215,54 @@ const policies = [
   .policy-go { color: var(--moss-deep); }
   .policy-card:hover .policy-go { color: var(--clay); }
 
+  /* Shut's inline policy — the same legal styles as the per-app pages, with h3
+     section heads because the section's own title is the h2. */
+  .shut-title { font-size: clamp(36px, 5vw, 58px); margin-top: 14px; }
+  .legal-updated {
+    font-family: var(--font-px); font-weight: 700; font-size: 13px; letter-spacing: .04em;
+    color: var(--moss-deep); margin: 14px 0 0;
+  }
+  .legal-tldr {
+    background: var(--cream); border: var(--bd); box-shadow: var(--sh-lg);
+    padding: 34px 38px; max-width: 860px; margin-top: 34px;
+  }
+  .legal-tldr p {
+    font-size: 18.5px; line-height: 1.65; color: var(--ink); margin: 0; text-wrap: pretty;
+  }
+  .legal { max-width: 760px; margin-top: 52px; }
+  .legal h3 {
+    font-family: var(--font-display); font-weight: 900; font-size: clamp(22px, 2.6vw, 27px);
+    letter-spacing: -.02em; color: var(--ink); margin: 44px 0 4px; padding-bottom: 12px;
+    border-bottom: 2.5px solid var(--ink); text-wrap: balance;
+  }
+  .legal h3:first-child { margin-top: 0; }
+  .legal p { font-size: 17px; line-height: 1.7; color: var(--ink); margin: 16px 0 0; text-wrap: pretty; }
+  .legal ul { margin: 12px 0 0; padding-left: 0; list-style: none; }
+  .legal li {
+    position: relative; font-size: 17px; line-height: 1.7; color: var(--ink);
+    padding-left: 26px; margin-top: 10px; text-wrap: pretty;
+  }
+  .legal li::before {
+    content: ""; position: absolute; left: 4px; top: .62em;
+    width: 8px; height: 8px; background: var(--gold); border: 2px solid var(--ink);
+  }
+  .legal strong { font-weight: 700; color: var(--ink); }
+  .legal a { color: var(--moss-deep); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+  .legal a:hover { color: var(--clay); }
+  .legal code {
+    font-family: var(--font-px); font-size: .92em; font-weight: 700;
+    background: var(--well); border: 1.5px solid var(--ink); padding: 1px 6px;
+  }
+  .legal-contact { margin: 20px 0 0; display: grid; gap: 10px; }
+  .legal-contact > div { display: flex; gap: 14px; align-items: baseline; flex-wrap: wrap; }
+  .legal-contact dt {
+    font-family: var(--font-px); font-weight: 800; font-size: 12.5px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--dim); min-width: 106px;
+  }
+  .legal-contact dd { margin: 0; font-size: 17px; color: var(--ink); }
+
   @media (max-width: 900px) {
     .policy-list { grid-template-columns: 1fr; }
+    .legal-tldr { padding: 26px 24px; }
   }
 </style>

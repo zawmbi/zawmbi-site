@@ -1,0 +1,256 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import ImageSlot from '../components/ImageSlot.astro';
+import {
+  shut,
+  shutFacts,
+  shutTechTags,
+  shutSteps,
+  shutFree,
+  shutPro,
+  shutGallery,
+  shutFaq,
+  shutTech,
+} from '../data/shut';
+---
+
+<Base
+  title="Shut · a focus timer for iPhone · Zawmbi"
+  description="Shut is a focus timer for iPhone with one input: pick a length and lock your phone. Unlock early and you get ten seconds before the block breaks. Support, FAQ and privacy."
+>
+  <Nav />
+
+  {/* ---------------- HERO ---------------- */}
+  <section class="hero mon-hero" id="top">
+    <div class="wrap">
+      <a class="mon-back" href="/#apps">← Back to all apps</a>
+      <div class="atz-hero-grid">
+        <div>
+          <div class="eyebrow" style="margin-top: 18px;">iPhone app</div>
+          <h1 class="mon-title">{shut.name}</h1>
+          <p class="mon-tag">{shut.tagline}</p>
+          <p class="mon-blurb">{shut.blurb}</p>
+          <div class="mon-cta">
+            {shut.appStore ? (
+              <a class="btn btn-solid btn-lg" href={shut.appStore} target="_blank" rel="noreferrer">Get it on the App Store ↗</a>
+            ) : (
+              <span class="btn btn-solid btn-lg shut-soon" aria-disabled="true">Coming to the App Store</span>
+            )}
+            <a class="btn btn-ghost btn-lg" href="#support">Support</a>
+            <div class="mon-meta">
+              {shut.platforms.map((p) => <span class="badge">{p}</span>)}
+              <span class="badge badge-status">{shut.status}</span>
+            </div>
+          </div>
+          <div class="mon-tags">
+            {shutTechTags.map((t) => <span class="badge">{t}</span>)}
+          </div>
+        </div>
+        <div class="atz-hero-shot">
+          <div class="device-phone shut-phone">
+            <ImageSlot
+              src={shut.heroShot}
+              alt="Shut — the timer screen"
+              placeholder="Timer screen"
+              style="width: 100%; height: 100%;"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="atz-facts">
+        {shutFacts.map(([l, v]) => (
+          <div class="atz-fact">
+            <div class="atz-fact-l">{l}</div>
+            <div class="atz-fact-v">{v}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- HOW IT WORKS ---------------- */}
+  <section class="section section-alt" id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">How it works</div>
+        <h2 class="sec-title">The commitment<br />is the lock</h2>
+        <p class="sec-lead">No blocklist to configure. No “five more minutes” button.</p>
+      </div>
+      <div class="shut-steps">
+        {shutSteps.map(([t, d], i) => (
+          <div class="serv-card pxc">
+            <span class="serv-no">{String(i + 1).padStart(2, '0')}</span>
+            <h4>{t}</h4>
+            <p>{d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- IPHONE DUO ---------------- */}
+  <section class="section" id="duo">
+    <div class="wrap">
+      <div class="shut-duo pxc">
+        <div class="eyebrow">Built for iPhone Duo</div>
+        <h3 class="hire-cta-title">Fold it shut. <span class="badge shut-coming">Coming</span></h3>
+        <p>
+          Shut is designed around iPhone Duo, Apple’s foldable. In a later update, folding
+          the phone shut will start a block, with the timer on the outer display. Until
+          then, locking the phone starts a block on every iPhone.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- FREE AND PRO ---------------- */}
+  <section class="section section-alt" id="pricing">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Free and Pro</div>
+        <h2 class="sec-title">Pay once,<br />or don’t</h2>
+        <p class="sec-lead">The timer is free and stays free. Shut Pro is a one-time purchase. There is no subscription.</p>
+      </div>
+      <div class="shut-tiers">
+        <div class="shut-tier pxc">
+          <h3 class="app-name">Free</h3>
+          <ul class="site-points">
+            {shutFree.map((p) => <li>{p}</li>)}
+          </ul>
+        </div>
+        <div class="shut-tier shut-tier-pro pxc">
+          <h3 class="app-name">Shut Pro</h3>
+          <div class="app-tag">One-time purchase. Everything in Free, plus:</div>
+          <ul class="site-points">
+            {shutPro.map((p) => <li>{p}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- SCREENSHOTS ---------------- */}
+  <section class="section" id="screens">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Screens</div>
+        <h2 class="sec-title">What it looks like</h2>
+      </div>
+      <div class="shut-gallery">
+        {shutGallery.map((s) => (
+          <figure class="shut-shot">
+            <div class="device-phone shut-phone">
+              <ImageSlot
+                src={s.src}
+                alt={`Shut — ${s.name}`}
+                placeholder={s.name}
+                style="width: 100%; height: 100%;"
+              />
+            </div>
+            <figcaption class="phy-caption">
+              {s.name}{s.pro && <span class="badge shut-pro-badge">Pro</span>}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- PRIVACY ---------------- */}
+  <section class="section section-alt" id="privacy">
+    <div class="wrap">
+      <div class="hire-cta pxc">
+        <div>
+          <h3 class="hire-cta-title">Nothing leaves your phone.</h3>
+          <p class="hire-cta-sub">No account, no server, no analytics.</p>
+        </div>
+        <a class="btn btn-solid btn-lg" href={shut.privacy}>Read the privacy policy →</a>
+      </div>
+    </div>
+  </section>
+
+  {/* ---------------- SUPPORT ---------------- */}
+  <section class="section" id="support">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Support</div>
+        <h2 class="sec-title">Questions</h2>
+      </div>
+      <div class="demo-list">
+        {shutFaq.map(([q, a]) => (
+          <div class="demo-row shut-faq">
+            <h4>{q}</h4>
+            <p set:html={a} />
+          </div>
+        ))}
+      </div>
+      <div class="hire-cta pxc" style="margin-top: 34px;">
+        <div>
+          <h3 class="hire-cta-title">Still stuck?</h3>
+          <p class="hire-cta-sub">Email me. Say which iPhone you have and what happened.</p>
+        </div>
+        <a class="btn btn-solid btn-lg" href={`mailto:${shut.support}`}>{shut.support}</a>
+      </div>
+      <a class="mon-back" href={shut.privacy} style="display: inline-block; margin-top: 24px;">Shut privacy policy →</a>
+    </div>
+  </section>
+
+  {/* ---------------- UNDER THE HOOD ---------------- */}
+  <section class="section section-alt" id="build">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="eyebrow">Under the hood</div>
+        <h2 class="sec-title">The engineering</h2>
+        <p class="sec-lead">Native Swift, one universal build, and nothing running off the device.</p>
+      </div>
+      <div class="demo-list">
+        {shutTech.map(([t, d]) => (
+          <div class="demo-row">
+            <h4>{t}</h4>
+            <p>{d}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>
+
+<style>
+  /* The 6.9" screenshots are 1320 × 2868; match that exactly so nothing crops. */
+  .shut-phone :global(.image-slot) { aspect-ratio: 1320 / 2868 !important; }
+
+  .shut-soon { cursor: default; opacity: .75; }
+  .shut-soon:hover { transform: none; box-shadow: var(--sh-sm); background: var(--moss); }
+
+  .shut-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+
+  .shut-duo { background: var(--cream); border: var(--bd); box-shadow: var(--sh-lg); padding: 34px 38px; max-width: 860px; }
+  .shut-duo .hire-cta-title { margin: 14px 0 0; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .shut-duo p { font-size: 17px; line-height: 1.65; color: var(--dim); margin: 12px 0 0; max-width: 40em; text-wrap: pretty; }
+  .shut-coming { background: var(--gold); }
+
+  .shut-tiers { display: grid; grid-template-columns: 1fr 1.25fr; gap: 20px; align-items: start; }
+  .shut-tier { background: var(--cream); border: var(--bd); box-shadow: var(--sh); padding: 30px 32px; }
+  .shut-tier-pro { box-shadow: var(--sh-lg); }
+  .shut-tier .site-points { margin-top: 18px; }
+
+  .shut-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px 22px; }
+  .shut-shot { margin: 0; display: flex; flex-direction: column; align-items: center; }
+  .shut-shot .phy-caption { display: flex; align-items: center; gap: 8px; }
+  .shut-pro-badge { padding: 3px 7px; font-size: 10.5px; background: var(--moss); }
+
+  .shut-faq p :global(a) { color: var(--moss-deep); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+
+  @media (max-width: 920px) {
+    .shut-steps, .shut-tiers { grid-template-columns: 1fr; }
+    .shut-gallery { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .shut-duo { padding: 26px 24px; }
+    .shut-gallery { gap: 22px 14px; }
+  }
+</style>
